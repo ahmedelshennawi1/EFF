@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>EFF Web App</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0E6E66">
+    <link rel="icon" type="image/svg+xml" href="icon.svg">
+    <style>
+        :root {
+            --ink: #23292C;
+            --ink-soft: #4A5457;
+            --paper: #FAFBFA;
+            --surface: #FFFFFF;
+            --teal-deep: #0E6E66;
+            --teal: #14958A;
+            --line: #D5DEDC;
+            --sans: "Segoe UI", "IBM Plex Sans", -apple-system, system-ui, sans-serif;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --ink: #E4EAE9;
+                --ink-soft: #A9B6B4;
+                --paper: #171C1D;
+                --surface: #1F2627;
+                --teal-deep: #3BB3A7;
+                --teal: #2AA79B;
+                --line: #35403F;
+            }
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: var(--sans);
+            background: var(--paper);
+            color: var(--ink);
+            -webkit-tap-highlight-color: transparent;
+        }
+        header {
+            background: var(--teal-deep);
+            color: #fff;
+            padding: 20px 24px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: 700;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            letter-spacing: 0.02em;
+        }
+        .container {
+            padding: 24px 20px 80px;
+            max-width: 800px;
+            margin: auto;
+        }
+        .category {
+            margin-top: 32px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--teal);
+            font-weight: 700;
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+        }
+        .file-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .file-card {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 16px 20px;
+            text-decoration: none;
+            color: var(--ink);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            transition: all 0.2s ease;
+        }
+        .file-card:active {
+            background: var(--line);
+            transform: scale(0.98);
+        }
+        .file-card:hover {
+            border-color: var(--teal);
+            box-shadow: 0 4px 12px rgba(20, 149, 138, 0.1);
+        }
+        .icon {
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--paper);
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+        .pdf-icon { color: #e74c3c; }
+        .html-icon { color: #3498db; }
+        
+        .card-content {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .file-title {
+            font-weight: 600;
+            font-size: 16px;
+        }
+        .file-ext {
+            font-size: 12px;
+            color: var(--ink-soft);
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <header>EFF Workspace</header>
+    <div class="container">
+        
+        <div class="category">Brand</div>
+        <div class="file-list">
+            <a href="brand/EFF-Brand-Guide.html" class="file-card">
+                <div class="icon html-icon">🌐</div>
+                <div class="card-content">
+                    <span class="file-title">EFF Brand Guide</span>
+                    <span class="file-ext">HTML</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="category">Demo</div>
+        <div class="file-list">
+            <a href="demo/EFF-Dashboard.html" class="file-card">
+                <div class="icon html-icon">🌐</div>
+                <div class="card-content">
+                    <span class="file-title">EFF Dashboard</span>
+                    <span class="file-ext">HTML</span>
+                </div>
+            </a>
+            <a href="demo/EFF-Deck.html" class="file-card">
+                <div class="icon html-icon">🌐</div>
+                <div class="card-content">
+                    <span class="file-title">EFF Deck</span>
+                    <span class="file-ext">HTML</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="category">Docs</div>
+        <div class="file-list">
+            <a href="docs/DATA-COLLECTION.html" class="file-card">
+                <div class="icon html-icon">🌐</div>
+                <div class="card-content">
+                    <span class="file-title">Data Collection Guide</span>
+                    <span class="file-ext">HTML</span>
+                </div>
+            </a>
+            <a href="docs/MARKET-RESEARCH-BRIEF.html" class="file-card">
+                <div class="icon html-icon">🌐</div>
+                <div class="card-content">
+                    <span class="file-title">Market Research Brief</span>
+                    <span class="file-ext">HTML</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="category">Marketing</div>
+        <div class="file-list">
+            <a href="marketing/EFF-Booklet-AR.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Booklet AR</span><span class="file-ext">HTML</span></div></a>
+            <a href="marketing/EFF-Booklet-EN.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Booklet EN</span><span class="file-ext">HTML</span></div></a>
+            <a href="marketing/EFF-Brochure-Print.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Brochure Print</span><span class="file-ext">HTML</span></div></a>
+            <a href="marketing/EFF-Brochure.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Brochure</span><span class="file-ext">HTML</span></div></a>
+            <a href="marketing/EFF-BusinessCard.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Business Card</span><span class="file-ext">HTML</span></div></a>
+            <a href="marketing/EFF-DataKit-Print.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF DataKit Print</span><span class="file-ext">HTML</span></div></a>
+            <a href="marketing/EFF-EmailSignature.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Email Signature</span><span class="file-ext">HTML</span></div></a>
+            <a href="marketing/EFF-Landing.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Landing</span><span class="file-ext">HTML</span></div></a>
+            <a href="marketing/EFF-Pilot-Overview.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Pilot Overview</span><span class="file-ext">HTML</span></div></a>
+            <a href="marketing/EFF-Portfolio-Print.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Portfolio Print</span><span class="file-ext">HTML</span></div></a>
+            <a href="marketing/EFF-Portfolio.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Portfolio</span><span class="file-ext">HTML</span></div></a>
+            <a href="marketing/EFF-Poster-Print.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Poster Print</span><span class="file-ext">HTML</span></div></a>
+            <a href="marketing/EFF-Poster.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Poster</span><span class="file-ext">HTML</span></div></a>
+            <a href="marketing/EFF-Social-Posts.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Social Posts</span><span class="file-ext">HTML</span></div></a>
+        </div>
+
+        <div class="category">Offer</div>
+        <div class="file-list">
+            <a href="offer/EFF-Brief-Dakahlia.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Brief Dakahlia</span><span class="file-ext">HTML</span></div></a>
+            <a href="offer/EFF-DataKit.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF DataKit</span><span class="file-ext">HTML</span></div></a>
+            <a href="offer/EFF-Offer-AR.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Offer AR</span><span class="file-ext">HTML</span></div></a>
+            <a href="offer/EFF-Pricing.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Pricing</span><span class="file-ext">HTML</span></div></a>
+            <a href="offer/EFF-Proposal-Dakahlia.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Proposal Dakahlia</span><span class="file-ext">HTML</span></div></a>
+            <a href="offer/EFFDashboard.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Dashboard</span><span class="file-ext">HTML</span></div></a>
+            <a href="offer/EFFDataKit.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF DataKit</span><span class="file-ext">HTML</span></div></a>
+            <a href="offer/EFFDeck.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Deck</span><span class="file-ext">HTML</span></div></a>
+        </div>
+
+        <div class="category">Out</div>
+        <div class="file-list">
+            <a href="out/assessment.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">Assessment Report</span><span class="file-ext">HTML</span></div></a>
+            <a href="out/EFF-Submission-Dakahlia.pdf" class="file-card"><div class="icon pdf-icon">📄</div><div class="card-content"><span class="file-title">EFF Submission Dakahlia</span><span class="file-ext">PDF</span></div></a>
+        </div>
+
+    </div>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch(err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>

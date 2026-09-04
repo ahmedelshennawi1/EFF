@@ -1,0 +1,16 @@
+{
+  "name": "EFF Web App",
+  "short_name": "EFF App",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#FAFBFA",
+  "theme_color": "#0E6E66",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
