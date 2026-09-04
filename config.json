@@ -1,0 +1,16 @@
+{
+  "organisation": "Dakahlia Group for Poultry and Agricultural Development",
+  "assessor": "Ahmed Elshennawi",
+  "currency": "EGP",
+  "discount_rate": 0.22,
+  "salvage_decay_per_year": 0.08,
+  "benchmark_unavailability": 0.02,
+  "economic_materiality": 0.15,
+
+  "_notes": {
+    "discount_rate": "Organisation's nominal cost of capital. Egyptian rates are high and volatile - set this deliberately, it is printed on every report.",
+    "salvage_decay_per_year": "Fraction of current resale value lost per additional year in service.",
+    "benchmark_unavailability": "Downtime a well-run NEW unit would itself incur, as a fraction of run hours. Only downtime above this is charged as a cost of keeping the old asset.",
+    "economic_materiality": "Replacing must beat keeping by at least this fraction of the new unit's annual cost before the verdict is escalated. Guards against acting on estimation noise."
+  }
+}

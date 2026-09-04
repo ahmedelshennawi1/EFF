@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EFF - Data Collection Guide </title>
+    <style>
+        :root {
+            --ink: #23292C;
+            --ink-soft: #4A5457;
+            --ink-faint: #7C8A8D;
+            --paper: #FAFBFA;
+            --surface: #FFFFFF;
+            --mist: #E8EEEC;
+            --line: #D5DEDC;
+            --teal-deep: #0E6E66;
+            --teal: #14958A;
+            --teal-tint: #E2F0EE;
+            --brass: #B8934A;
+            --radius: 6px;
+            --sans: "Segoe UI", "IBM Plex Sans", -apple-system, system-ui, sans-serif;
+            --mono: "Cascadia Code", "Consolas", ui-monospace, monospace;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --ink: #E4EAE9;
+                --ink-soft: #A9B6B4;
+                --ink-faint: #74827F;
+                --paper: #171C1D;
+                --surface: #1F2627;
+                --mist: #26302F;
+                --line: #35403F;
+                --teal-deep: #3BB3A7;
+                --teal: #2AA79B;
+                --brass: #CFA95E;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--paper);
+            color: var(--ink);
+            font-family: var(--sans);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        .page {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 32px 96px;
+        }
+
+        header.masthead {
+            padding: 72px 0 48px;
+            border-bottom: 3px solid var(--teal-deep);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .eyebrow {
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--teal-deep);
+        }
+
+        .masthead h1 {
+            margin: 0;
+            font-size: clamp(34px, 5.5vw, 52px);
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            line-height: 1.12;
+        }
+
+        .masthead p.tagline {
+            margin: 0;
+            color: var(--ink-soft);
+            max-width: 62ch;
+            font-size: 18px;
+        }
+
+        section {
+            margin-top: 56px;
+        }
+
+        .sec-head {
+            display: flex;
+            align-items: baseline;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .sec-head h2 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--teal-deep);
+            letter-spacing: 0.005em;
+        }
+
+        .sec-intro {
+            color: var(--ink-soft);
+            max-width: 68ch;
+            margin: 0 0 28px;
+        }
+
+        h3 {
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--ink-faint);
+            font-weight: 600;
+            margin: 36px 0 14px;
+        }
+
+        p {
+            margin: 0 0 16px;
+            max-width: 68ch;
+        }
+
+        code {
+            font-family: var(--mono);
+            font-size: 14px;
+            background: var(--mist);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--ink-soft);
+        }
+
+        pre {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            padding: 16px;
+            border-radius: var(--radius);
+            overflow-x: auto;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            font-size: 14px;
+            color: var(--ink);
+        }
+
+        table.spec-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            margin-bottom: 24px;
+        }
+
+        .spec-wrap {
+            overflow-x: auto;
+        }
+
+        table.spec-table th {
+            text-align: left;
+            background: var(--teal-deep);
+            color: #fff;
+            padding: 10px 14px;
+            font-size: 12.5px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        table.spec-table td {
+            padding: 10px 14px;
+            border-top: 1px solid var(--line);
+            vertical-align: top;
+        }
+
+        table.spec-table td:first-child {
+            font-weight: 600;
+        }
+
+        table.spec-table tr:nth-child(even) td {
+            background: var(--mist);
+        }
+
+        .callout {
+            background: var(--mist);
+            border-left: 3px solid var(--teal);
+            padding: 16px 20px;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 24px 0;
+            max-width: 68ch;
+        }
+
+        .callout p {
+            margin: 0;
+        }
+
+        ol {
+            padding-inline-start: 24px;
+            max-width: 68ch;
+            color: var(--ink);
+        }
+
+        ol li {
+            margin-bottom: 8px;
+        }
+
+        footer.colophon {
+            margin-top: 88px;
+            border-top: 1px solid var(--line);
+            padding-top: 20px;
+            font-size: 12.5px;
+            color: var(--ink-faint);
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <header class="masthead">
+            <div class="eyebrow">Equipment Fitness Framework</div>
+            <h1>Data Collection Guide</h1>
+            <p class="tagline">What to measure, how, and how often — so that an assessment reaches decision-grade confidence.</p>
+        </header>
+
+        <section>
+            <p>Every column below maps to a field in <code>data/assets.csv</code>. Blank cells are safe: a missing value is excluded from scoring and reduces reported confidence. It is never treated as zero, so leaving a cell empty is always better than guessing a number.</p>
+        </section>
+
+        <section>
+            <div class="sec-head">
+                <h2>Tier 1 — start here</h2>
+            </div>
+            <p class="sec-intro">Gets most fleets to ~60% confidence. These need no instruments beyond a clipboard and the existing work-order system.</p>
+
+            <div class="spec-wrap">
+                <table class="spec-table">
+                    <tr>
+                        <th>Field</th>
+                        <th>Source</th>
+                        <th>Frequency</th>
+                    </tr>
+                    <tr>
+                        <td><code>commissioned_year</code></td>
+                        <td>Asset register, commissioning certificate</td>
+                        <td>Once</td>
+                    </tr>
+                    <tr>
+                        <td><code>run_hours</code></td>
+                        <td>Hour meter</td>
+                        <td>Monthly</td>
+                    </tr>
+                    <tr>
+                        <td><code>annual_run_hours</code></td>
+                        <td>Hour meter delta over 12 months</td>
+                        <td>Monthly</td>
+                    </tr>
+                    <tr>
+                        <td><code>annual_downtime_hours</code></td>
+                        <td>Work orders — <strong>unplanned stops only</strong></td>
+                        <td>Per event</td>
+                    </tr>
+                    <tr>
+                        <td><code>unplanned_failures_12m</code></td>
+                        <td>Count of corrective work orders that stopped production</td>
+                        <td>Per event</td>
+                    </tr>
+                    <tr>
+                        <td><code>annual_maint_cost</code></td>
+                        <td>Parts + contracted labour + in-house hours at loaded rate</td>
+                        <td>Monthly</td>
+                    </tr>
+                    <tr>
+                        <td><code>cumulative_maint_cost</code></td>
+                        <td>Running total since commissioning</td>
+                        <td>Monthly</td>
+                    </tr>
+                    <tr>
+                        <td><code>replacement_value</code></td>
+                        <td>Current quote for an equivalent new unit</td>
+                        <td>Annually</td>
+                    </tr>
+                    <tr>
+                        <td><code>oem_support</code>, <code>spare_lead_days</code></td>
+                        <td>Supplier — include customs and FX time, not just ship date</td>
+                        <td>Annually</td>
+                    </tr>
+                    <tr>
+                        <td><code>safety_findings</code></td>
+                        <td>Open critical HSE findings against the asset</td>
+                        <td>Per event</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="callout">
+                <p><strong>If an asset has no hour meter, fit one.</strong> It is the cheapest instrument in this entire guide and it unlocks three separate indicators.</p>
+            </div>
+        </section>
+
+        <section>
+            <div class="sec-head">
+                <h2>Tier 2 — the efficiency layer</h2>
+            </div>
+            <p class="sec-intro">This is where the money is. Specific consumption is the indicator almost nobody tracks and the one that converts directly into money. It needs a meter on the input and a count of the output.</p>
+
+            <div class="spec-wrap">
+                <table class="spec-table">
+                    <tr>
+                        <th>Field</th>
+                        <th>How</th>
+                    </tr>
+                    <tr>
+                        <td><code>specific_consumption</code></td>
+                        <td>Input consumed ÷ output produced, over a measured period</td>
+                    </tr>
+                    <tr>
+                        <td><code>baseline_specific_consumption</code></td>
+                        <td>OEM figure at the <strong>measured load factor</strong>, or the best 12-month figure on record</td>
+                    </tr>
+                    <tr>
+                        <td><code>consumption_unit</code></td>
+                        <td>See the table below</td>
+                    </tr>
+                    <tr>
+                        <td><code>energy_price</code></td>
+                        <td>Current diesel price per litre, or industrial tariff per kWh</td>
+                    </tr>
+                    <tr>
+                        <td><code>annual_output_total</code></td>
+                        <td>Total output over the year, in the denominator unit above</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h3>Equipment Output Guide</h3>
+            <div class="spec-wrap">
+                <table class="spec-table">
+                    <tr>
+                        <th>Equipment</th>
+                        <th>Unit</th>
+                        <th>Input meter</th>
+                        <th>Output count</th>
+                    </tr>
+                    <tr>
+                        <td>Diesel generator</td>
+                        <td>L/kWh</td>
+                        <td>Fuel flow meter, or tank dips against a log</td>
+                        <td>Genset kWh meter</td>
+                    </tr>
+                    <tr>
+                        <td>Electric machine</td>
+                        <td>kWh/tonne</td>
+                        <td>Sub-meter on the panel</td>
+                        <td>Production log</td>
+                    </tr>
+                    <tr>
+                        <td>Pump</td>
+                        <td>kWh/m³</td>
+                        <td>Sub-meter</td>
+                        <td>Flow meter or run-hours × rated flow</td>
+                    </tr>
+                    <tr>
+                        <td>Compressor</td>
+                        <td>kWh/m³</td>
+                        <td>Sub-meter</td>
+                        <td>FAD from the OEM curve × loaded hours</td>
+                    </tr>
+                    <tr>
+                        <td>Chiller</td>
+                        <td>kW/TR</td>
+                        <td>Sub-meter</td>
+                        <td>BTU meter, or design TR × load %</td>
+                    </tr>
+                    <tr>
+                        <td>Vehicle</td>
+                        <td>L/h</td>
+                        <td>Fuel issue log</td>
+                        <td>Hour meter</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="callout">
+                <p><strong>Always record <code>load_factor</code> with an efficiency reading.</strong> Specific consumption moves with load. A genset at 25% load burns far more fuel per kWh than the same genset at 75%, whatever its condition. The tool corrects the baseline for this automatically on diesel generators — but only if you give it the load factor. Without it, a perfectly healthy lightly-loaded machine reads as a scrap candidate, which is the most damaging false positive this framework can produce.</p>
+            </div>
+
+            <p>Measure it as the actual output drawn divided by rated output, at the same time as the consumption reading:</p>
+            <pre><code>load_factor = average kW drawn / rated kW          (generators)</code></pre>
+
+            <p>If a genset sits below 30% load, the finding is a <strong>sizing problem, not a wear problem</strong> — replacing it buys a new machine that will wet-stack the same way. Right-size or re-dispatch.</p>
+
+            <h3>The two output figures are different things</h3>
+            <div class="spec-wrap">
+                <table class="spec-table">
+                    <tr>
+                        <th>Field</th>
+                        <th>Unit</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <td><code>rated_output</code> / <code>actual_output</code></td>
+                        <td>a <strong>rate</strong></td>
+                        <td>400 kW, 12 t/h, 320 m³/h</td>
+                    </tr>
+                    <tr>
+                        <td><code>annual_output_total</code></td>
+                        <td>a <strong>volume</strong> over the year</td>
+                        <td>780,000 kWh, 911,200 m³</td>
+                    </tr>
+                </table>
+            </div>
+
+            <p><code>annual_output_total</code> must be in the denominator unit of <code>specific_consumption</code>. If consumption is L/kWh, the total is kWh. If it is kWh/m³, the total is m³. If consumption is stated per hour (L/h on vehicles), the total is simply <code>annual_run_hours</code>.</p>
+
+            <p>Get this wrong and no score changes — but the money in the economics moves, potentially by orders of magnitude. The tool cross-checks it against your rate and run-hours and raises an advisory if the two disagree by more than 15%.</p>
+
+            <div class="callout">
+                <p><strong>Take readings monthly.</strong> The trend is worth more than any single reading, and monthly readings are what turn a one-off audit into a monitoring retainer.</p>
+            </div>
+        </section>
+
+        <section>
+            <div class="sec-head">
+                <h2>Tier 3 — condition monitoring</h2>
+            </div>
+            <div class="spec-wrap">
+                <table class="spec-table">
+                    <tr>
+                        <th>Field</th>
+                        <th>Instrument</th>
+                        <th>Frequency</th>
+                        <th>Scale</th>
+                    </tr>
+                    <tr>
+                        <td><code>vibration_zone</code></td>
+                        <td>Handheld vibration meter at bearing housings, steady load</td>
+                        <td>Quarterly</td>
+                        <td>ISO 20816 zone <code>a</code> / <code>b</code> / <code>c</code> / <code>d</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>oil_analysis</code></td>
+                        <td>Lab sample, drawn mid-sump while hot</td>
+                        <td>2× per year</td>
+                        <td><code>normal</code> / <code>caution</code> / <code>alert</code> / <code>critical</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>thermography</code></td>
+                        <td>Thermal camera on panels, bearings, couplings at full load</td>
+                        <td>2× per year</td>
+                        <td><code>normal</code> / <code>caution</code> / <code>alert</code> / <code>critical</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>insulation</code></td>
+                        <td>Megger + polarization index, IEEE 43</td>
+                        <td>Annually</td>
+                        <td><code>good</code> / <code>caution</code> / <code>poor</code> / <code>fail</code></td>
+                    </tr>
+                </table>
+            </div>
+            <p>Insulation testing applies to generators and motors. Leave it blank for anything else rather than recording a pass it never had.</p>
+        </section>
+
+        <section>
+            <div class="sec-head">
+                <h2>Tier 4 — the economic inputs</h2>
+            </div>
+            <p class="sec-intro">Needed only for the replacement-timing test. Without <code>new_unit_capital</code> and <code>new_unit_life_years</code> the score still works; the economics are simply reported as not computed.</p>
+
+            <div class="spec-wrap">
+                <table class="spec-table">
+                    <tr>
+                        <th>Field</th>
+                        <th>Notes</th>
+                    </tr>
+                    <tr>
+                        <td><code>new_unit_capital</code></td>
+                        <td>Landed cost of the replacement — include shipping, customs, installation</td>
+                    </tr>
+                    <tr>
+                        <td><code>new_unit_life_years</code></td>
+                        <td>Expected service life of the replacement</td>
+                    </tr>
+                    <tr>
+                        <td><code>new_unit_specific_consumption</code></td>
+                        <td>The new unit's rated efficiency — sets the energy-penalty baseline</td>
+                    </tr>
+                    <tr>
+                        <td><code>salvage_value</code></td>
+                        <td>Realistic resale today, not book value</td>
+                    </tr>
+                    <tr>
+                        <td><code>downtime_cost_per_hour</code></td>
+                        <td>Lost contribution margin per hour, not revenue</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="callout">
+                <p><code>downtime_cost_per_hour</code> is the input clients get most wrong and the one the result is most sensitive to. Use lost <strong>contribution margin</strong> — revenue minus the variable costs you avoid while stopped. Using full revenue can overstate the case for replacement several times over.</p>
+            </div>
+        </section>
+
+        <section>
+            <div class="sec-head">
+                <h2>Enumerated values</h2>
+            </div>
+            <p class="sec-intro">The parser lowercases input and converts spaces and hyphens to underscores, so <code>Non Compliant</code>, <code>non-compliant</code> and <code>non_compliant</code> are all read the same way. Anything it does not recognise is treated as missing rather than guessed.</p>
+
+            <div class="spec-wrap">
+                <table class="spec-table">
+                    <tr>
+                        <th>Field</th>
+                        <th>Accepted values</th>
+                    </tr>
+                    <tr>
+                        <td><code>asset_class</code></td>
+                        <td><code>diesel_generator</code>, <code>production_machine</code>, <code>pump</code>, <code>compressor</code>, <code>chiller</code>, <code>vehicle</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>vibration_zone</code></td>
+                        <td><code>a</code>, <code>b</code>, <code>c</code>, <code>d</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>oil_analysis</code>, <code>thermography</code></td>
+                        <td><code>normal</code>, <code>caution</code>, <code>alert</code>, <code>critical</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>insulation</code></td>
+                        <td><code>good</code>, <code>caution</code>, <code>poor</code>, <code>fail</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>oem_support</code></td>
+                        <td><code>supported</code>, <code>limited</code>, <code>discontinued</code>, <code>unsupported</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>emissions_status</code></td>
+                        <td><code>compliant</code>, <code>marginal</code>, <code>non_compliant</code></td>
+                    </tr>
+                </table>
+            </div>
+            <p>An unrecognised <code>asset_class</code> falls back to <code>production_machine</code> weights.</p>
+        </section>
+
+        <section>
+            <div class="sec-head">
+                <h2>Suggested rollout</h2>
+            </div>
+            <ol>
+                <li><strong>Week 1</strong> — asset register, Tier 1 fields. Run the assessment. Expect most assets to come back <em>Insufficient data</em>; that report is the sales case for step 2.</li>
+                <li><strong>Month 1–2</strong> — fit hour meters and fuel/energy sub-meters on the highest-value assets. Start monthly efficiency readings.</li>
+                <li><strong>Month 3</strong> — first condition-monitoring round.</li>
+                <li><strong>Month 6</strong> — re-assess. Confidence should now be decision-grade, and the efficiency trend has enough points to be meaningful.</li>
+            </ol>
+        </section>
+
+        <footer class="colophon">
+            <span>Ahmed Elshennawi — Equipment Fitness Framework</span>
+            <span>Data Collection Guide</span>
+        </footer>
+    </div>
+</body>
+
+</html>

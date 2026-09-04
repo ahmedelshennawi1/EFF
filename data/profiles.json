@@ -1,0 +1,994 @@
+{
+  "version": "2.0",
+  "_about": "Machinery library for EFF. Organised as: archetypes (shared scoring behaviour) -> classes (specific machines) -> sectors (which machines a given industry actually runs). Add your own classes or sectors here without touching any Python.",
+  "default_class": "generic_machine",
+  "target_load": 0.8,
+  "_curves_about": "Multiplier on specific consumption vs load factor. A machine measured at part load must be judged against a part-load baseline. Planning approximations - replace with OEM or test-station curves where available (OECD/Nebraska for tractors, IPLV data for chillers).",
+  "curves": {
+    "diesel_engine": [
+      [
+        0.1,
+        2.0
+      ],
+      [
+        0.2,
+        1.45
+      ],
+      [
+        0.3,
+        1.22
+      ],
+      [
+        0.4,
+        1.12
+      ],
+      [
+        0.5,
+        1.06
+      ],
+      [
+        0.75,
+        0.99
+      ],
+      [
+        1.0,
+        1.0
+      ]
+    ],
+    "gas_engine": [
+      [
+        0.1,
+        1.9
+      ],
+      [
+        0.2,
+        1.4
+      ],
+      [
+        0.3,
+        1.2
+      ],
+      [
+        0.4,
+        1.11
+      ],
+      [
+        0.5,
+        1.05
+      ],
+      [
+        0.75,
+        0.99
+      ],
+      [
+        1.0,
+        1.0
+      ]
+    ],
+    "tractor_diesel": [
+      [
+        0.15,
+        1.75
+      ],
+      [
+        0.25,
+        1.42
+      ],
+      [
+        0.4,
+        1.18
+      ],
+      [
+        0.55,
+        1.07
+      ],
+      [
+        0.75,
+        1.0
+      ],
+      [
+        0.9,
+        0.99
+      ],
+      [
+        1.0,
+        1.0
+      ]
+    ],
+    "combustion_burner": [
+      [
+        0.2,
+        1.18
+      ],
+      [
+        0.3,
+        1.1
+      ],
+      [
+        0.5,
+        1.03
+      ],
+      [
+        0.7,
+        1.0
+      ],
+      [
+        0.85,
+        1.0
+      ],
+      [
+        1.0,
+        1.02
+      ]
+    ],
+    "_vapour_note": "Modern chillers run BETTER at 50-75% load than at 100% - the curve dips below 1.0. This is real and is why IPLV exists; do not 'correct' it.",
+    "vapour_compression": [
+      [
+        0.25,
+        1.15
+      ],
+      [
+        0.4,
+        0.98
+      ],
+      [
+        0.5,
+        0.93
+      ],
+      [
+        0.75,
+        0.92
+      ],
+      [
+        0.9,
+        0.96
+      ],
+      [
+        1.0,
+        1.0
+      ]
+    ],
+    "_throttled_note": "Centrifugal machines throttled by valve or damper waste heavily at low flow. On a VFD the penalty largely disappears - record which it is.",
+    "throttled_centrifugal": [
+      [
+        0.3,
+        1.55
+      ],
+      [
+        0.5,
+        1.3
+      ],
+      [
+        0.7,
+        1.12
+      ],
+      [
+        0.85,
+        1.03
+      ],
+      [
+        1.0,
+        1.0
+      ]
+    ],
+    "vfd_centrifugal": [
+      [
+        0.3,
+        1.02
+      ],
+      [
+        0.5,
+        1.0
+      ],
+      [
+        0.7,
+        1.0
+      ],
+      [
+        0.85,
+        1.0
+      ],
+      [
+        1.0,
+        1.0
+      ]
+    ]
+  },
+  "_archetypes_about": "Shared scoring behaviour. A class inherits its archetype and may override any field. Weights must total 100.",
+  "archetypes": {
+    "fuel_burning": {
+      "label_en": "Fuel-burning plant",
+      "label_ar": "معدات تعمل بحرق الوقود",
+      "rationale_en": "Fuel is the dominant lifecycle cost and combustion carries real safety and emissions exposure.",
+      "weights": {
+        "AGE": 8,
+        "RELIABILITY": 16,
+        "EFFICIENCY": 29,
+        "CAPACITY": 10,
+        "MAINT_COST": 13,
+        "CONDITION": 13,
+        "OBSOLESCENCE": 2,
+        "COMPLIANCE": 9
+      },
+      "design_life": {
+        "hours": 60000,
+        "years": 20
+      },
+      "curve": "combustion_burner",
+      "low_load_threshold": 0.3,
+      "duty_matched": true
+    },
+    "electric_continuous": {
+      "label_en": "Continuously-loaded electrical plant",
+      "label_ar": "معدات كهربائية دائمة التحميل",
+      "rationale_en": "Runs for most of the year, so a few points of efficiency loss outweigh everything else.",
+      "weights": {
+        "AGE": 10,
+        "RELIABILITY": 18,
+        "EFFICIENCY": 26,
+        "CAPACITY": 13,
+        "MAINT_COST": 13,
+        "CONDITION": 14,
+        "OBSOLESCENCE": 4,
+        "COMPLIANCE": 2
+      },
+      "design_life": {
+        "hours": 60000,
+        "years": 18
+      },
+      "curve": "throttled_centrifugal",
+      "duty_matched": true
+    },
+    "line_critical": {
+      "label_en": "Production-line equipment",
+      "label_ar": "معدات خط الإنتاج",
+      "rationale_en": "A stop here idles the whole line, so downtime costs far more than the repair.",
+      "weights": {
+        "AGE": 10,
+        "RELIABILITY": 25,
+        "EFFICIENCY": 16,
+        "CAPACITY": 16,
+        "MAINT_COST": 18,
+        "CONDITION": 10,
+        "OBSOLESCENCE": 3,
+        "COMPLIANCE": 2
+      },
+      "design_life": {
+        "hours": 60000,
+        "years": 15
+      }
+    },
+    "conveying": {
+      "label_en": "Conveying equipment",
+      "label_ar": "معدات النقل والمناولة",
+      "rationale_en": "Cheap to run and cheap to fix, but its stoppage halts everything downstream.",
+      "weights": {
+        "AGE": 12,
+        "RELIABILITY": 30,
+        "EFFICIENCY": 8,
+        "CAPACITY": 14,
+        "MAINT_COST": 16,
+        "CONDITION": 14,
+        "OBSOLESCENCE": 3,
+        "COMPLIANCE": 3
+      },
+      "design_life": {
+        "hours": 70000,
+        "years": 20
+      }
+    },
+    "mobile": {
+      "label_en": "Mobile equipment",
+      "label_ar": "المعدات المتحركة",
+      "rationale_en": "Wear shows up in the maintenance bill first, and oversizing for the task is common and expensive.",
+      "weights": {
+        "AGE": 13,
+        "RELIABILITY": 19,
+        "EFFICIENCY": 18,
+        "CAPACITY": 8,
+        "MAINT_COST": 23,
+        "CONDITION": 10,
+        "OBSOLESCENCE": 4,
+        "COMPLIANCE": 5
+      },
+      "design_life": {
+        "hours": 15000,
+        "years": 12
+      },
+      "curve": "tractor_diesel",
+      "low_load_threshold": 0.4,
+      "duty_matched": true
+    },
+    "static_electrical": {
+      "label_en": "Static electrical plant",
+      "label_ar": "معدات كهربائية ثابتة",
+      "rationale_en": "Few moving parts; condition testing and parts availability decide its remaining life.",
+      "weights": {
+        "AGE": 14,
+        "RELIABILITY": 18,
+        "EFFICIENCY": 14,
+        "CAPACITY": 12,
+        "MAINT_COST": 10,
+        "CONDITION": 24,
+        "OBSOLESCENCE": 5,
+        "COMPLIANCE": 3
+      },
+      "design_life": {
+        "hours": 175000,
+        "years": 30
+      }
+    },
+    "generic": {
+      "label_en": "General equipment",
+      "label_ar": "معدات عامة",
+      "rationale_en": "Balanced weighting used when no specific profile applies.",
+      "weights": {
+        "AGE": 12,
+        "RELIABILITY": 20,
+        "EFFICIENCY": 16,
+        "CAPACITY": 14,
+        "MAINT_COST": 18,
+        "CONDITION": 13,
+        "OBSOLESCENCE": 4,
+        "COMPLIANCE": 3
+      },
+      "design_life": {
+        "hours": 60000,
+        "years": 15
+      }
+    }
+  },
+  "classes": {
+    "diesel_genset": {
+      "archetype": "fuel_burning",
+      "label_en": "Diesel generator set",
+      "label_ar": "مولد ديزل",
+      "curve": "diesel_engine",
+      "design_life": {
+        "hours": 30000,
+        "years": 20
+      },
+      "unit": "L/kWh",
+      "weights": {
+        "AGE": 10,
+        "RELIABILITY": 20,
+        "EFFICIENCY": 25,
+        "CAPACITY": 10,
+        "MAINT_COST": 15,
+        "CONDITION": 10,
+        "OBSOLESCENCE": 5,
+        "COMPLIANCE": 5
+      },
+      "benchmark": {
+        "low": 0.25,
+        "high": 0.32
+      }
+    },
+    "gas_genset": {
+      "archetype": "fuel_burning",
+      "label_en": "Gas generator set",
+      "label_ar": "مولد غاز",
+      "curve": "gas_engine",
+      "design_life": {
+        "hours": 40000,
+        "years": 20
+      },
+      "unit": "m3/kWh",
+      "benchmark": {
+        "low": 0.25,
+        "high": 0.33
+      }
+    },
+    "steam_boiler": {
+      "archetype": "fuel_burning",
+      "label_en": "Steam boiler",
+      "label_ar": "بويلر بخار",
+      "design_life": {
+        "hours": 200000,
+        "years": 25
+      },
+      "unit": "fuel/ton steam",
+      "weights": {
+        "AGE": 8,
+        "RELIABILITY": 15,
+        "EFFICIENCY": 30,
+        "CAPACITY": 10,
+        "MAINT_COST": 12,
+        "CONDITION": 13,
+        "OBSOLESCENCE": 2,
+        "COMPLIANCE": 10
+      },
+      "benchmark": {
+        "low": 78.0,
+        "high": 96.0
+      }
+    },
+    "hot_water_boiler": {
+      "archetype": "fuel_burning",
+      "label_en": "Hot water boiler",
+      "label_ar": "بويلر مياه ساخنة",
+      "design_life": {
+        "hours": 150000,
+        "years": 22
+      },
+      "unit": "fuel/kWh_th"
+    },
+    "space_heater": {
+      "archetype": "fuel_burning",
+      "label_en": "Space heater / brooder",
+      "label_ar": "دفاية عنابر",
+      "design_life": {
+        "hours": 25000,
+        "years": 10
+      },
+      "unit": "fuel/kWh_th",
+      "note_en": "Poultry brooders are among the largest fuel consumers on a farm and are rarely metered individually.",
+      "benchmark": {
+        "low": 0.105,
+        "high": 0.135
+      }
+    },
+    "process_dryer": {
+      "archetype": "fuel_burning",
+      "label_en": "Dryer",
+      "label_ar": "مجفف (دراير)",
+      "unit": "fuel/ton"
+    },
+    "oven_furnace": {
+      "archetype": "fuel_burning",
+      "label_en": "Oven / furnace",
+      "label_ar": "فرن",
+      "unit": "fuel/ton"
+    },
+    "kiln": {
+      "archetype": "fuel_burning",
+      "label_en": "Kiln",
+      "label_ar": "فرن دوّار",
+      "design_life": {
+        "hours": 150000,
+        "years": 25
+      },
+      "unit": "fuel/ton"
+    },
+    "thermal_incinerator": {
+      "archetype": "fuel_burning",
+      "label_en": "Incinerator",
+      "label_ar": "محرقة",
+      "unit": "fuel/ton"
+    },
+    "chiller": {
+      "archetype": "electric_continuous",
+      "label_en": "Chiller",
+      "label_ar": "تشيلر",
+      "curve": "vapour_compression",
+      "design_life": {
+        "hours": 60000,
+        "years": 20
+      },
+      "unit": "kW/TR",
+      "benchmark": {
+        "low": 0.65,
+        "high": 1.15
+      }
+    },
+    "refrigeration_unit": {
+      "archetype": "electric_continuous",
+      "label_en": "Refrigeration unit / cold store",
+      "label_ar": "ثلاجة تخزين",
+      "curve": "vapour_compression",
+      "unit": "kWh/m3.day",
+      "benchmark": {
+        "low": 0.08,
+        "high": 0.25
+      }
+    },
+    "cooling_tower": {
+      "archetype": "electric_continuous",
+      "label_en": "Cooling tower",
+      "label_ar": "برج تبريد (كولنج تاور)",
+      "unit": "kWh/TR"
+    },
+    "ventilation_fan": {
+      "archetype": "electric_continuous",
+      "label_en": "Ventilation fan",
+      "label_ar": "مروحة شفط (تهوية)",
+      "curve": "throttled_centrifugal",
+      "design_life": {
+        "hours": 70000,
+        "years": 15
+      },
+      "unit": "kWh/1000m3",
+      "note_en": "Poultry house ventilation runs continuously and is often the single largest electrical load on the site.",
+      "benchmark": {
+        "low": 0.035,
+        "high": 0.075
+      }
+    },
+    "evaporative_cooler": {
+      "archetype": "electric_continuous",
+      "label_en": "Evaporative cooler",
+      "label_ar": "ألواح تبريد",
+      "unit": "kWh/1000m3"
+    },
+    "air_compressor": {
+      "archetype": "electric_continuous",
+      "label_en": "Air compressor",
+      "label_ar": "ضاغط هواء",
+      "design_life": {
+        "hours": 45000,
+        "years": 15
+      },
+      "unit": "kWh/m3",
+      "weights": {
+        "AGE": 10,
+        "RELIABILITY": 18,
+        "EFFICIENCY": 25,
+        "CAPACITY": 12,
+        "MAINT_COST": 15,
+        "CONDITION": 12,
+        "OBSOLESCENCE": 5,
+        "COMPLIANCE": 3
+      },
+      "benchmark": {
+        "low": 0.095,
+        "high": 0.14
+      }
+    },
+    "blower": {
+      "archetype": "electric_continuous",
+      "label_en": "Blower",
+      "label_ar": "بلوَر (نافخ هواء)",
+      "unit": "kWh/1000m3"
+    },
+    "vacuum_pump": {
+      "archetype": "electric_continuous",
+      "label_en": "Vacuum pump",
+      "label_ar": "مضخة فاكيوم",
+      "unit": "kWh/h"
+    },
+    "pump": {
+      "archetype": "electric_continuous",
+      "label_en": "Pump",
+      "label_ar": "مضخة",
+      "design_life": {
+        "hours": 50000,
+        "years": 15
+      },
+      "unit": "kWh/m3",
+      "weights": {
+        "AGE": 10,
+        "RELIABILITY": 18,
+        "EFFICIENCY": 22,
+        "CAPACITY": 12,
+        "MAINT_COST": 15,
+        "CONDITION": 15,
+        "OBSOLESCENCE": 5,
+        "COMPLIANCE": 3
+      }
+    },
+    "irrigation_pump": {
+      "archetype": "electric_continuous",
+      "label_en": "Irrigation pump",
+      "label_ar": "مضخة ري",
+      "unit": "kWh/m3"
+    },
+    "water_treatment": {
+      "archetype": "electric_continuous",
+      "label_en": "Water / RO treatment unit",
+      "label_ar": "محطة معالجة مياه",
+      "unit": "kWh/m3"
+    },
+    "hammer_mill": {
+      "archetype": "line_critical",
+      "label_en": "Hammer mill",
+      "label_ar": "مطحنة مطارق",
+      "unit": "kWh/ton",
+      "benchmark": {
+        "low": 8.0,
+        "high": 25.0
+      }
+    },
+    "pellet_mill": {
+      "archetype": "line_critical",
+      "label_en": "Pellet mill",
+      "label_ar": "ماكينة بيليت",
+      "unit": "kWh/ton",
+      "benchmark": {
+        "low": 15.0,
+        "high": 45.0
+      }
+    },
+    "roller_mill": {
+      "archetype": "line_critical",
+      "label_en": "Roller mill",
+      "label_ar": "مطحنة أسطوانية",
+      "unit": "kWh/ton"
+    },
+    "mixer": {
+      "archetype": "line_critical",
+      "label_en": "Mixer",
+      "label_ar": "خلاط",
+      "unit": "kWh/ton",
+      "benchmark": {
+        "low": 2.0,
+        "high": 8.0
+      }
+    },
+    "crusher": {
+      "archetype": "line_critical",
+      "label_en": "Crusher",
+      "label_ar": "كسارة",
+      "unit": "kWh/ton"
+    },
+    "extruder": {
+      "archetype": "line_critical",
+      "label_en": "Extruder",
+      "label_ar": "إكسترودر",
+      "unit": "kWh/ton"
+    },
+    "injection_moulder": {
+      "archetype": "line_critical",
+      "label_en": "Injection moulding machine",
+      "label_ar": "ماكينة حقن",
+      "unit": "kWh/ton"
+    },
+    "separator_sieve": {
+      "archetype": "line_critical",
+      "label_en": "Separator / sieve",
+      "label_ar": "غربال هزاز",
+      "unit": "kWh/ton"
+    },
+    "packing_machine": {
+      "archetype": "line_critical",
+      "label_en": "Packing machine",
+      "label_ar": "ماكينة تعبئة",
+      "unit": "kWh/1000pcs"
+    },
+    "spinning_frame": {
+      "archetype": "line_critical",
+      "label_en": "Spinning frame",
+      "label_ar": "ماكينة غزل",
+      "unit": "kWh/ton"
+    },
+    "loom": {
+      "archetype": "line_critical",
+      "label_en": "Loom",
+      "label_ar": "نول نسيج",
+      "unit": "kWh/1000m"
+    },
+    "cnc_machine": {
+      "archetype": "line_critical",
+      "label_en": "CNC machine tool",
+      "label_ar": "ماكينة CNC",
+      "unit": "kWh/h"
+    },
+    "press": {
+      "archetype": "line_critical",
+      "label_en": "Press",
+      "label_ar": "مكبس",
+      "unit": "kWh/1000pcs"
+    },
+    "belt_conveyor": {
+      "archetype": "conveying",
+      "label_en": "Belt conveyor",
+      "label_ar": "سير ناقل",
+      "unit": "kWh/ton"
+    },
+    "bucket_elevator": {
+      "archetype": "conveying",
+      "label_en": "Bucket elevator",
+      "label_ar": "أسانسير",
+      "unit": "kWh/ton"
+    },
+    "screw_conveyor": {
+      "archetype": "conveying",
+      "label_en": "Screw conveyor",
+      "label_ar": "سكرو (ناقل حلزوني)",
+      "unit": "kWh/ton"
+    },
+    "crane_hoist": {
+      "archetype": "conveying",
+      "label_en": "Crane / hoist",
+      "label_ar": "ونش / رافعة",
+      "design_life": {
+        "hours": 40000,
+        "years": 25
+      },
+      "unit": "kWh/lift",
+      "note_en": "Lifting gear carries statutory inspection duties, so an overdue certificate is a compliance finding, not just a maintenance one."
+    },
+    "tractor": {
+      "archetype": "mobile",
+      "label_en": "Tractor",
+      "label_ar": "جرار زراعي",
+      "design_life": {
+        "hours": 12000,
+        "years": 15
+      },
+      "unit": "L/h",
+      "note_en": "Oversizing against the implement is the single most common and most expensive fault on a tractor fleet."
+    },
+    "harvester": {
+      "archetype": "mobile",
+      "label_en": "Harvester",
+      "label_ar": "حصادة",
+      "design_life": {
+        "hours": 8000,
+        "years": 12
+      },
+      "unit": "L/feddan"
+    },
+    "loader": {
+      "archetype": "mobile",
+      "label_en": "Loader",
+      "label_ar": "لودر",
+      "unit": "L/h"
+    },
+    "excavator": {
+      "archetype": "mobile",
+      "label_en": "Excavator",
+      "label_ar": "حفار",
+      "unit": "L/h"
+    },
+    "forklift": {
+      "archetype": "mobile",
+      "label_en": "Forklift",
+      "label_ar": "رافعة شوكية",
+      "design_life": {
+        "hours": 20000,
+        "years": 10
+      },
+      "unit": "L/h",
+      "benchmark": {
+        "low": 2.5,
+        "high": 4.5
+      }
+    },
+    "truck": {
+      "archetype": "mobile",
+      "label_en": "Truck",
+      "label_ar": "شاحنة",
+      "design_life": {
+        "hours": 25000,
+        "years": 12
+      },
+      "unit": "L/100km"
+    },
+    "transformer": {
+      "archetype": "static_electrical",
+      "label_en": "Transformer",
+      "label_ar": "محول (ترانس)",
+      "unit": "loss_kW"
+    },
+    "electric_motor": {
+      "archetype": "static_electrical",
+      "label_en": "Electric motor",
+      "label_ar": "موتور",
+      "design_life": {
+        "hours": 80000,
+        "years": 20
+      },
+      "unit": "kWh/kWh_out",
+      "benchmark": {
+        "low": 1.05,
+        "high": 1.15
+      }
+    },
+    "switchgear": {
+      "archetype": "static_electrical",
+      "label_en": "Switchgear",
+      "label_ar": "لوحة توزيع",
+      "unit": "n/a"
+    },
+    "generic_machine": {
+      "archetype": "generic",
+      "label_en": "General equipment",
+      "label_ar": "معدة عامة",
+      "unit": ""
+    },
+    "incubator": {
+      "archetype": "electric_continuous",
+      "label_en": "Incubator / hatcher",
+      "label_ar": "ماكينة تفريخ (حضّانة)",
+      "unit": "kWh/1000egg",
+      "design_life": {
+        "hours": 90000,
+        "years": 20
+      },
+      "note_en": "Setters and hatchers run continuously under tight temperature and humidity control; a drift in either shows up as hatch rate before it shows as a fault."
+    }
+  },
+  "_sectors_about": "Which classes a given sector typically runs. Used to generate a starting asset checklist so a client is not handed a blank sheet. A sector list is a prompt, not a constraint - any class can be used anywhere.",
+  "sectors": {
+    "poultry": {
+      "label_en": "Poultry & livestock",
+      "label_ar": "الدواجن والثروة الحيوانية",
+      "classes": [
+        "incubator",
+        "space_heater",
+        "ventilation_fan",
+        "evaporative_cooler",
+        "diesel_genset",
+        "gas_genset",
+        "refrigeration_unit",
+        "pump",
+        "water_treatment",
+        "screw_conveyor",
+        "hammer_mill",
+        "air_compressor",
+        "electric_motor",
+        "transformer",
+        "truck",
+        "loader"
+      ],
+      "note_en": "Brooder heating and house ventilation usually dominate site energy, and are the two loads least likely to be metered."
+    },
+    "feed_milling": {
+      "label_en": "Feed milling",
+      "label_ar": "مصانع الأعلاف",
+      "classes": [
+        "hammer_mill",
+        "pellet_mill",
+        "roller_mill",
+        "mixer",
+        "separator_sieve",
+        "belt_conveyor",
+        "bucket_elevator",
+        "screw_conveyor",
+        "steam_boiler",
+        "process_dryer",
+        "air_compressor",
+        "diesel_genset",
+        "electric_motor",
+        "transformer",
+        "packing_machine",
+        "forklift"
+      ]
+    },
+    "agriculture": {
+      "label_en": "Field crop agriculture",
+      "label_ar": "الزراعة المحصولية",
+      "classes": [
+        "tractor",
+        "harvester",
+        "irrigation_pump",
+        "diesel_genset",
+        "truck",
+        "loader",
+        "water_treatment",
+        "space_heater"
+      ]
+    },
+    "food_processing": {
+      "label_en": "Food processing",
+      "label_ar": "التصنيع الغذائي",
+      "classes": [
+        "steam_boiler",
+        "chiller",
+        "refrigeration_unit",
+        "process_dryer",
+        "oven_furnace",
+        "air_compressor",
+        "pump",
+        "belt_conveyor",
+        "packing_machine",
+        "water_treatment",
+        "diesel_genset",
+        "cooling_tower",
+        "forklift"
+      ]
+    },
+    "cold_chain": {
+      "label_en": "Cold storage & distribution",
+      "label_ar": "التخزين المبرد والتوزيع",
+      "classes": [
+        "refrigeration_unit",
+        "chiller",
+        "cooling_tower",
+        "ventilation_fan",
+        "diesel_genset",
+        "transformer",
+        "forklift",
+        "truck",
+        "electric_motor"
+      ]
+    },
+    "textiles": {
+      "label_en": "Textiles",
+      "label_ar": "الغزل والنسيج",
+      "classes": [
+        "spinning_frame",
+        "loom",
+        "steam_boiler",
+        "chiller",
+        "air_compressor",
+        "blower",
+        "process_dryer",
+        "water_treatment",
+        "diesel_genset",
+        "transformer",
+        "electric_motor"
+      ]
+    },
+    "building_materials": {
+      "label_en": "Cement & building materials",
+      "label_ar": "الأسمنت ومواد البناء",
+      "classes": [
+        "kiln",
+        "crusher",
+        "roller_mill",
+        "belt_conveyor",
+        "bucket_elevator",
+        "air_compressor",
+        "blower",
+        "diesel_genset",
+        "transformer",
+        "loader",
+        "excavator",
+        "truck"
+      ]
+    },
+    "plastics": {
+      "label_en": "Plastics",
+      "label_ar": "صناعة البلاستيك",
+      "classes": [
+        "injection_moulder",
+        "extruder",
+        "chiller",
+        "cooling_tower",
+        "air_compressor",
+        "crusher",
+        "diesel_genset",
+        "transformer",
+        "packing_machine"
+      ]
+    },
+    "metal_fabrication": {
+      "label_en": "Metal fabrication",
+      "label_ar": "تشكيل المعادن",
+      "classes": [
+        "cnc_machine",
+        "press",
+        "oven_furnace",
+        "air_compressor",
+        "chiller",
+        "crane_hoist",
+        "diesel_genset",
+        "transformer",
+        "forklift"
+      ]
+    },
+    "water_utilities": {
+      "label_en": "Water & wastewater",
+      "label_ar": "المياه والصرف الصحي",
+      "classes": [
+        "pump",
+        "blower",
+        "water_treatment",
+        "diesel_genset",
+        "transformer",
+        "electric_motor",
+        "vacuum_pump",
+        "switchgear"
+      ]
+    },
+    "general_facilities": {
+      "label_en": "General facilities & utilities",
+      "label_ar": "المرافق العامة",
+      "classes": [
+        "diesel_genset",
+        "gas_genset",
+        "chiller",
+        "air_compressor",
+        "pump",
+        "hot_water_boiler",
+        "ventilation_fan",
+        "transformer",
+        "switchgear",
+        "electric_motor",
+        "forklift"
+      ]
+    }
+  },
+  "_benchmarks_about": "Class 'benchmark' = planning-grade specific-consumption range in the class unit, used ONLY when an asset has no baseline of its own; results on this basis are always marked indicative. Deliberately absent where a benchmark is meaningless without more context (pumps without head, dryers without material)."
+}

@@ -1,0 +1,250 @@
+<meta charset="utf-8">
+<title>eff — كراسة جمع بيانات المعدات (نسخة طباعة ثنائية اللغة) | Data Collection Sheet (Bilingual Print)</title>
+<style>
+:root{
+  --paper:#FAFAF8; --surface:#FFFFFF; --surface-2:#F1F2EF; --well:#ECEDE9;
+  --line:#D8DCD6; --line-soft:#E5E7E2;
+  --text:#171D1F; --text-2:#4C595D; --text-3:#7C898D;
+  --ember:#D4551E; --ember-hi:#F0692F;
+  --keep:#177E66; --monitor:#9A741B; --plan:#A83E35; --retire:#7C2418;
+  --f:"Rubik","Segoe UI","Noto Sans Arabic",Tahoma,sans-serif;
+  --mono:"IBM Plex Mono","Consolas",ui-monospace,monospace;
+}
+*{box-sizing:border-box;}
+body{margin:0; background:#DADFDB; font-family:var(--f); padding:2rem 0;}
+.num{font-family:var(--mono); font-variant-numeric:tabular-nums; direction:ltr; unicode-bidi:isolate;}
+h1,h2,h3{margin:0; line-height:1.25; text-wrap:balance;} p{margin:0;}
+
+.note{max-width:40rem; margin:0 auto 1.2rem; text-align:center; color:#4C595D; font-size:.85rem;}
+
+/* A4 landscape sheet = two A5 columns. Right = Arabic, Left = English. */
+.sheet{width:297mm; height:210mm; margin:0 auto 8mm; background:var(--paper);
+  box-shadow:0 6px 30px rgba(0,0,0,.18); display:flex; position:relative; overflow:hidden;}
+.col{width:148.5mm; height:210mm; padding:8mm 9.5mm 9mm; overflow:hidden; position:relative; font-size:9.8px; line-height:1.35;}
+.col-en{direction:ltr; text-align:left; color:var(--text); border-inline-end:1px dashed var(--line);}
+.col-ar{direction:rtl; text-align:right; color:var(--text);}
+
+.brand{display:flex; align-items:center; gap:1.8mm;}
+.brand .wm{font-weight:700; font-size:1.25rem; letter-spacing:-.05em; color:var(--text);}
+.docref{font-family:var(--mono); font-size:.52rem; color:var(--text-3); margin-top:.5mm;}
+.pagenum{position:absolute; bottom:5.5mm; inset-inline-end:9.5mm; font-family:var(--mono); font-size:.52rem; color:var(--text-3);}
+
+.eyebrow{font-family:var(--mono); font-size:.5rem; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--ember); margin:2.5mm 0 .8mm;}
+h1{font-size:.95rem; font-weight:700; letter-spacing:-.02em;}
+.lede{color:var(--text-2); margin-top:1.5mm; font-size:.62rem;}
+
+.recipe{background:var(--well); border-inline-start:2px solid var(--ember); border-radius:0 3px 3px 0;
+  padding:1.4mm 2.2mm; margin-top:1.8mm; font-size:.56rem; color:var(--text-2);}
+.recipe b{display:block; color:var(--text); font-size:.58rem; margin-bottom:.5mm;}
+.recipe ol{margin:0; padding-inline-start:3.2mm; display:flex; flex-direction:column; gap:.35mm;}
+
+.idrow{display:flex; gap:2mm; margin-top:1.8mm;}
+.idfld{flex:1;}
+.idfld .lbl{font-size:.52rem; color:var(--ember); font-weight:700;}
+.idfld .ln{border-bottom:1px solid var(--text-3); height:2.6mm;}
+
+h2{font-size:.58rem; font-weight:700; margin:2.4mm 0 .6mm; color:var(--ember); text-transform:uppercase; letter-spacing:.03em;}
+.grphint{font-size:.52rem; color:var(--text-3); margin-bottom:.6mm;}
+
+.formrow{display:flex; align-items:baseline; gap:1.5mm; padding:.55mm 0; border-bottom:1px dotted var(--line-soft);}
+.formrow .lbl{font-size:.6rem; color:var(--text-2); flex:0 0 auto; max-width:52%;}
+.formrow .lbl small{display:block; color:var(--text-3); font-size:.5rem;}
+.formrow .ln{flex:1; border-bottom:1px solid var(--text-3); align-self:flex-end; height:2.6mm;}
+.formrow .unit{font-size:.5rem; color:var(--ember); flex:0 0 auto;}
+
+.foot{position:absolute; bottom:5.5mm; inset-inline:9.5mm; padding-top:1.2mm; border-top:1px solid var(--line);
+  font-size:.52rem; color:var(--text-3); display:flex; justify-content:space-between;}
+.foot b{color:var(--ember);}
+
+@media print{
+  body{background:#fff; padding:0;}
+  .note{display:none;}
+  .sheet{box-shadow:none; margin:0; -webkit-print-color-adjust:exact; print-color-adjust:exact;
+    break-after:page; page-break-after:always;}
+  .sheet:last-of-type{break-after:auto; page-break-after:auto;}
+  @page{ size:A4 landscape; margin:0; }
+}
+</style>
+
+<div class="note">نسخة طباعة ثنائية اللغة — A4 أفقي مقسّم لعمودَي A5: العربية يمين، الإنجليزية يسار. اطبع نسخة لكل معدة.<br>Bilingual print version — landscape A4 split into two A5 columns: Arabic right, English left. Print one copy per machine.</div>
+
+<!-- page 1: essential + operation + costs -->
+<div class="sheet">
+  <div class="col col-en">
+    <div class="brand">
+      <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+      <span class="wm">eff</span>
+    </div>
+    <div class="docref">DATA COLLECTION SHEET · v1.0 · eff-egypt.com</div>
+    <div class="eyebrow">ONE SHEET PER MACHINE</div>
+    <h1>Equipment Data Collection Sheet</h1>
+    <p class="lede">Fill in only what you know. A blank cell is better than a guessed number
+      — missing data is excluded honestly, but a wrong number corrupts the whole result.</p>
+
+    <div class="recipe">
+      <b>How to use this — four steps</b>
+      <ol>
+        <li>Print one copy of this sheet per machine you want assessed.</li>
+        <li>Fill what you have from records and nameplates — leave the rest blank.</li>
+        <li>A technician can complete the physical-condition section during a routine check.</li>
+        <li>Transcribe into the digital DataKit (or send scanned copies) — no site visit required.</li>
+      </ol>
+    </div>
+
+    <div class="idrow">
+      <div class="idfld"><div class="lbl">ASSET ID</div><div class="ln"></div></div>
+      <div class="idfld"><div class="lbl">MACHINE TYPE</div><div class="ln"></div></div>
+      <div class="idfld"><div class="lbl">SITE</div><div class="ln"></div></div>
+    </div>
+
+    <h2>Essential data</h2>
+    <div class="grphint">From the asset register and nameplate — no instrument needed.</div>
+    <div class="formrow"><span class="lbl">Name / description</span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">Manufacturer</span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">Model</span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">Year commissioned</span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">Rated output <small>from nameplate</small></span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">Hour meter reading <small>blank if none fitted</small></span><span class="ln"></span></div>
+
+    <h2>Operation &amp; breakdowns</h2>
+    <div class="grphint">From the breakdown log and work orders — last 12 months.</div>
+    <div class="formrow"><span class="lbl">Annual run hours</span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">Unplanned downtime hours</span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">Number of breakdowns</span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">Sustained actual output</span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">Assigned task</span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">Power the task needs <small>if known</small></span><span class="ln"></span></div>
+
+    <h2>Costs</h2>
+    <div class="grphint">Replacement value = today's price of an equivalent new machine.</div>
+    <div class="formrow"><span class="lbl">Annual maintenance cost</span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">Total maintenance since purchase</span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">Replacement value today</span><span class="ln"></span></div>
+
+    <div class="foot"><span><b>eff</b> · Equipment Fitness Framework</span><span class="mono">info@eff-egypt.com</span></div>
+    <div class="pagenum">01</div>
+  </div>
+  <div class="col col-ar">
+    <div class="brand">
+      <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+      <span class="wm">eff</span>
+    </div>
+    <div class="docref">كراسة جمع البيانات · v1.0 · eff-egypt.com</div>
+    <div class="eyebrow">ورقة واحدة لكل معدة</div>
+    <h1>كراسة جمع بيانات المعدات</h1>
+    <p class="lede">املأ ما تعرفه فقط. الخانة الفارغة أفضل من الرقم المُخمَّن — البيانات
+      الناقصة تُستبعد بأمانة، أما الرقم الخاطئ فيُفسد النتيجة كلها.</p>
+
+    <div class="recipe">
+      <b>طريقة الاستخدام — أربع خطوات</b>
+      <ol>
+        <li>اطبع نسخة من هذه الورقة لكل معدة تريد تقييمها.</li>
+        <li>املأ ما تملكه من سجلات ولوحات تعريف — اترك الباقي فارغًا.</li>
+        <li>يمكن لفني ميداني إكمال قسم الحالة الفنية أثناء فحص روتيني.</li>
+        <li>انقل البيانات إلى كراسة البيانات الرقمية (أو أرسل صورًا ممسوحة) — بلا زيارة موقعية.</li>
+      </ol>
+    </div>
+
+    <div class="idrow">
+      <div class="idfld"><div class="lbl">رقم المعدة</div><div class="ln"></div></div>
+      <div class="idfld"><div class="lbl">نوع المعدة</div><div class="ln"></div></div>
+      <div class="idfld"><div class="lbl">الموقع</div><div class="ln"></div></div>
+    </div>
+
+    <h2>البيانات الأساسية</h2>
+    <div class="grphint">من سجل الأصول ولوحة التعريف — لا تحتاج أي جهاز قياس.</div>
+    <div class="formrow"><span class="lbl">اسم / وصف</span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">الصانع</span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">الموديل</span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">سنة التشغيل</span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">القدرة المقننة <small>من لوحة التعريف</small></span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">قراءة عداد الساعات <small>اتركها فارغة إن لم يوجد عداد</small></span><span class="ln"></span></div>
+
+    <h2>التشغيل والأعطال</h2>
+    <div class="grphint">من دفتر الأعطال وأوامر الشغل — آخر 12 شهرًا.</div>
+    <div class="formrow"><span class="lbl">ساعات التشغيل السنوية</span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">ساعات التوقف المفاجئ</span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">عدد الأعطال</span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">الإنتاج الفعلي المستدام</span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">المهمة المخصصة لها</span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">القدرة التي تحتاجها المهمة <small>إن عُرفت</small></span><span class="ln"></span></div>
+
+    <h2>التكاليف</h2>
+    <div class="grphint">قيمة الإحلال = سعر شراء آلة جديدة مماثلة اليوم.</div>
+    <div class="formrow"><span class="lbl">تكلفة الصيانة السنوية</span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">إجمالي الصيانة منذ الشراء</span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">قيمة الإحلال اليوم</span><span class="ln"></span></div>
+
+    <div class="foot"><span class="mono">info@eff-egypt.com</span><span><b>eff</b> · تقييم كفاءة المعدات</span></div>
+    <div class="pagenum">01</div>
+  </div>
+</div>
+
+<!-- page 2: energy + condition -->
+<div class="sheet">
+  <div class="col col-en">
+    <div class="brand">
+      <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+      <span class="wm" style="font-size:1.05rem">eff</span>
+    </div>
+    <div class="docref">DATA COLLECTION SHEET · v1.0 · eff-egypt.com — page 2</div>
+
+    <h2 style="margin-top:0">Energy &amp; consumption</h2>
+    <div class="grphint">The most valuable section, and usually the least measured. Fill only what exists.</div>
+    <div class="formrow"><span class="lbl">Energy source <small>diesel / gas / LPG / electricity / biomass / solar</small></span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">Current specific consumption</span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">Baseline consumption <small>OEM manual or best recorded figure</small></span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">Load factor <small>fraction of rated output, e.g. 0.75</small></span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">Unit price <small>EGP per litre or per kWh</small></span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">Total annual output</span><span class="ln"></span></div>
+
+    <h2>Physical condition</h2>
+    <div class="grphint">If these checks have not been done, leave them blank — they will appear
+      in the report as a measurement plan, not a failure.</div>
+    <div class="formrow"><span class="lbl">Vibration <small>ISO zone A/B/C/D, if measured</small></span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">Oil analysis <small>normal / caution / alert / critical</small></span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">Thermography <small>normal / caution / alert / critical</small></span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">Insulation test <small>good / caution / poor / fail</small></span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">OEM support <small>supported / limited / discontinued / unsupported</small></span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">Spare parts lead time <small>days, incl. customs</small></span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">Open safety findings <small>count of unresolved</small></span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">Emissions status <small>compliant / marginal / non-compliant</small></span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">Notes</span><span class="ln"></span></div>
+
+    <div class="foot"><span><b>eff</b> · Equipment Fitness Framework</span><span class="mono">info@eff-egypt.com</span></div>
+    <div class="pagenum">02</div>
+  </div>
+  <div class="col col-ar">
+    <div class="brand">
+      <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+      <span class="wm" style="font-size:1.05rem">eff</span>
+    </div>
+    <div class="docref">كراسة جمع البيانات · v1.0 · eff-egypt.com — صفحة 2</div>
+
+    <h2 style="margin-top:0">الطاقة والاستهلاك</h2>
+    <div class="grphint">هذا القسم هو الأثمن — وهو غالبًا غير مُقاس. املأ ما يتوفر فقط.</div>
+    <div class="formrow"><span class="lbl">مصدر الطاقة <small>ديزل / غاز طبيعي / غاز مسال / كهرباء / كتلة حيوية / شمسية</small></span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">الاستهلاك النوعي الحالي</span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">الاستهلاك المرجعي <small>من كتالوج الصانع أو أفضل قراءة</small></span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">معامل الحمل <small>نسبة من القدرة المقننة، مثل 0.75</small></span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">سعر الوحدة <small>جنيه لللتر أو للكيلوواط ساعة</small></span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">إجمالي الإنتاج السنوي</span><span class="ln"></span></div>
+
+    <h2>الحالة الفنية</h2>
+    <div class="grphint">إن لم تُجرَ هذه الفحوص، اترك الخانات فارغة — ستظهر في التقرير كخطة
+      قياس، لا كإخفاق.</div>
+    <div class="formrow"><span class="lbl">الاهتزاز <small>تصنيف ISO A/B/C/D إن قيس</small></span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">تحليل الزيت <small>طبيعي / تحذير / إنذار / حرج</small></span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">التصوير الحراري <small>طبيعي / تحذير / إنذار / حرج</small></span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">اختبار العزل <small>جيد / تحذير / ضعيف / راسب</small></span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">دعم الصانع <small>مدعوم / محدود / متوقف / بلا دعم</small></span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">مدة توريد قطع الغيار <small>بالأيام، شاملة التخليص</small></span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">ملاحظات سلامة مفتوحة <small>عدد غير المغلقة</small></span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">حالة الامتثال البيئي <small>مطابق / حدّي / غير مطابق</small></span><span class="ln"></span></div>
+    <div class="formrow"><span class="lbl">ملاحظات</span><span class="ln"></span></div>
+
+    <div class="foot"><span class="mono">info@eff-egypt.com</span><span><b>eff</b> · تقييم كفاءة المعدات</span></div>
+    <div class="pagenum">02</div>
+  </div>
+</div>

@@ -1,0 +1,67 @@
+<meta charset="utf-8">
+<title>eff — كارت شخصي | Business Card</title>
+<style>
+:root{
+  --ink:#0F1416; --ember:#F0692F; --text:#E9EEEF; --text-2:#9FB0B5;
+  --paper:#FAFAF8; --dark-text:#171D1F;
+  --f:"Rubik","Segoe UI","Noto Sans Arabic",Tahoma,sans-serif;
+  --mono:"IBM Plex Mono","Consolas",ui-monospace,monospace;
+}
+*{box-sizing:border-box;}
+body{margin:0; background:#3A4144; font-family:var(--f); padding:2rem;}
+.note{max-width:40rem; margin:0 auto 1.5rem; color:#dfe4e2; font-size:.85rem; text-align:center;}
+.note b{color:#fff;}
+.row{display:flex; gap:8mm; flex-wrap:wrap; justify-content:center; margin-bottom:8mm;}
+
+/* standard card: 89mm x 51mm */
+.card{width:89mm; height:51mm; border-radius:3mm; padding:6mm; position:relative; overflow:hidden;
+  box-shadow:0 4px 20px rgba(0,0,0,.35); display:flex; flex-direction:column; justify-content:space-between;}
+.card.front{background:var(--ink); color:var(--text);}
+.card.back{background:var(--paper); color:var(--dark-text); direction:rtl; text-align:right;}
+
+.front .brand{display:flex; align-items:center; gap:2.5mm;}
+.front .wm{font-weight:700; font-size:8mm; letter-spacing:-.045em;}
+.front .tag{font-size:2.6mm; color:var(--text-2); margin-top:4mm; max-width:70%; line-height:1.5;}
+.front .bars{position:absolute; inset-inline-end:-8mm; bottom:-8mm; opacity:.12;
+  display:flex; flex-direction:column; gap:2mm; transform:rotate(-90deg);}
+.front .bars i{display:block; height:5mm; background:var(--ember); border-radius:1.5mm;}
+.front .bars i:nth-child(1){width:40mm;} .front .bars i:nth-child(2){width:28mm;} .front .bars i:nth-child(3){width:16mm;}
+
+.back .name{font-size:4.6mm; font-weight:700;}
+.back .role{font-size:3mm; color:#4C595D; margin-top:1mm;}
+.back .contact{font-family:var(--mono); font-size:2.7mm; color:#4C595D; line-height:2; direction:ltr; text-align:left; margin-top:3mm;}
+.back .barline{position:absolute; inset-inline-start:0; top:0; bottom:0; width:2.2mm; background:var(--ember);}
+
+@media print{
+  body{background:#fff; padding:0;}
+  .note{display:none;}
+  .card{box-shadow:none; border:.25pt solid #ccc;}
+  @page{ size:A4; margin:10mm; }
+}
+</style>
+
+<div class="note"><b>الحجم القياسي: 89×51مم.</b> اطبع بدقة 300dpi أو ارفع لمطبعة كروت أونلاين — الوجه غامق (Ink) والظهر فاتح (Paper) بالتصميم.</div>
+
+<div class="row">
+  <div class="card front">
+    <div class="bars"><i></i><i></i><i></i></div>
+    <div class="brand">
+      <svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#F0692F"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+      <span class="wm">eff</span>
+    </div>
+    <div class="tag">تقييم كفاءة المعدات<br>Equipment Fitness Framework</div>
+  </div>
+
+  <div class="card back">
+    <div class="barline"></div>
+    <div>
+      <div class="name">Ahmed Elshennawi</div>
+      <div class="role">المؤسس — Founder, eff</div>
+    </div>
+    <div class="contact">
+      a.elshennawi@eff-egypt.com<br>
+      +20 10 3220 8322<br>
+      eff-egypt.com
+    </div>
+  </div>
+</div>

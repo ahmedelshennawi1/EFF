@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Equipment Fitness Assessment — Dakahlia Group for Poultry and Agricultural Development</title>
+<style>
+:root{--teal-d:#0E6E66;--teal:#14958A;--charcoal:#23292C;--mist:#E8EEEC;
+--paper:#FAFBFA;--brass:#B8934A;--line:#D5DEDB;--muted:#5F6C70;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--paper);color:var(--charcoal);
+font-family:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;line-height:1.55;}
+.wrap{max-width:1080px;margin:0 auto;padding:40px 28px 72px;}
+header{border-bottom:3px solid var(--teal-d);padding-bottom:20px;margin-bottom:32px;}
+h1{margin:0 0 4px;font-size:26px;letter-spacing:-.01em;color:var(--teal-d);}
+.sub{color:var(--muted);font-size:14px;}
+h2{font-size:17px;margin:40px 0 14px;color:var(--teal-d);
+border-bottom:1px solid var(--line);padding-bottom:6px;}
+.cards{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0 8px;}
+.card{flex:1 1 150px;background:#fff;border:1px solid var(--line);
+border-radius:6px;padding:14px 16px;}
+.card .n{font-size:28px;font-weight:600;line-height:1.1;}
+.card .l{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;}
+.tablewrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:14px;background:#fff;}
+th{background:var(--mist);text-align:left;padding:9px 11px;font-weight:600;
+font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--teal-d);
+white-space:nowrap;}
+td{padding:9px 11px;border-top:1px solid var(--line);vertical-align:top;}
+td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.pill{display:inline-block;padding:2px 9px;border-radius:99px;color:#fff;
+font-size:12px;font-weight:600;white-space:nowrap;}
+.bar{height:7px;background:var(--mist);border-radius:99px;overflow:hidden;min-width:80px;}
+.bar i{display:block;height:100%;}
+.asset{background:#fff;border:1px solid var(--line);border-radius:6px;
+padding:18px 20px;margin-bottom:16px;}
+.asset h3{margin:0 0 2px;font-size:16px;}
+.asset .meta{color:var(--muted);font-size:13px;margin-bottom:14px;}
+.ind{display:grid;grid-template-columns:130px 46px 1fr 62px;gap:8px;
+align-items:center;font-size:13px;padding:3px 0;}
+.ind .w{color:var(--muted);font-size:11px;text-align:right;}
+.ind .na{color:var(--muted);font-style:italic;font-size:12px;}
+.flag{background:#FDF3E3;border-left:3px solid var(--brass);padding:9px 13px;
+margin:12px 0;font-size:13px;border-radius:0 4px 4px 0;}
+.flag.adv{background:var(--mist);border-left-color:var(--teal);}
+.ctx{color:var(--muted);font-size:12px;margin:-8px 0 12px;}
+.econ{margin-top:14px;font-size:13px;}
+.econ td{border:0;padding:2px 0;}
+.econ td.num{padding-left:20px;}
+.econ .tot{border-top:1px solid var(--line);font-weight:600;}
+footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);
+color:var(--muted);font-size:12px;}
+@media print{body{background:#fff;}.asset{break-inside:avoid;}}
+</style></head><body><div class="wrap">
+<header>
+  <h1>Equipment Fitness Assessment</h1>
+  <div class="sub">Dakahlia Group for Poultry and Agricultural Development · 19 August 2026
+   · EFF v1.0 · discount rate 22%
+    · assessor Ahmed Elshennawi</div>
+</header>
+
+<div class="cards"><div class="card"><div class="n" style="color:#8C2F22">1</div><div class="l">Retire now</div></div><div class="card"><div class="n" style="color:#C9705F">6</div><div class="l">Plan replacement</div></div><div class="card"><div class="n" style="color:#5F6C70">1</div><div class="l">Insufficient data</div></div><div class="card"><div class="n" style="color:#D9A441">2</div><div class="l">Monitor</div></div><div class="card"><div class="n" style="color:#14958A">3</div><div class="l">Keep</div></div><div class="card"><div class="n">13</div><div class="l">Assets assessed</div></div><div class="card"><div class="n" style="color:var(--brass)">3,715</div><div class="l">EGP burned per day above requirement</div></div></div>
+<div class="flag"><b>The fleet burns EGP 3,715 per day above what its work requires</b> — EGP 3,454/day from degradation (maintenance) and EGP 260/day from machines mismatched to their duty (operations). That is EGP 1,355,831 per year, paid whether or not anything breaks.</div>
+<div class="flag"><b>1 of 13 assets are below 60% data confidence and carry no verdict.</b> The first deliverable for those assets is a measurement plan, not a replacement decision.</div>
+
+<h2>Fleet summary</h2>
+<div class="tablewrap"><table>
+<thead><tr><th>Asset</th><th>Class</th><th>Site</th><th>Score</th>
+<th>Verdict</th><th>Confidence</th><th>Burn/day</th><th>Main driver</th></tr></thead>
+<tbody><tr><td>CMP-02 · Screw compressor - packaging</td><td>air compressor</td><td>Sadat City Mill</td><td class="num">59.4</td><td><span class="pill" style="background:#8C2F22">Retire now</span></td><td class="num">100%</td><td class="num">172</td><td>EFFICIENCY</td></tr><tr><td>GEN-02 · Prime genset - hatchery</td><td>diesel genset</td><td>Wadi El Natrun Farms</td><td class="num">62.3</td><td><span class="pill" style="background:#C9705F">Plan replacement</span></td><td class="num">100%</td><td class="num">961</td><td>EFFICIENCY</td></tr><tr><td>MIL-07 · Hammer mill - feed line A</td><td>hammer mill</td><td>Sadat City Mill</td><td class="num">60.9</td><td><span class="pill" style="background:#C9705F">Plan replacement</span></td><td class="num">84%</td><td class="num">—</td><td>RELIABILITY</td></tr><tr><td>VEH-12 · Forklift - dispatch yard</td><td>forklift</td><td>Sadat City Mill</td><td class="num">54.7</td><td><span class="pill" style="background:#C9705F">Plan replacement</span></td><td class="num">100%</td><td class="num">55</td><td>EFFICIENCY</td></tr><tr><td>FAN-06 · Tunnel ventilation - house 3</td><td>ventilation fan</td><td>Wadi El Natrun Farms</td><td class="num">47.6</td><td><span class="pill" style="background:#C9705F">Plan replacement</span></td><td class="num">100%</td><td class="num">11</td><td>EFFICIENCY</td></tr><tr><td>TRC-02 · Tractor - primary tillage</td><td>tractor</td><td>Agri - Wadi El Natrun</td><td class="num">46.1</td><td><span class="pill" style="background:#C9705F">Plan replacement</span></td><td class="num">100%</td><td class="num">272</td><td>EFFICIENCY</td></tr><tr><td>BLR-01 · Steam boiler - pellet line</td><td>steam boiler</td><td>Sadat City Mill</td><td class="num">42.1</td><td><span class="pill" style="background:#C9705F">Plan replacement</span></td><td class="num">100%</td><td class="num">835</td><td>EFFICIENCY</td></tr><tr><td>GEN-03 · Standby genset - cold store</td><td>diesel genset</td><td>Sadat City Mill</td><td class="num">15.4</td><td><span class="pill" style="background:#5F6C70">Insufficient data</span></td><td class="num">15%</td><td class="num">—</td><td>AGE</td></tr><tr><td>HTR-11 · Brooder - house 3</td><td>space heater</td><td>Wadi El Natrun Farms</td><td class="num">37.9</td><td><span class="pill" style="background:#D9A441">Monitor</span></td><td class="num">100%</td><td class="num">61</td><td>EFFICIENCY</td></tr><tr><td>CHL-01 · Chiller - process cooling</td><td>chiller</td><td>Sadat City Mill</td><td class="num">33.3</td><td><span class="pill" style="background:#D9A441">Monitor</span></td><td class="num">100%</td><td class="num">898</td><td>EFFICIENCY</td></tr><tr><td>TRC-01 · Tractor - spraying duty</td><td>tractor</td><td>Agri - Wadi El Natrun</td><td class="num">12.8</td><td><span class="pill" style="background:#14958A">Keep</span></td><td class="num">82%</td><td class="num">—</td><td>RELIABILITY</td></tr><tr><td>GEN-04 · Genset - admin block</td><td>diesel genset</td><td>HQ - Nasr City</td><td class="num">8.4</td><td><span class="pill" style="background:#14958A">Keep</span></td><td class="num">100%</td><td class="num">130</td><td>RELIABILITY</td></tr><tr><td>GEN-01 · Standby genset - main feed plant</td><td>diesel genset</td><td>Sadat City Mill</td><td class="num">7.5</td><td><span class="pill" style="background:#14958A">Keep</span></td><td class="num">100%</td><td class="num">320</td><td>EFFICIENCY</td></tr></tbody></table></div>
+
+<h2>Asset detail</h2>
+
+    <div class="asset">
+      <h3>CMP-02 · Screw compressor - packaging
+        <span class="pill" style="background:#8C2F22;float:right">
+          Retire now · 59</span></h3>
+      <div class="meta">Atlas Copco GA37 · air compressor · Sadat City Mill — data confidence 100%</div>
+      <div class="ctx">utilisation 45% of the year (3,900 h)</div>
+      <div class="ind"><span>AGE</span><span class="num">47</span><div class="bar"><i style="width:47%;background:#C9705F"></i></div><span class="w">wt 10</span></div><div class="ind"><span>RELIABILITY</span><span class="num">32</span><div class="bar"><i style="width:32%;background:#D9A441"></i></div><span class="w">wt 18</span></div><div class="ind"><span>EFFICIENCY</span><span class="num">84</span><div class="bar"><i style="width:84%;background:#8C2F22"></i></div><span class="w">wt 25</span></div><div class="ind"><span>CAPACITY</span><span class="num">44</span><div class="bar"><i style="width:44%;background:#D9A441"></i></div><span class="w">wt 12</span></div><div class="ind"><span>MAINT_COST</span><span class="num">80</span><div class="bar"><i style="width:80%;background:#8C2F22"></i></div><span class="w">wt 15</span></div><div class="ind"><span>CONDITION</span><span class="num">67</span><div class="bar"><i style="width:67%;background:#8C2F22"></i></div><span class="w">wt 12</span></div><div class="ind"><span>OBSOLESCENCE</span><span class="num">11</span><div class="bar"><i style="width:11%;background:#14958A"></i></div><span class="w">wt 5</span></div><div class="ind"><span>COMPLIANCE</span><span class="num">60</span><div class="bar"><i style="width:60%;background:#C9705F"></i></div><span class="w">wt 3</span></div>
+      <div class="flag"><b>Override —</b> 1 open critical safety finding(s) — remediate before any return to service.</div><div class="flag adv"><b>Advisory —</b> efficiency measured without a load factor, so the baseline could not be load-corrected. The reading is only meaningful if it was taken at rated load.</div><div class="flag adv"><b>Advisory —</b> burning EGP 172 per day above what the work requires: EGP 172/day from degradation (a maintenance problem).</div>
+      
+        <table class="econ">
+          <tr><td>Equivalent annual cost of a new unit</td>
+              <td class="num">EGP 266,499</td></tr>
+          <tr><td>Maintenance, next year</td>
+              <td class="num">EGP 165,000</td></tr>
+          <tr><td>Excess energy vs. a new unit</td>
+              <td class="num">EGP 70,635</td></tr>
+          <tr><td>Downtime cost</td>
+              <td class="num">EGP 348,400</td></tr>
+          <tr><td>Salvage value lost by keeping</td>
+              <td class="num">EGP 8,800</td></tr>
+          <tr><td>Capital tied up in the asset</td>
+              <td class="num">EGP 24,200</td></tr>
+          <tr class="tot"><td>Cost of keeping one more year</td>
+              <td class="num">EGP 617,035</td></tr>
+          <tr><td colspan="2" style="padding-top:8px">Replacing saves <b>EGP 350,536</b> per year</td></tr>
+        </table>
+    </div>
+    <div class="asset">
+      <h3>GEN-02 · Prime genset - hatchery
+        <span class="pill" style="background:#C9705F;float:right">
+          Plan replacement · 62</span></h3>
+      <div class="meta">Cummins C250 D5 · diesel genset · Wadi El Natrun Farms — data confidence 100%</div>
+      <div class="ctx">utilisation 35% of the year (3,100 h) · load factor 70% of rated</div>
+      <div class="ind"><span>AGE</span><span class="num">60</span><div class="bar"><i style="width:60%;background:#C9705F"></i></div><span class="w">wt 10</span></div><div class="ind"><span>RELIABILITY</span><span class="num">51</span><div class="bar"><i style="width:51%;background:#C9705F"></i></div><span class="w">wt 20</span></div><div class="ind"><span>EFFICIENCY</span><span class="num">76</span><div class="bar"><i style="width:76%;background:#8C2F22"></i></div><span class="w">wt 25</span></div><div class="ind"><span>CAPACITY</span><span class="num">48</span><div class="bar"><i style="width:48%;background:#C9705F"></i></div><span class="w">wt 10</span></div><div class="ind"><span>MAINT_COST</span><span class="num">74</span><div class="bar"><i style="width:74%;background:#8C2F22"></i></div><span class="w">wt 15</span></div><div class="ind"><span>CONDITION</span><span class="num">67</span><div class="bar"><i style="width:67%;background:#8C2F22"></i></div><span class="w">wt 10</span></div><div class="ind"><span>OBSOLESCENCE</span><span class="num">48</span><div class="bar"><i style="width:48%;background:#C9705F"></i></div><span class="w">wt 5</span></div><div class="ind"><span>COMPLIANCE</span><span class="num">40</span><div class="bar"><i style="width:40%;background:#D9A441"></i></div><span class="w">wt 5</span></div>
+      <div class="flag adv"><b>Advisory —</b> burning EGP 961 per day above what the work requires: EGP 902/day from degradation (a maintenance problem); EGP 59/day from running the wrong size machine for the duty (an operations problem).</div>
+      
+        <table class="econ">
+          <tr><td>Equivalent annual cost of a new unit</td>
+              <td class="num">EGP 470,824</td></tr>
+          <tr><td>Maintenance, next year</td>
+              <td class="num">EGP 310,000</td></tr>
+          <tr><td>Excess energy vs. a new unit</td>
+              <td class="num">EGP 376,712</td></tr>
+          <tr><td>Downtime cost</td>
+              <td class="num">EGP 731,600</td></tr>
+          <tr><td>Salvage value lost by keeping</td>
+              <td class="num">EGP 25,600</td></tr>
+          <tr><td>Capital tied up in the asset</td>
+              <td class="num">EGP 70,400</td></tr>
+          <tr class="tot"><td>Cost of keeping one more year</td>
+              <td class="num">EGP 1,514,312</td></tr>
+          <tr><td colspan="2" style="padding-top:8px">Replacing saves <b>EGP 1,043,488</b> per year</td></tr>
+        </table>
+    </div>
+    <div class="asset">
+      <h3>MIL-07 · Hammer mill - feed line A
+        <span class="pill" style="background:#C9705F;float:right">
+          Plan replacement · 61</span></h3>
+      <div class="meta">Buhler DFZC-1265 · hammer mill · Sadat City Mill — data confidence 84%</div>
+      <div class="ctx">utilisation 47% of the year (4,100 h)</div>
+      <div class="ind"><span>AGE</span><span class="num">38</span><div class="bar"><i style="width:38%;background:#D9A441"></i></div><span class="w">wt 10</span></div><div class="ind"><span>RELIABILITY</span><span class="num">58</span><div class="bar"><i style="width:58%;background:#C9705F"></i></div><span class="w">wt 25</span></div><div class="ind"><span>EFFICIENCY</span><span class="na">n/m</span><span class="na">not measured</span><span class="w">wt 16</span></div><div class="ind"><span>CAPACITY</span><span class="num">64</span><div class="bar"><i style="width:64%;background:#C9705F"></i></div><span class="w">wt 16</span></div><div class="ind"><span>MAINT_COST</span><span class="num">73</span><div class="bar"><i style="width:73%;background:#8C2F22"></i></div><span class="w">wt 18</span></div><div class="ind"><span>CONDITION</span><span class="num">70</span><div class="bar"><i style="width:70%;background:#8C2F22"></i></div><span class="w">wt 10</span></div><div class="ind"><span>OBSOLESCENCE</span><span class="num">76</span><div class="bar"><i style="width:76%;background:#8C2F22"></i></div><span class="w">wt 3</span></div><div class="ind"><span>COMPLIANCE</span><span class="num">0</span><div class="bar"><i style="width:2%;background:#14958A"></i></div><span class="w">wt 2</span></div>
+      
+      
+        <table class="econ">
+          <tr><td>Equivalent annual cost of a new unit</td>
+              <td class="num">EGP 672,041</td></tr>
+          <tr><td>Maintenance, next year</td>
+              <td class="num">EGP 420,000</td></tr>
+          <tr><td>Excess energy vs. a new unit</td>
+              <td class="num">EGP 0</td></tr>
+          <tr><td>Downtime cost</td>
+              <td class="num">EGP 2,166,000</td></tr>
+          <tr><td>Salvage value lost by keeping</td>
+              <td class="num">EGP 20,800</td></tr>
+          <tr><td>Capital tied up in the asset</td>
+              <td class="num">EGP 57,200</td></tr>
+          <tr class="tot"><td>Cost of keeping one more year</td>
+              <td class="num">EGP 2,664,000</td></tr>
+          <tr><td colspan="2" style="padding-top:8px">Replacing saves <b>EGP 1,991,959</b> per year</td></tr>
+        </table>
+    </div>
+    <div class="asset">
+      <h3>VEH-12 · Forklift - dispatch yard
+        <span class="pill" style="background:#C9705F;float:right">
+          Plan replacement · 55</span></h3>
+      <div class="meta">Toyota 8FD25 · forklift · Sadat City Mill — data confidence 100%</div>
+      <div class="ctx">utilisation 21% of the year (1,850 h)</div>
+      <div class="ind"><span>AGE</span><span class="num">63</span><div class="bar"><i style="width:63%;background:#C9705F"></i></div><span class="w">wt 13</span></div><div class="ind"><span>RELIABILITY</span><span class="num">60</span><div class="bar"><i style="width:60%;background:#C9705F"></i></div><span class="w">wt 19</span></div><div class="ind"><span>EFFICIENCY</span><span class="num">84</span><div class="bar"><i style="width:84%;background:#8C2F22"></i></div><span class="w">wt 18</span></div><div class="ind"><span>CAPACITY</span><span class="num">0</span><div class="bar"><i style="width:2%;background:#14958A"></i></div><span class="w">wt 8</span></div><div class="ind"><span>MAINT_COST</span><span class="num">60</span><div class="bar"><i style="width:60%;background:#C9705F"></i></div><span class="w">wt 23</span></div><div class="ind"><span>CONDITION</span><span class="num">40</span><div class="bar"><i style="width:40%;background:#D9A441"></i></div><span class="w">wt 10</span></div><div class="ind"><span>OBSOLESCENCE</span><span class="num">6</span><div class="bar"><i style="width:6%;background:#14958A"></i></div><span class="w">wt 4</span></div><div class="ind"><span>COMPLIANCE</span><span class="num">40</span><div class="bar"><i style="width:40%;background:#D9A441"></i></div><span class="w">wt 5</span></div>
+      <div class="flag adv"><b>Advisory —</b> efficiency measured without a load factor, so the baseline could not be load-corrected. The reading is only meaningful if it was taken at rated load.</div><div class="flag adv"><b>Advisory —</b> burning EGP 55 per day above what the work requires: EGP 55/day from degradation (a maintenance problem).</div>
+      
+        <table class="econ">
+          <tr><td>Equivalent annual cost of a new unit</td>
+              <td class="num">EGP 183,524</td></tr>
+          <tr><td>Maintenance, next year</td>
+              <td class="num">EGP 96,000</td></tr>
+          <tr><td>Excess energy vs. a new unit</td>
+              <td class="num">EGP 22,940</td></tr>
+          <tr><td>Downtime cost</td>
+              <td class="num">EGP 133,000</td></tr>
+          <tr><td>Salvage value lost by keeping</td>
+              <td class="num">EGP 6,800</td></tr>
+          <tr><td>Capital tied up in the asset</td>
+              <td class="num">EGP 18,700</td></tr>
+          <tr class="tot"><td>Cost of keeping one more year</td>
+              <td class="num">EGP 277,440</td></tr>
+          <tr><td colspan="2" style="padding-top:8px">Replacing saves <b>EGP 93,916</b> per year</td></tr>
+        </table>
+    </div>
+    <div class="asset">
+      <h3>FAN-06 · Tunnel ventilation - house 3
+        <span class="pill" style="background:#C9705F;float:right">
+          Plan replacement · 48</span></h3>
+      <div class="meta">Munters EM50 · ventilation fan · Wadi El Natrun Farms — data confidence 100%</div>
+      <div class="ctx">utilisation 81% of the year (7,100 h) · load factor 68% of rated</div>
+      <div class="ind"><span>AGE</span><span class="num">22</span><div class="bar"><i style="width:22%;background:#14958A"></i></div><span class="w">wt 10</span></div><div class="ind"><span>RELIABILITY</span><span class="num">16</span><div class="bar"><i style="width:16%;background:#14958A"></i></div><span class="w">wt 18</span></div><div class="ind"><span>EFFICIENCY</span><span class="num">57</span><div class="bar"><i style="width:57%;background:#C9705F"></i></div><span class="w">wt 26</span></div><div class="ind"><span>CAPACITY</span><span class="num">51</span><div class="bar"><i style="width:51%;background:#C9705F"></i></div><span class="w">wt 13</span></div><div class="ind"><span>MAINT_COST</span><span class="num">77</span><div class="bar"><i style="width:77%;background:#8C2F22"></i></div><span class="w">wt 13</span></div><div class="ind"><span>CONDITION</span><span class="num">76</span><div class="bar"><i style="width:76%;background:#8C2F22"></i></div><span class="w">wt 14</span></div><div class="ind"><span>OBSOLESCENCE</span><span class="num">10</span><div class="bar"><i style="width:10%;background:#14958A"></i></div><span class="w">wt 4</span></div><div class="ind"><span>COMPLIANCE</span><span class="num">0</span><div class="bar"><i style="width:2%;background:#14958A"></i></div><span class="w">wt 2</span></div>
+      <div class="flag adv"><b>Advisory —</b> burning EGP 11 per day above what the work requires: EGP 7/day from degradation (a maintenance problem); EGP 4/day from running the wrong size machine for the duty (an operations problem).</div>
+      
+        <table class="econ">
+          <tr><td>Equivalent annual cost of a new unit</td>
+              <td class="num">EGP 88,061</td></tr>
+          <tr><td>Maintenance, next year</td>
+              <td class="num">EGP 54,000</td></tr>
+          <tr><td>Excess energy vs. a new unit</td>
+              <td class="num">EGP 6,311</td></tr>
+          <tr><td>Downtime cost</td>
+              <td class="num">EGP 0</td></tr>
+          <tr><td>Salvage value lost by keeping</td>
+              <td class="num">EGP 3,600</td></tr>
+          <tr><td>Capital tied up in the asset</td>
+              <td class="num">EGP 9,900</td></tr>
+          <tr class="tot"><td>Cost of keeping one more year</td>
+              <td class="num">EGP 73,811</td></tr>
+          <tr><td colspan="2" style="padding-top:8px">Keeping saves <b>EGP 14,249</b> per year</td></tr>
+        </table>
+    </div>
+    <div class="asset">
+      <h3>TRC-02 · Tractor - primary tillage
+        <span class="pill" style="background:#C9705F;float:right">
+          Plan replacement · 46</span></h3>
+      <div class="meta">Massey Ferguson MF 7724 · tractor · Agri - Wadi El Natrun — data confidence 100%</div>
+      <div class="ctx">utilisation 13% of the year (1,150 h) · load factor 78% of rated</div>
+      <div class="ind"><span>AGE</span><span class="num">26</span><div class="bar"><i style="width:26%;background:#D9A441"></i></div><span class="w">wt 13</span></div><div class="ind"><span>RELIABILITY</span><span class="num">57</span><div class="bar"><i style="width:57%;background:#C9705F"></i></div><span class="w">wt 19</span></div><div class="ind"><span>EFFICIENCY</span><span class="num">72</span><div class="bar"><i style="width:72%;background:#8C2F22"></i></div><span class="w">wt 18</span></div><div class="ind"><span>CAPACITY</span><span class="num">29</span><div class="bar"><i style="width:29%;background:#D9A441"></i></div><span class="w">wt 8</span></div><div class="ind"><span>MAINT_COST</span><span class="num">43</span><div class="bar"><i style="width:43%;background:#D9A441"></i></div><span class="w">wt 23</span></div><div class="ind"><span>CONDITION</span><span class="num">38</span><div class="bar"><i style="width:38%;background:#D9A441"></i></div><span class="w">wt 10</span></div><div class="ind"><span>OBSOLESCENCE</span><span class="num">16</span><div class="bar"><i style="width:16%;background:#14958A"></i></div><span class="w">wt 4</span></div><div class="ind"><span>COMPLIANCE</span><span class="num">40</span><div class="bar"><i style="width:40%;background:#D9A441"></i></div><span class="w">wt 5</span></div>
+      <div class="flag adv"><b>Advisory —</b> burning EGP 272 per day above what the work requires: EGP 270/day from degradation (a maintenance problem); EGP 2/day from running the wrong size machine for the duty (an operations problem).</div>
+      
+        <table class="econ">
+          <tr><td>Equivalent annual cost of a new unit</td>
+              <td class="num">EGP 718,388</td></tr>
+          <tr><td>Maintenance, next year</td>
+              <td class="num">EGP 290,000</td></tr>
+          <tr><td>Excess energy vs. a new unit</td>
+              <td class="num">EGP 121,675</td></tr>
+          <tr><td>Downtime cost</td>
+              <td class="num">EGP 153,000</td></tr>
+          <tr><td>Salvage value lost by keeping</td>
+              <td class="num">EGP 60,800</td></tr>
+          <tr><td>Capital tied up in the asset</td>
+              <td class="num">EGP 167,200</td></tr>
+          <tr class="tot"><td>Cost of keeping one more year</td>
+              <td class="num">EGP 792,675</td></tr>
+          <tr><td colspan="2" style="padding-top:8px">Keeping saves <b>EGP 74,287</b> per year</td></tr>
+        </table>
+    </div>
+    <div class="asset">
+      <h3>BLR-01 · Steam boiler - pellet line
+        <span class="pill" style="background:#C9705F;float:right">
+          Plan replacement · 42</span></h3>
+      <div class="meta">Bosch U-ND 2000 · steam boiler · Sadat City Mill — data confidence 100%</div>
+      <div class="ctx">utilisation 59% of the year (5,200 h) · load factor 62% of rated</div>
+      <div class="ind"><span>AGE</span><span class="num">10</span><div class="bar"><i style="width:10%;background:#14958A"></i></div><span class="w">wt 8</span></div><div class="ind"><span>RELIABILITY</span><span class="num">20</span><div class="bar"><i style="width:20%;background:#14958A"></i></div><span class="w">wt 15</span></div><div class="ind"><span>EFFICIENCY</span><span class="num">66</span><div class="bar"><i style="width:66%;background:#8C2F22"></i></div><span class="w">wt 30</span></div><div class="ind"><span>CAPACITY</span><span class="num">42</span><div class="bar"><i style="width:42%;background:#D9A441"></i></div><span class="w">wt 10</span></div><div class="ind"><span>MAINT_COST</span><span class="num">40</span><div class="bar"><i style="width:40%;background:#D9A441"></i></div><span class="w">wt 12</span></div><div class="ind"><span>CONDITION</span><span class="num">40</span><div class="bar"><i style="width:40%;background:#D9A441"></i></div><span class="w">wt 13</span></div><div class="ind"><span>OBSOLESCENCE</span><span class="num">18</span><div class="bar"><i style="width:18%;background:#14958A"></i></div><span class="w">wt 2</span></div><div class="ind"><span>COMPLIANCE</span><span class="num">40</span><div class="bar"><i style="width:40%;background:#D9A441"></i></div><span class="w">wt 10</span></div>
+      <div class="flag"><b>Override —</b> economic test favours replacement by EGP 198,338/year — escalated one band.</div><div class="flag adv"><b>Advisory —</b> burning EGP 835 per day above what the work requires: EGP 770/day from degradation (a maintenance problem); EGP 65/day from running the wrong size machine for the duty (an operations problem).</div>
+      
+        <table class="econ">
+          <tr><td>Equivalent annual cost of a new unit</td>
+              <td class="num">EGP 575,994</td></tr>
+          <tr><td>Maintenance, next year</td>
+              <td class="num">EGP 215,000</td></tr>
+          <tr><td>Excess energy vs. a new unit</td>
+              <td class="num">EGP 420,732</td></tr>
+          <tr><td>Downtime cost</td>
+              <td class="num">EGP 51,600</td></tr>
+          <tr><td>Salvage value lost by keeping</td>
+              <td class="num">EGP 23,200</td></tr>
+          <tr><td>Capital tied up in the asset</td>
+              <td class="num">EGP 63,800</td></tr>
+          <tr class="tot"><td>Cost of keeping one more year</td>
+              <td class="num">EGP 774,332</td></tr>
+          <tr><td colspan="2" style="padding-top:8px">Replacing saves <b>EGP 198,338</b> per year</td></tr>
+        </table>
+    </div>
+    <div class="asset">
+      <h3>GEN-03 · Standby genset - cold store
+        <span class="pill" style="background:#5F6C70;float:right">
+          Insufficient data</span></h3>
+      <div class="meta">FG Wilson P150-3 · diesel genset · Sadat City Mill — data confidence 15%</div>
+      
+      <div class="ind"><span>AGE</span><span class="num">17</span><div class="bar"><i style="width:17%;background:#14958A"></i></div><span class="w">wt 10</span></div><div class="ind"><span>RELIABILITY</span><span class="na">n/m</span><span class="na">not measured</span><span class="w">wt 20</span></div><div class="ind"><span>EFFICIENCY</span><span class="na">n/m</span><span class="na">not measured</span><span class="w">wt 25</span></div><div class="ind"><span>CAPACITY</span><span class="na">n/m</span><span class="na">not measured</span><span class="w">wt 10</span></div><div class="ind"><span>MAINT_COST</span><span class="na">n/m</span><span class="na">not measured</span><span class="w">wt 15</span></div><div class="ind"><span>CONDITION</span><span class="na">n/m</span><span class="na">not measured</span><span class="w">wt 10</span></div><div class="ind"><span>OBSOLESCENCE</span><span class="num">13</span><div class="bar"><i style="width:13%;background:#14958A"></i></div><span class="w">wt 5</span></div><div class="ind"><span>COMPLIANCE</span><span class="na">n/m</span><span class="na">not measured</span><span class="w">wt 5</span></div>
+      <div class="flag"><b>Not decision-grade.</b> Only 15% of the scoring weight is backed by measurements, so no verdict is issued. On the evidence available this asset would score 15 (Keep), but that is indicative only. Collect: CAPACITY, COMPLIANCE, CONDITION, EFFICIENCY, MAINT_COST, RELIABILITY.</div>
+      
+    </div>
+    <div class="asset">
+      <h3>HTR-11 · Brooder - house 3
+        <span class="pill" style="background:#D9A441;float:right">
+          Monitor · 38</span></h3>
+      <div class="meta">Systel GP-120 · space heater · Wadi El Natrun Farms — data confidence 100%</div>
+      <div class="ctx">utilisation 33% of the year (2,900 h) · load factor 79% of rated</div>
+      <div class="ind"><span>AGE</span><span class="num">17</span><div class="bar"><i style="width:17%;background:#14958A"></i></div><span class="w">wt 8</span></div><div class="ind"><span>RELIABILITY</span><span class="num">22</span><div class="bar"><i style="width:22%;background:#14958A"></i></div><span class="w">wt 16</span></div><div class="ind"><span>EFFICIENCY</span><span class="num">73</span><div class="bar"><i style="width:73%;background:#8C2F22"></i></div><span class="w">wt 29</span></div><div class="ind"><span>CAPACITY</span><span class="num">17</span><div class="bar"><i style="width:17%;background:#14958A"></i></div><span class="w">wt 10</span></div><div class="ind"><span>MAINT_COST</span><span class="num">38</span><div class="bar"><i style="width:38%;background:#D9A441"></i></div><span class="w">wt 13</span></div><div class="ind"><span>CONDITION</span><span class="num">40</span><div class="bar"><i style="width:40%;background:#D9A441"></i></div><span class="w">wt 13</span></div><div class="ind"><span>OBSOLESCENCE</span><span class="num">8</span><div class="bar"><i style="width:8%;background:#14958A"></i></div><span class="w">wt 2</span></div><div class="ind"><span>COMPLIANCE</span><span class="num">0</span><div class="bar"><i style="width:2%;background:#14958A"></i></div><span class="w">wt 9</span></div>
+      <div class="flag adv"><b>Advisory —</b> burning EGP 61 per day above what the work requires: EGP 61/day from degradation (a maintenance problem).</div>
+      
+        <table class="econ">
+          <tr><td>Equivalent annual cost of a new unit</td>
+              <td class="num">EGP 107,056</td></tr>
+          <tr><td>Maintenance, next year</td>
+              <td class="num">EGP 38,000</td></tr>
+          <tr><td>Excess energy vs. a new unit</td>
+              <td class="num">EGP 29,691</td></tr>
+          <tr><td>Downtime cost</td>
+              <td class="num">EGP 0</td></tr>
+          <tr><td>Salvage value lost by keeping</td>
+              <td class="num">EGP 7,600</td></tr>
+          <tr><td>Capital tied up in the asset</td>
+              <td class="num">EGP 20,900</td></tr>
+          <tr class="tot"><td>Cost of keeping one more year</td>
+              <td class="num">EGP 96,191</td></tr>
+          <tr><td colspan="2" style="padding-top:8px">Keeping saves <b>EGP 10,865</b> per year</td></tr>
+        </table>
+    </div>
+    <div class="asset">
+      <h3>CHL-01 · Chiller - process cooling
+        <span class="pill" style="background:#D9A441;float:right">
+          Monitor · 33</span></h3>
+      <div class="meta">Carrier 30XA-352 · chiller · Sadat City Mill — data confidence 100%</div>
+      <div class="ctx">utilisation 53% of the year (4,600 h) · load factor 66% of rated</div>
+      <div class="ind"><span>AGE</span><span class="num">10</span><div class="bar"><i style="width:10%;background:#14958A"></i></div><span class="w">wt 10</span></div><div class="ind"><span>RELIABILITY</span><span class="num">9</span><div class="bar"><i style="width:9%;background:#14958A"></i></div><span class="w">wt 18</span></div><div class="ind"><span>EFFICIENCY</span><span class="num">84</span><div class="bar"><i style="width:84%;background:#8C2F22"></i></div><span class="w">wt 26</span></div><div class="ind"><span>CAPACITY</span><span class="num">22</span><div class="bar"><i style="width:22%;background:#14958A"></i></div><span class="w">wt 13</span></div><div class="ind"><span>MAINT_COST</span><span class="num">10</span><div class="bar"><i style="width:10%;background:#14958A"></i></div><span class="w">wt 13</span></div><div class="ind"><span>CONDITION</span><span class="num">30</span><div class="bar"><i style="width:30%;background:#D9A441"></i></div><span class="w">wt 14</span></div><div class="ind"><span>OBSOLESCENCE</span><span class="num">8</span><div class="bar"><i style="width:8%;background:#14958A"></i></div><span class="w">wt 4</span></div><div class="ind"><span>COMPLIANCE</span><span class="num">0</span><div class="bar"><i style="width:2%;background:#14958A"></i></div><span class="w">wt 2</span></div>
+      <div class="flag adv"><b>Advisory —</b> burning EGP 898 per day above what the work requires: EGP 898/day from degradation (a maintenance problem).</div>
+      
+        <table class="econ">
+          <tr><td>Equivalent annual cost of a new unit</td>
+              <td class="num">EGP 941,648</td></tr>
+          <tr><td>Maintenance, next year</td>
+              <td class="num">EGP 145,000</td></tr>
+          <tr><td>Excess energy vs. a new unit</td>
+              <td class="num">EGP 251,305</td></tr>
+          <tr><td>Downtime cost</td>
+              <td class="num">EGP 0</td></tr>
+          <tr><td>Salvage value lost by keeping</td>
+              <td class="num">EGP 92,000</td></tr>
+          <tr><td>Capital tied up in the asset</td>
+              <td class="num">EGP 253,000</td></tr>
+          <tr class="tot"><td>Cost of keeping one more year</td>
+              <td class="num">EGP 741,305</td></tr>
+          <tr><td colspan="2" style="padding-top:8px">Keeping saves <b>EGP 200,343</b> per year</td></tr>
+        </table>
+    </div>
+    <div class="asset">
+      <h3>TRC-01 · Tractor - spraying duty
+        <span class="pill" style="background:#14958A;float:right">
+          Keep · 13</span></h3>
+      <div class="meta">John Deere 8R 370 · tractor · Agri - Wadi El Natrun — data confidence 82%</div>
+      <div class="ctx">utilisation 6% of the year (520 h) · load factor 16% of rated</div>
+      <div class="ind"><span>AGE</span><span class="num">9</span><div class="bar"><i style="width:9%;background:#14958A"></i></div><span class="w">wt 13</span></div><div class="ind"><span>RELIABILITY</span><span class="num">38</span><div class="bar"><i style="width:38%;background:#D9A441"></i></div><span class="w">wt 19</span></div><div class="ind"><span>EFFICIENCY</span><span class="na">n/m</span><span class="na">not measured</span><span class="w">wt 18</span></div><div class="ind"><span>CAPACITY</span><span class="num">2</span><div class="bar"><i style="width:2%;background:#14958A"></i></div><span class="w">wt 8</span></div><div class="ind"><span>MAINT_COST</span><span class="num">7</span><div class="bar"><i style="width:7%;background:#14958A"></i></div><span class="w">wt 23</span></div><div class="ind"><span>CONDITION</span><span class="num">0</span><div class="bar"><i style="width:2%;background:#14958A"></i></div><span class="w">wt 10</span></div><div class="ind"><span>OBSOLESCENCE</span><span class="num">11</span><div class="bar"><i style="width:11%;background:#14958A"></i></div><span class="w">wt 4</span></div><div class="ind"><span>COMPLIANCE</span><span class="num">0</span><div class="bar"><i style="width:2%;background:#14958A"></i></div><span class="w">wt 5</span></div>
+      <div class="flag adv"><b>Advisory —</b> running at 16% of rated load — chronically under-loaded. Low-load operation raises fuel per kWh and causes wet stacking, so poor efficiency here is a sizing and dispatch fault, not a worn machine. Right-size or re-dispatch before replacing.</div><div class="flag adv"><b>Advisory —</b> severely oversized for its task: the job needs 60 of 373 rated (16%). A unit rated around 75 would carry it at 80% load. Running oversized costs about EGP 86,746 per year in extra fuel or power alone. The remedy is reassignment or re-sizing, not replacement — the machine itself may be perfectly sound.</div>
+      
+    </div>
+    <div class="asset">
+      <h3>GEN-04 · Genset - admin block
+        <span class="pill" style="background:#14958A;float:right">
+          Keep · 8</span></h3>
+      <div class="meta">Perkins 1103A-33TG2 · diesel genset · HQ - Nasr City — data confidence 100%</div>
+      <div class="ctx">utilisation 24% of the year (2,100 h) · load factor 22% of rated</div>
+      <div class="ind"><span>AGE</span><span class="num">8</span><div class="bar"><i style="width:8%;background:#14958A"></i></div><span class="w">wt 10</span></div><div class="ind"><span>RELIABILITY</span><span class="num">12</span><div class="bar"><i style="width:12%;background:#14958A"></i></div><span class="w">wt 20</span></div><div class="ind"><span>EFFICIENCY</span><span class="num">0</span><div class="bar"><i style="width:2%;background:#14958A"></i></div><span class="w">wt 25</span></div><div class="ind"><span>CAPACITY</span><span class="num">7</span><div class="bar"><i style="width:7%;background:#14958A"></i></div><span class="w">wt 10</span></div><div class="ind"><span>MAINT_COST</span><span class="num">16</span><div class="bar"><i style="width:16%;background:#14958A"></i></div><span class="w">wt 15</span></div><div class="ind"><span>CONDITION</span><span class="num">18</span><div class="bar"><i style="width:18%;background:#14958A"></i></div><span class="w">wt 10</span></div><div class="ind"><span>OBSOLESCENCE</span><span class="num">7</span><div class="bar"><i style="width:7%;background:#14958A"></i></div><span class="w">wt 5</span></div><div class="ind"><span>COMPLIANCE</span><span class="num">0</span><div class="bar"><i style="width:2%;background:#14958A"></i></div><span class="w">wt 5</span></div>
+      <div class="flag adv"><b>Advisory —</b> running at 22% of rated load — chronically under-loaded. Low-load operation raises fuel per kWh and causes wet stacking, so poor efficiency here is a sizing and dispatch fault, not a worn machine. Right-size or re-dispatch before replacing.</div><div class="flag adv"><b>Advisory —</b> severely oversized for its task: the job needs 13 of 60 rated (22%). A unit rated around 16 would carry it at 80% load. Running oversized costs about EGP 47,592 per year in extra fuel or power alone. The remedy is reassignment or re-sizing, not replacement — the machine itself may be perfectly sound.</div><div class="flag adv"><b>Advisory —</b> burning EGP 130 per day above what the work requires: EGP 130/day from running the wrong size machine for the duty (an operations problem).</div>
+      
+        <table class="econ">
+          <tr><td>Equivalent annual cost of a new unit</td>
+              <td class="num">EGP 199,540</td></tr>
+          <tr><td>Maintenance, next year</td>
+              <td class="num">EGP 41,000</td></tr>
+          <tr><td>Excess energy vs. a new unit</td>
+              <td class="num">EGP 41,247</td></tr>
+          <tr><td>Downtime cost</td>
+              <td class="num">EGP 0</td></tr>
+          <tr><td>Salvage value lost by keeping</td>
+              <td class="num">EGP 30,400</td></tr>
+          <tr><td>Capital tied up in the asset</td>
+              <td class="num">EGP 83,600</td></tr>
+          <tr class="tot"><td>Cost of keeping one more year</td>
+              <td class="num">EGP 196,247</td></tr>
+          <tr><td colspan="2" style="padding-top:8px">Keeping saves <b>EGP 3,292</b> per year</td></tr>
+        </table>
+    </div>
+    <div class="asset">
+      <h3>GEN-01 · Standby genset - main feed plant
+        <span class="pill" style="background:#14958A;float:right">
+          Keep · 8</span></h3>
+      <div class="meta">Perkins 2506A-E15TAG2 · diesel genset · Sadat City Mill — data confidence 100%</div>
+      <div class="ctx">utilisation 30% of the year (2,600 h) · load factor 75% of rated</div>
+      <div class="ind"><span>AGE</span><span class="num">8</span><div class="bar"><i style="width:8%;background:#14958A"></i></div><span class="w">wt 10</span></div><div class="ind"><span>RELIABILITY</span><span class="num">9</span><div class="bar"><i style="width:9%;background:#14958A"></i></div><span class="w">wt 20</span></div><div class="ind"><span>EFFICIENCY</span><span class="num">15</span><div class="bar"><i style="width:15%;background:#14958A"></i></div><span class="w">wt 25</span></div><div class="ind"><span>CAPACITY</span><span class="num">2</span><div class="bar"><i style="width:2%;background:#14958A"></i></div><span class="w">wt 10</span></div><div class="ind"><span>MAINT_COST</span><span class="num">4</span><div class="bar"><i style="width:4%;background:#14958A"></i></div><span class="w">wt 15</span></div><div class="ind"><span>CONDITION</span><span class="num">0</span><div class="bar"><i style="width:2%;background:#14958A"></i></div><span class="w">wt 10</span></div><div class="ind"><span>OBSOLESCENCE</span><span class="num">5</span><div class="bar"><i style="width:5%;background:#14958A"></i></div><span class="w">wt 5</span></div><div class="ind"><span>COMPLIANCE</span><span class="num">0</span><div class="bar"><i style="width:2%;background:#14958A"></i></div><span class="w">wt 5</span></div>
+      <div class="flag adv"><b>Advisory —</b> burning EGP 320 per day above what the work requires: EGP 320/day from degradation (a maintenance problem).</div>
+      
+        <table class="econ">
+          <tr><td>Equivalent annual cost of a new unit</td>
+              <td class="num">EGP 851,967</td></tr>
+          <tr><td>Maintenance, next year</td>
+              <td class="num">EGP 62,000</td></tr>
+          <tr><td>Excess energy vs. a new unit</td>
+              <td class="num">EGP 84,630</td></tr>
+          <tr><td>Downtime cost</td>
+              <td class="num">EGP 0</td></tr>
+          <tr><td>Salvage value lost by keeping</td>
+              <td class="num">EGP 128,000</td></tr>
+          <tr><td>Capital tied up in the asset</td>
+              <td class="num">EGP 352,000</td></tr>
+          <tr class="tot"><td>Cost of keeping one more year</td>
+              <td class="num">EGP 626,630</td></tr>
+          <tr><td colspan="2" style="padding-top:8px">Keeping saves <b>EGP 225,337</b> per year</td></tr>
+        </table>
+    </div>
+
+<footer>
+Scores run 0 (as-new) to 100 (fully consumed) across eight weighted indicators.
+Indicators that were not measured are excluded and their weight redistributed —
+the resulting coverage is reported as data confidence. Verdicts below 60%
+confidence are not decision-grade. Criteria, thresholds and the economic test
+are documented in <b>docs/CRITERIA.md</b>.
+</footer>
+</div></body></html>

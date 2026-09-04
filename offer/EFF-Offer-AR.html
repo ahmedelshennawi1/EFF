@@ -1,0 +1,655 @@
+<meta charset="utf-8">
+﻿<title>عرض خدمة — إطار تقييم جاهزية المعدات | Equipment Fitness Framework Proposal</title>
+<style>
+:root{
+  --ground:#FAFBFA; --surface:#FFFFFF; --surface-2:#EFF3F1; --sunk:#E4EBE8;
+  --line:#D3DEDA; --line-soft:#E3EAE7;
+  --ink:#1B2124; --ink-2:#4A5A5C; --ink-3:#728285;
+  --teal-deep:#D4551E; --teal:#F0692F; --brass:#B8934A;
+  --keep:#177E66; --monitor:#9A741B; --plan:#A83E35; --retire:#7C2418;
+  --on-band:#FFFFFF;
+  --shadow:0 1px 2px rgba(27,33,36,.05), 0 8px 24px -16px rgba(27,33,36,.18);
+  --f:"Rubik","Segoe UI","Noto Sans Arabic",Tahoma,Arial,sans-serif;
+  --f-mono:"IBM Plex Mono","Consolas",ui-monospace,"Courier New",monospace;
+  --s--1:.8125rem; --s0:1rem; --s1:1.1875rem; --s2:1.4375rem;
+  --s3:1.8125rem; --s4:2.375rem; --s5:3rem;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#12191A; --surface:#182122; --surface-2:#1E2829; --sunk:#141D1E;
+    --line:#2C3B3C; --line-soft:#243132;
+    --ink:#E7EFEC; --ink-2:#A6BAB6; --ink-3:#7C9290;
+    --teal-deep:#FF8A4D; --teal:#F0692F; --brass:#D4B173;
+    --keep:#2FA98C; --monitor:#D9A441; --plan:#C4574D; --retire:#8C2F22;
+    --on-band:#0E1617;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0F1416; --surface:#171E21; --surface-2:#1D262A; --sunk:#0B1012;
+  --line:#263135; --line-soft:#1F292D;
+  --ink:#E9EEEF; --ink-2:#9FB0B5; --ink-3:#5F7076;
+  --teal-deep:#FF8A4D; --teal:#F0692F; --brass:#D4B173;
+  --keep:#2FA98C; --monitor:#D9A441; --plan:#C4574D; --retire:#8C2F22;
+  --on-band:#0E1617;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box;}
+body{margin:0; background:var(--ground); color:var(--ink); font-family:var(--f);
+  font-size:var(--s0); line-height:1.75; -webkit-font-smoothing:antialiased;}
+.page{max-width:64rem; margin:0 auto; padding:0 1.5rem 6rem;}
+.page[dir="rtl"]{text-align:right;}
+.page[dir="ltr"]{text-align:left;}
+.prose{max-width:44rem;}
+h1,h2,h3{text-wrap:balance; line-height:1.32; margin:0;}
+p{margin:0;} strong{font-weight:700; color:var(--ink);}
+.num{font-family:var(--f-mono); font-variant-numeric:tabular-nums;
+  direction:ltr; unicode-bidi:isolate;}
+/* Specificity (0,3,0) — deliberately above rules like `.step .what span`
+   (0,2,1) that set display on bare elements, or the hidden language leaks
+   through in exactly those sections. */
+.page[data-doc-lang="ar"] .en-only,
+.page[data-doc-lang="ar"] .en-sub{display:none;}
+.page[data-doc-lang="en"] .ar-only{display:none;}
+
+/* ---- language switch ---- */
+.langbar{display:flex; justify-content:flex-end; padding:1.25rem 0 0; gap:.35rem;}
+.langbar button{font-family:var(--f); font-size:var(--s--1); font-weight:700;
+  padding:.35rem 1rem; border:1px solid var(--line); background:var(--surface);
+  color:var(--ink-2); cursor:pointer; border-radius:3px;}
+.langbar button[aria-pressed="true"]{background:var(--teal-deep); color:#fff;
+  border-color:var(--teal-deep);}
+.langbar button:focus-visible{outline:2px solid var(--brass); outline-offset:2px;}
+
+/* ---- masthead ---- */
+.mast{padding:1.5rem 0 2rem; border-bottom:2px solid var(--teal-deep);
+  display:flex; flex-direction:column; gap:1.1rem;}
+.eyebrow{font-size:var(--s--1); letter-spacing:.14em; color:var(--teal-deep); font-weight:700;}
+h1{font-size:var(--s5); font-weight:700; letter-spacing:-.02em;}
+.lede{font-size:var(--s2); line-height:1.6; color:var(--ink-2); max-width:40rem; font-weight:300;}
+.byline{display:flex; flex-wrap:wrap; gap:.4rem 1.5rem; font-size:var(--s--1); color:var(--ink-3);}
+
+/* ---- headline numbers ---- */
+.kpis{display:grid; gap:1px; background:var(--line-soft); border:1px solid var(--line-soft);
+  border-radius:5px; overflow:hidden; margin-top:1.5rem;
+  grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));}
+.kpi{background:var(--surface); padding:1.3rem 1.4rem; display:flex; flex-direction:column; gap:.2rem;}
+.kpi .v{font-size:var(--s4); font-weight:700; font-family:var(--f-mono);
+  font-variant-numeric:tabular-nums; direction:ltr; line-height:1.15; color:var(--teal-deep);}
+.page[dir="rtl"] .kpi .v{text-align:right;}
+.kpi .l{font-size:var(--s--1); color:var(--ink-2);}
+.kpi .n{font-size:.6875rem; color:var(--ink-3);}
+
+/* ---- sections ---- */
+section{padding:3.25rem 0 0;}
+.kicker{font-size:var(--s--1); font-weight:700; letter-spacing:.1em; color:var(--brass);
+  margin-bottom:.6rem; display:flex; align-items:center; gap:.6rem;}
+.kicker::before{content:""; width:1.5rem; height:2px; background:var(--brass); flex:none;}
+h2{font-size:var(--s3); font-weight:700; letter-spacing:-.015em; margin-bottom:.9rem;}
+h3{font-size:var(--s1); font-weight:700; margin-bottom:.35rem;}
+.stack{display:flex; flex-direction:column; gap:1.1rem;}
+.stack-lg{display:flex; flex-direction:column; gap:1.9rem;}
+.en-sub{font-size:var(--s--1); color:var(--ink-3); font-weight:400; display:block; margin-top:.15rem;}
+
+ul.marks{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:.8rem;}
+ul.marks li{padding-inline-start:1.4rem; position:relative; color:var(--ink-2);}
+ul.marks li::before{content:""; position:absolute; inset-inline-start:0; top:.72em;
+  width:.45rem; height:.45rem; background:var(--teal); border-radius:1px;}
+ul.marks li strong{color:var(--ink);}
+
+/* ---- tables ---- */
+.tw{overflow-x:auto; border:1px solid var(--line); border-radius:4px; background:var(--surface);}
+table{width:100%; border-collapse:collapse; font-size:var(--s--1);}
+th{background:var(--surface-2); padding:.7rem .9rem; font-weight:700; color:var(--teal-deep);
+  white-space:nowrap; border-bottom:1px solid var(--line);}
+.page[dir="rtl"] th, .page[dir="rtl"] td{text-align:right;}
+.page[dir="ltr"] th, .page[dir="ltr"] td{text-align:left;}
+td{padding:.7rem .9rem; border-bottom:1px solid var(--line-soft); color:var(--ink-2);
+  vertical-align:top;}
+tr:last-child td{border-bottom:0;}
+td.f{color:var(--ink); font-weight:700;}
+td.n, th.n{font-family:var(--f-mono); font-variant-numeric:tabular-nums;
+  white-space:nowrap;}
+.page[dir="rtl"] td.n, .page[dir="rtl"] th.n{text-align:left; direction:ltr;}
+.page[dir="ltr"] td.n, .page[dir="ltr"] th.n{text-align:right;}
+tr.total td{border-top:2px solid var(--line); font-weight:700; color:var(--ink);
+  background:var(--surface-2);}
+
+/* ---- callouts ---- */
+.note{background:var(--sunk); border-inline-start:3px solid var(--brass);
+  border-radius:0 4px 4px 0; padding:1.1rem 1.3rem; color:var(--ink-2); font-size:var(--s--1);}
+.note strong{color:var(--ink);}
+.note.teal{border-inline-start-color:var(--teal);}
+.case{background:var(--surface); border:1px solid var(--line); border-radius:5px;
+  padding:1.6rem; box-shadow:var(--shadow); display:flex; flex-direction:column; gap:1rem;}
+.flip{display:grid; gap:1px; background:var(--line-soft); border:1px solid var(--line-soft);
+  border-radius:4px; overflow:hidden; grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));}
+.flip>div{background:var(--surface-2); padding:.95rem 1.1rem;}
+.flip .lbl{font-size:.6875rem; letter-spacing:.06em; color:var(--ink-3); font-weight:700;}
+.flip .val{font-size:var(--s3); font-weight:700; font-family:var(--f-mono);
+  font-variant-numeric:tabular-nums; direction:ltr;}
+.page[dir="rtl"] .flip .val{text-align:right;}
+.flip .sub{font-size:var(--s--1); color:var(--ink-2);}
+.good .val{color:var(--keep);} .bad .val{color:var(--retire);}
+.pill{display:inline-block; padding:.15rem .7rem; border-radius:99px; color:var(--on-band);
+  font-size:var(--s--1); font-weight:700;}
+
+/* ---- fee cards ---- */
+.tiers{display:grid; gap:1rem; grid-template-columns:repeat(auto-fit,minmax(17rem,1fr));}
+.tier{background:var(--surface); border:1px solid var(--line); border-radius:5px;
+  padding:1.4rem; display:flex; flex-direction:column; gap:.8rem;}
+.tier.feature{border-color:var(--teal); box-shadow:var(--shadow);}
+.tier .no{font-family:var(--f-mono); font-size:var(--s--1); color:var(--brass); font-weight:700;}
+.tier .from{font-family:var(--f-mono); font-size:var(--s2); font-weight:700;
+  color:var(--teal-deep); direction:ltr;}
+.page[dir="rtl"] .tier .from{text-align:right;}
+.tier ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column;
+  gap:.45rem; font-size:var(--s--1); color:var(--ink-2);}
+.tier ul li{padding-inline-start:1.05rem; position:relative;}
+.tier ul li::before{content:""; position:absolute; inset-inline-start:0; top:.7em;
+  width:.35rem; height:.35rem; border-radius:50%; background:var(--teal);}
+.tier .foot{margin-top:auto; padding-top:.8rem; border-top:1px solid var(--line-soft);
+  font-size:.6875rem; color:var(--ink-3);}
+
+.steps{display:flex; flex-direction:column;}
+.step{display:grid; grid-template-columns:5.5rem 1fr; gap:1.2rem; padding:1rem 0;
+  border-bottom:1px solid var(--line-soft);}
+.step:last-child{border-bottom:0;}
+.step .when{font-family:var(--f-mono); font-size:var(--s--1); color:var(--brass);
+  font-weight:700; direction:ltr;}
+.page[dir="rtl"] .step .when{text-align:right;}
+.step .what span{font-size:var(--s--1); color:var(--ink-2); display:block;}
+
+.close{margin-top:3.5rem; padding:2.2rem 0 0; border-top:2px solid var(--teal-deep);
+  display:flex; flex-wrap:wrap; gap:2rem; justify-content:space-between; align-items:flex-end;}
+.sig{font-size:var(--s2); font-weight:700; color:var(--teal-deep);}
+.sig span{display:block; font-size:var(--s--1); font-weight:400; color:var(--ink-3); margin-top:.25rem;}
+.contact{font-size:var(--s--1); color:var(--ink-3); line-height:1.9;}
+
+@media (max-width:34rem){
+  h1{font-size:var(--s4); overflow-wrap:break-word;} .lede{font-size:var(--s1);}
+  .page{padding:0 1.1rem 4rem;} .kpi .v{font-size:var(--s3);}
+  .step{grid-template-columns:1fr; gap:.25rem;} .case{padding:1.2rem;}
+  .flip .val{font-size:var(--s2);}
+}
+@media print{ body{background:#fff;} .langbar{display:none;} .case,.tier{break-inside:avoid;} }
+</style>
+
+<div class="page" id="doc" dir="rtl" data-doc-lang="ar">
+
+  <div class="langbar">
+    <button type="button" id="btn-ar" aria-pressed="true">العربية</button>
+    <button type="button" id="btn-en" aria-pressed="false">English</button>
+  </div>
+
+  <header class="mast">
+    <div class="eyebrow">
+      <span class="ar-only">عرض خدمة — سري ومُعدّ للإدارة العليا</span>
+      <span class="en-only">Service Proposal — Confidential, for executive review</span>
+    </div>
+    <h1>
+      <span class="ar-only">إطار تقييم جاهزية المعدات</span>
+      <span class="en-only">Equipment Fitness Framework</span>
+    </h1>
+    <p class="lede">
+      <span class="ar-only">قرار رأسمالي مبني على القياس: أي معدة تبقى، وأيها تُحلّ، وأيها يُعاد
+        تخصيصها — وكم يكلفكم التأجيل، بالجنيه، سنويًا.</span>
+      <span class="en-only">A measured basis for capital decisions: which assets stay, which get
+        replaced, which get reassigned — and what deferral costs you, in pounds, per year.</span>
+    </p>
+    <div class="byline">
+      <span class="ar-only">eff — إطار تقييم جاهزية المعدات</span>
+      <span class="en-only">eff — Equipment Fitness Framework</span>
+      <span class="num">v2.0</span>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi">
+        <span class="v">3,812,575</span>
+        <span class="l"><span class="ar-only">جنيه/سنة — وفر محدد على أسطول العرض التوضيحي</span>
+          <span class="en-only">EGP/year identified on the demonstration fleet</span></span>
+        <span class="n"><span class="ar-only">13 أصلًا</span><span class="en-only">13 assets</span></span>
+      </div>
+      <div class="kpi">
+        <span class="v">134,338</span>
+        <span class="l"><span class="ar-only">جنيه/سنة منها بلا أي إنفاق رأسمالي</span>
+          <span class="en-only">EGP/year of that requiring zero capital</span></span>
+        <span class="n"><span class="ar-only">إعادة تخصيص فقط</span><span class="en-only">reallocation only</span></span>
+      </div>
+      <div class="kpi">
+        <span class="v">79×</span>
+        <span class="l"><span class="ar-only">نسبة الوفر المحدد إلى أتعاب التقييم</span>
+          <span class="en-only">identified saving vs. assessment fee</span></span>
+        <span class="n"><span class="ar-only">مقابل 48,000 جنيه لأسطول 60 أصلًا</span>
+          <span class="en-only">against EGP 48,000 for a 60-asset fleet</span></span>
+      </div>
+      <div class="kpi">
+        <span class="v">47 / 11</span>
+        <span class="l"><span class="ar-only">نوع معدة عبر 11 قطاعًا صناعيًا</span>
+          <span class="en-only">equipment classes across 11 industrial sectors</span></span>
+        <span class="n"><span class="ar-only">مكتبة قابلة للتوسعة</span><span class="en-only">extensible library</span></span>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="kicker"><span class="ar-only">الخلاصة التنفيذية</span><span class="en-only">Executive summary</span></div>
+    <div class="prose stack">
+      <h2>
+        <span class="ar-only">أنتم تعرفون ما تملكون. السؤال المكلف هو: هل ما زال تشغيله مجديًا؟</span>
+        <span class="en-only">You know what you own. The expensive question is whether it is still worth running.</span>
+      </h2>
+      <p class="ar-only">سجل الأصول يجيب عن الملكية. لكنه لا يقول لكم أي مولد يحرق وقودًا زائدًا كل
+        ساعة، ولا أي خط إنتاج يقترب من نقطة يصبح فيها إصلاحه أغلى من إحلاله، ولا أي جرار
+        بقدرة <span class="num">500</span> حصان مخصص لمهمة تحتاج <span class="num">80</span>.</p>
+      <p class="en-only">An asset register answers ownership. It does not tell you which generator
+        burns excess fuel every hour it runs, which line is approaching the point where repair
+        costs more than replacement, or which <span class="num">500</span> hp tractor is assigned
+        to a job needing <span class="num">80</span>.</p>
+      <ul class="marks">
+        <li><span class="ar-only"><strong>ثلاثة مخرجات لكل أصل:</strong> درجة جاهزية من
+          <span class="num">0</span> إلى <span class="num">100</span>، حكم واضح، وحساب اقتصادي
+          بالجنيه يوضح هل الإحلال يوفّر أم يكلّف.</span>
+          <span class="en-only"><strong>Three outputs per asset:</strong> a fitness score from
+          <span class="num">0</span> to <span class="num">100</span>, a clear verdict, and an
+          economic calculation in pounds showing whether replacing saves or costs.</span></li>
+        <li><span class="ar-only"><strong>تقرير منفصل لمطابقة القدرة للمهمة</strong> — يرصد
+          الهدر الناتج عن سوء التخصيص، وهو وفر تشغيلي لا يحتاج رأس مال.</span>
+          <span class="en-only"><strong>A separate duty-match report</strong> — waste caused by
+          misallocation, which is an operational saving needing no capital at all.</span></li>
+        <li><span class="ar-only"><strong>لا نصدر حكمًا لا تسنده القياسات.</strong> إذا كانت
+          البيانات تغطي أقل من <span class="num">60٪</span> من وزن التقييم، فالمخرج خطة قياس
+          موثقة، لا توصية إحلال.</span>
+          <span class="en-only"><strong>No verdict is issued without measurement behind it.</strong>
+          Below <span class="num">60٪</span> data coverage the deliverable is a documented
+          measurement plan, not a replacement recommendation.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker"><span class="ar-only">الحالة التجارية</span><span class="en-only">The commercial case</span></div>
+    <div class="stack-lg">
+      <div class="prose stack">
+        <h2><span class="ar-only">ما وجده الإطار على أسطول من 13 أصلًا</span>
+          <span class="en-only">What the framework found on a 13-asset fleet</span></h2>
+        <p class="ar-only">هذه أرقام محسوبة بالأداة نفسها على أسطول العرض التوضيحي، لا تقديرات
+          تسويقية. كل رقم قابل للتتبع إلى مدخلاته.</p>
+        <p class="en-only">These are figures computed by the tool itself on the demonstration
+          fleet, not marketing estimates. Every number traces back to its inputs.</p>
+      </div>
+
+      <div class="tw">
+        <table>
+          <thead><tr>
+            <th><span class="ar-only">مصدر الوفر</span><span class="en-only">Source of saving</span></th>
+            <th><span class="ar-only">الأصول</span><span class="en-only">Assets</span></th>
+            <th class="n"><span class="ar-only">جنيه/سنة</span><span class="en-only">EGP/year</span></th>
+            <th><span class="ar-only">يحتاج رأس مال؟</span><span class="en-only">Capital needed?</span></th>
+          </tr></thead>
+          <tbody>
+            <tr><td class="f"><span class="ar-only">قرارات إحلال مسنودة اقتصاديًا</span>
+              <span class="en-only">Economically justified replacements</span></td>
+              <td class="n">5</td><td class="n">3,678,237</td>
+              <td><span class="ar-only">نعم</span><span class="en-only">Yes</span></td></tr>
+            <tr><td class="f"><span class="ar-only">إعادة تخصيص وتصحيح التحجيم</span>
+              <span class="en-only">Reallocation &amp; right-sizing</span></td>
+              <td class="n">2</td><td class="n">134,338</td>
+              <td><span class="ar-only">لا — قرار تشغيلي</span><span class="en-only">No — operational</span></td></tr>
+            <tr class="total"><td><span class="ar-only">الإجمالي المحدد</span>
+              <span class="en-only">Total identified</span></td>
+              <td class="n">7</td><td class="n">3,812,575</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="prose">
+        <div class="note">
+          <span class="ar-only"><strong>قراءة أمينة لهذا الرقم:</strong> أسطول العرض التوضيحي
+            صُمم ليعرض مدى كاملًا من الحالات — من معدة سليمة إلى أخرى تجاوزت عمرها — وليس ادعاءً
+            بأن أسطولكم مثله. الرقم يوضح <em>نوع</em> ما تكشفه المنهجية وكيف يُحسب. أما رقمكم
+            أنتم فهو تحديدًا ما يسلّمه التقييم التأسيسي.</span>
+          <span class="en-only"><strong>An honest reading of that figure:</strong> the
+            demonstration fleet was built to exhibit a full range of conditions — from sound
+            machines to one past its design life — not as a claim about your fleet. It shows the
+            <em>kind</em> of finding the methodology produces and how it is calculated. Your
+            number is precisely what the baseline assessment delivers.</span>
+        </div>
+      </div>
+
+      <div class="case">
+        <div class="case-head" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;align-items:baseline">
+          <h3><span class="ar-only">مثال: جرار مخصص للرش</span>
+            <span class="en-only">Example: a tractor assigned to spraying</span></h3>
+          <span class="pill" style="background:var(--keep)">
+            <span class="ar-only">استمرار التشغيل</span><span class="en-only">Keep</span></span>
+        </div>
+        <div class="flip">
+          <div class="good"><div class="lbl">
+            <span class="ar-only">درجة الجاهزية</span><span class="en-only">Fitness score</span></div>
+            <div class="val">12.8</div>
+            <div class="sub"><span class="ar-only">المعدة سليمة — لا مبرر لإحلالها.</span>
+              <span class="en-only">The machine is sound — no case for replacing it.</span></div></div>
+          <div class="bad"><div class="lbl">
+            <span class="ar-only">هدر سنوي من سوء التخصيص</span>
+            <span class="en-only">Annual waste from misallocation</span></div>
+            <div class="val">86,746</div>
+            <div class="sub"><span class="ar-only">جنيهًا، وقودًا زائدًا فقط.</span>
+              <span class="en-only">EGP, excess fuel alone.</span></div></div>
+        </div>
+        <p><span class="ar-only">جرار <span class="num">373</span> كيلوواط (نحو
+          <span class="num">500</span> حصان) على مهمة تحتاج <span class="num">60</span> كيلوواط —
+          أي <span class="num">16٪</span> من قدرته. <strong>التوصية ليست الإحلال بل إعادة
+          التخصيص</strong>، أو تنفيذ المهمة بجرار <span class="num">75</span> كيلوواط. وفر بلا
+          رأس مال، ولن يظهر في أي تقييم حالة تقليدي لأن الآلة ليست بها عطب.</span>
+          <span class="en-only">A <span class="num">373</span> kW
+          (~<span class="num">500</span> hp) tractor on a job needing <span class="num">60</span> kW
+          — <span class="num">16%</span> of its rating. <strong>The remedy is reassignment, not
+          replacement</strong>, or a <span class="num">75</span> kW machine for the task. A saving
+          with no capital, invisible to any conventional condition review because nothing is
+          broken.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker"><span class="ar-only">الأتعاب</span><span class="en-only">Fees</span></div>
+    <div class="stack-lg">
+      <div class="prose stack">
+        <h2><span class="ar-only">خدمة ذاتية التعبئة — بلا زيارات موقعية</span>
+          <span class="en-only">Self-service data entry — no site visits</span></h2>
+        <p class="ar-only">أنتم تملكون البيانات بالفعل: سجلات الصيانة، لوحات التعريف، فواتير
+          الوقود، دفتر الأعطال. نرسل لكم <strong>كراسة جمع بيانات</strong> واضحة بلغة غير هندسية،
+          يملؤها أمين المخزن أو مهندس الصيانة في ساعات، ثم نتولى نحن التحليل وإصدار التقرير.
+          لا تعبئة فريق، ولا أيام عمل ميدانية تُحاسَبون عليها.</p>
+        <p class="en-only">You already hold the data: maintenance records, nameplates, fuel
+          invoices, the breakdown log. We send a plain-language <strong>data collection
+          sheet</strong> your storekeeper or maintenance engineer fills in within hours, then we
+          run the analysis and issue the report. No mobilisation, no field days on your invoice.</p>
+        <p class="ar-only">الأتعاب أدناه مشتقة من جهد صريح: نصف يوم للتهيئة وإصدار الكراسة، ثم
+          <span class="num">0.15</span> يوم لكل <span class="num">10</span> أصول لمراجعة البيانات
+          واستيفاء نواقصها، ثم <span class="num">1.5–2.5</span> يوم للتفسير وكتابة التقرير، ونصف
+          يوم للعرض على الإدارة. متوسط اليوم الاستشاري <span class="num">13,000</span> جنيه.</p>
+        <p class="en-only">Fees derive from explicit effort: half a day to configure and issue the
+          sheet, <span class="num">0.15</span> day per <span class="num">10</span> assets to
+          review and chase the data, <span class="num">1.5–2.5</span> days to interpret and write
+          the report, and half a day for the executive presentation. Blended rate
+          <span class="num">EGP 13,000</span> per day.</p>
+      </div>
+
+      <h3><span class="ar-only">1 · التقييم التأسيسي (ذاتي التعبئة)</span>
+        <span class="en-only">1 · Baseline assessment (self-service)</span></h3>
+      <div class="tw">
+        <table>
+          <thead><tr>
+            <th><span class="ar-only">حجم الأسطول</span><span class="en-only">Fleet size</span></th>
+            <th class="n"><span class="ar-only">الجهد (يوم)</span><span class="en-only">Effort (days)</span></th>
+            <th class="n"><span class="ar-only">الأتعاب (جنيه)</span><span class="en-only">Fee (EGP)</span></th>
+            <th class="n"><span class="ar-only">للأصل</span><span class="en-only">Per asset</span></th>
+          </tr></thead>
+          <tbody>
+            <tr><td class="f"><span class="ar-only">حتى 25 أصلًا</span><span class="en-only">Up to 25</span></td>
+              <td class="n">2.9</td><td class="n">38,000</td><td class="n">1,520</td></tr>
+            <tr><td class="f">26 – 60</td><td class="n">3.7</td><td class="n">48,000</td><td class="n">800</td></tr>
+            <tr><td class="f">61 – 120</td><td class="n">5.3</td><td class="n">69,000</td><td class="n">575</td></tr>
+            <tr><td class="f"><span class="ar-only">أكثر من 120</span><span class="en-only">Above 120</span></td>
+              <td class="n">—</td>
+              <td class="n">69,000 + 450×n</td><td class="n">450</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3><span class="ar-only">2 · خدمات اختيارية</span><span class="en-only">2 · Optional add-ons</span></h3>
+      <div class="tw">
+        <table>
+          <thead><tr>
+            <th><span class="ar-only">الخدمة</span><span class="en-only">Service</span></th>
+            <th><span class="ar-only">الوحدة</span><span class="en-only">Unit</span></th>
+            <th class="n"><span class="ar-only">الأتعاب (جنيه)</span><span class="en-only">Fee (EGP)</span></th>
+          </tr></thead>
+          <tbody>
+            <tr><td class="f"><span class="ar-only">جلسة تعبئة موجهة (عن بُعد، ساعتان)</span>
+              <span class="en-only">Guided fill-in session (remote, 2 hours)</span></td>
+              <td><span class="ar-only">لكل جلسة</span><span class="en-only">per session</span></td>
+              <td class="n">6,500</td></tr>
+            <tr><td class="f"><span class="ar-only">إدخال البيانات نيابةً عنكم من صوركم ومستنداتكم</span>
+              <span class="en-only">We enter the data from your scans and documents</span></td>
+              <td><span class="ar-only">لكل أصل</span><span class="en-only">per asset</span></td>
+              <td class="n">350</td></tr>
+            <tr><td class="f"><span class="ar-only">زيارة تحقق ميدانية (عند الطلب فقط)</span>
+              <span class="en-only">On-site verification visit (only if you want it)</span></td>
+              <td><span class="ar-only">لكل يوم + الانتقالات</span><span class="en-only">per day + travel</span></td>
+              <td class="n">18,000</td></tr>
+            <tr><td class="f"><span class="ar-only">تصميم منظومة القياس ومواصفات العدادات</span>
+              <span class="en-only">Measurement system design &amp; meter specification</span></td>
+              <td><span class="ar-only">لكل موقع</span><span class="en-only">per site</span></td>
+              <td class="n">28,000</td></tr>
+            <tr><td class="f"><span class="ar-only">تدريب فريق الصيانة (عن بُعد، حتى 12 فردًا)</span>
+              <span class="en-only">Maintenance team training (remote, up to 12 staff)</span></td>
+              <td><span class="ar-only">لكل دورة</span><span class="en-only">per course</span></td>
+              <td class="n">14,000</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3><span class="ar-only">3 · المراقبة المستمرة (اشتراك سنوي)</span>
+        <span class="en-only">3 · Continuous monitoring (annual retainer)</span></h3>
+      <div class="tw">
+        <table>
+          <thead><tr>
+            <th><span class="ar-only">الأصول تحت المراقبة</span><span class="en-only">Assets monitored</span></th>
+            <th class="n"><span class="ar-only">سنويًا (جنيه)</span><span class="en-only">Annual (EGP)</span></th>
+            <th class="n"><span class="ar-only">شهريًا</span><span class="en-only">Monthly</span></th>
+            <th class="n"><span class="ar-only">للأصل/سنة</span><span class="en-only">Per asset/yr</span></th>
+          </tr></thead>
+          <tbody>
+            <tr><td class="f"><span class="ar-only">حتى 30</span><span class="en-only">Up to 30</span></td>
+              <td class="n">42,000</td><td class="n">3,500</td><td class="n">1,400</td></tr>
+            <tr><td class="f">31 – 80</td><td class="n">78,000</td><td class="n">6,500</td><td class="n">975</td></tr>
+            <tr><td class="f">81 – 160</td><td class="n">130,000</td><td class="n">10,833</td><td class="n">813</td></tr>
+            <tr><td class="f"><span class="ar-only">أكثر من 160</span><span class="en-only">Above 160</span></td>
+              <td class="n">800 × n</td><td class="n">—</td><td class="n">800</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="prose">
+        <div class="note teal">
+          <span class="ar-only"><strong>مثال متكامل — أسطول 60 أصلًا:</strong>
+            تقييم تأسيسي <span class="num">48,000</span> + جلستا تعبئة موجهة
+            <span class="num">13,000</span> + تصميم قياس لموقعين <span class="num">56,000</span>
+            + تدريب <span class="num">14,000</span> =
+            <strong><span class="num">131,000</span> جنيه في السنة الأولى</strong>، ثم اشتراك
+            مراقبة <span class="num">78,000</span> جنيه سنويًا. أتعاب الاستشارة فقط — الأجهزة
+            على العميل.</span>
+          <span class="en-only"><strong>Worked example — 60 assets:</strong>
+            baseline assessment <span class="num">48,000</span> + two guided sessions
+            <span class="num">13,000</span> + measurement design for two sites
+            <span class="num">56,000</span> + training <span class="num">14,000</span> =
+            <strong><span class="num">EGP 131,000</span> in year one</strong>, then a
+            <span class="num">78,000</span> annual monitoring retainer. Consulting fees only —
+            instruments are the client's.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker"><span class="ar-only">ميزانية أجهزة القياس</span><span class="en-only">Instrument budget</span></div>
+    <div class="stack-lg">
+      <div class="prose stack">
+        <h2><span class="ar-only">الأجهزة على العميل — وهذه أسعارها الاسترشادية</span>
+          <span class="en-only">Instruments are client-supplied — indicative budget</span></h2>
+        <p class="ar-only">لا نبيع أجهزة ولا نتقاضى عمولة عليها، حتى تبقى التوصية بالقياس مستقلة
+          عن أي مصلحة. الأرقام أدناه نطاقات سوقية استرشادية بحاجة إلى عرض سعر فعلي.</p>
+        <p class="en-only">We neither sell instruments nor take commission on them, so the
+          recommendation to measure stays independent of any interest in what gets bought. The
+          figures below are indicative market ranges requiring formal quotation.</p>
+      </div>
+      <div class="tw">
+        <table>
+          <thead><tr>
+            <th><span class="ar-only">الجهاز</span><span class="en-only">Instrument</span></th>
+            <th class="n"><span class="ar-only">النطاق (جنيه)</span><span class="en-only">Range (EGP)</span></th>
+            <th><span class="ar-only">ما يفتحه من مؤشرات</span><span class="en-only">What it unlocks</span></th>
+          </tr></thead>
+          <tbody>
+            <tr><td class="f"><span class="ar-only">عداد ساعات تشغيل</span><span class="en-only">Hour meter</span></td>
+              <td class="n">1,200 – 3,000</td>
+              <td><span class="ar-only">العمر، الاعتمادية، الكفاءة — أرخص أداة وأعلاها عائدًا</span>
+                <span class="en-only">Age, reliability, efficiency — cheapest, highest return</span></td></tr>
+            <tr><td class="f"><span class="ar-only">عداد تدفق وقود (مولد)</span><span class="en-only">Fuel flow meter</span></td>
+              <td class="n">22,000 – 55,000</td>
+              <td><span class="ar-only">الاستهلاك النوعي</span><span class="en-only">Specific consumption</span></td></tr>
+            <tr><td class="f"><span class="ar-only">عداد كهرباء فرعي ثلاثي الأوجه</span>
+              <span class="en-only">3-phase sub-meter</span></td>
+              <td class="n">7,000 – 18,000</td>
+              <td><span class="ar-only">كفاءة المعدات الكهربائية</span><span class="en-only">Electrical equipment efficiency</span></td></tr>
+            <tr><td class="f"><span class="ar-only">عداد تدفق غاز</span><span class="en-only">Gas flow meter</span></td>
+              <td class="n">25,000 – 70,000</td>
+              <td><span class="ar-only">الغلايات والحضّانات</span><span class="en-only">Boilers and brooders</span></td></tr>
+            <tr><td class="f"><span class="ar-only">عداد بخار</span><span class="en-only">Steam flow meter</span></td>
+              <td class="n">45,000 – 120,000</td>
+              <td><span class="ar-only">كفاءة الغلايات</span><span class="en-only">Boiler efficiency</span></td></tr>
+            <tr><td class="f"><span class="ar-only">جهاز قياس اهتزاز محمول</span><span class="en-only">Portable vibration meter</span></td>
+              <td class="n">40,000 – 150,000</td>
+              <td><span class="ar-only">الحالة الفنية</span><span class="en-only">Physical condition</span></td></tr>
+            <tr><td class="f"><span class="ar-only">كاميرا حرارية صناعية</span><span class="en-only">Industrial thermal camera</span></td>
+              <td class="n">55,000 – 190,000</td>
+              <td><span class="ar-only">الحالة الفنية والسلامة الكهربائية</span>
+                <span class="en-only">Condition and electrical safety</span></td></tr>
+            <tr><td class="f"><span class="ar-only">تحليل زيت (لكل عينة، معمل خارجي)</span>
+              <span class="en-only">Oil analysis (per sample, external lab)</span></td>
+              <td class="n">900 – 2,000</td>
+              <td><span class="ar-only">تآكل داخلي مبكر</span><span class="en-only">Early internal wear</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="prose">
+        <div class="note">
+          <span class="ar-only"><strong>ابدأوا بعدادات الساعات.</strong> أرخص بند في الجدول،
+            ويفتح وحده ثلاثة مؤشرات من الثمانية. أي أصل بلا عداد ساعات لا يمكن تقييمه بجدية.</span>
+          <span class="en-only"><strong>Start with hour meters.</strong> The cheapest line in the
+            table, and on its own it unlocks three of the eight indicators. Any asset without one
+            cannot be seriously assessed.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker"><span class="ar-only">الشروط التجارية</span><span class="en-only">Commercial terms</span></div>
+    <div class="tw">
+      <table>
+        <tbody>
+          <tr><td class="f"><span class="ar-only">جدول السداد</span><span class="en-only">Payment schedule</span></td>
+            <td><span class="ar-only">40٪ عند التعاقد · 40٪ عند اكتمال جمع البيانات · 20٪ عند تسليم التقرير</span>
+              <span class="en-only">40% on signature · 40% on completion of data collection · 20% on report delivery</span></td></tr>
+          <tr><td class="f"><span class="ar-only">الاشتراك السنوي</span><span class="en-only">Retainer</span></td>
+            <td><span class="ar-only">يُسدد ربع سنويًا مقدمًا</span><span class="en-only">Payable quarterly in advance</span></td></tr>
+          <tr><td class="f"><span class="ar-only">سريان العرض</span><span class="en-only">Proposal validity</span></td>
+            <td><span class="ar-only">30 يومًا من تاريخه</span><span class="en-only">30 days from date of issue</span></td></tr>
+          <tr><td class="f"><span class="ar-only">غير شامل</span><span class="en-only">Excludes</span></td>
+            <td><span class="ar-only">ضريبة القيمة المضافة، الأجهزة، رسوم المعامل، السفر خارج الدلتا والقاهرة الكبرى</span>
+              <span class="en-only">VAT, instruments, laboratory fees, travel outside the Delta and Greater Cairo</span></td></tr>
+          <tr><td class="f"><span class="ar-only">ملكية البيانات</span><span class="en-only">Data ownership</span></td>
+            <td><span class="ar-only">ملف البيانات والتقارير ملك للعميل بالكامل، بصيغة مفتوحة</span>
+              <span class="en-only">The data file and all reports belong entirely to the client, in open formats</span></td></tr>
+          <tr><td class="f"><span class="ar-only">السرية</span><span class="en-only">Confidentiality</span></td>
+            <td><span class="ar-only">اتفاقية عدم إفصاح متبادلة قبل بدء جمع البيانات</span>
+              <span class="en-only">Mutual NDA in place before data collection begins</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker"><span class="ar-only">خطة التنفيذ</span><span class="en-only">Delivery plan</span></div>
+    <div class="steps">
+      <div class="step"><div class="when"><span class="ar-only">يوم 1</span><span class="en-only">Day 1</span></div>
+        <div class="what"><strong><span class="ar-only">مكالمة تهيئة وإصدار كراسة البيانات</span>
+          <span class="en-only">Configuration call, data sheet issued</span></strong>
+          <span class="ar-only">نصف ساعة لتحديد القطاع، ثم تصلكم الكراسة مهيأة بمعدات قطاعكم ووحداتها.</span>
+          <span class="en-only">Half an hour to set the sector, then the sheet arrives pre-configured with your sector's machinery and units.</span></div></div>
+      <div class="step"><div class="when"><span class="ar-only">أسبوع 1–2</span><span class="en-only">Week 1–2</span></div>
+        <div class="what"><strong><span class="ar-only">فريقكم يملأ الكراسة</span>
+          <span class="en-only">Your team fills the sheet</span></strong>
+          <span class="ar-only">من السجلات ولوحات التعريف. مؤشر الاكتمال يوضح لهم مباشرةً جودة الحكم المتوقع، فيعرفون أين يبذلون الجهد.</span>
+          <span class="en-only">From records and nameplates. A live completeness meter shows how sound the verdict will be, so they know where effort pays.</span></div></div>
+      <div class="step"><div class="when"><span class="ar-only">أسبوع 3</span><span class="en-only">Week 3</span></div>
+        <div class="what"><strong><span class="ar-only">التحليل وعرض النتائج على الإدارة</span>
+          <span class="en-only">Analysis and executive presentation</span></strong>
+          <span class="ar-only">تقرير الأسطول، الحساب الاقتصادي لكل أصل، تقرير مطابقة القدرة للمهمة، وخطة قياس للفجوات.</span>
+          <span class="en-only">Fleet report, per-asset economics, the duty-match report, and a measurement plan for the gaps.</span></div></div>
+      <div class="step"><div class="when"><span class="ar-only">شهر 6</span><span class="en-only">Month 6</span></div>
+        <div class="what"><strong><span class="ar-only">إعادة تقييم بدرجة ثقة كافية للقرار</span>
+          <span class="en-only">Reassessment at decision-grade confidence</span></strong>
+          <span class="ar-only">مع اتجاه كفاءة له عدد قراءات يُعتد به لموازنة الإحلال.</span>
+          <span class="en-only">With an efficiency trend of usable length for the capital budget.</span></div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker"><span class="ar-only">حدود المنهجية</span><span class="en-only">Limitations</span></div>
+    <div class="prose stack">
+      <h2><span class="ar-only">ما لا يغطيه الإطار بعد</span><span class="en-only">What the framework does not yet cover</span></h2>
+      <p class="ar-only">نذكرها صراحةً لأن منهجية تُقدَّم بلا حدود معلنة هي منهجية غير قابلة للمراجعة.</p>
+      <p class="en-only">Stated plainly, because a methodology presented without limits is a methodology that cannot be audited.</p>
+      <ul class="marks">
+        <li><span class="ar-only"><strong>العتبات قواعد هندسية عملية</strong> لا مشتقة من قاعدة
+          بيانات أسطول، وتُعاد معايرتها مع تراكم الحالات ونتائجها الفعلية.</span>
+          <span class="en-only"><strong>Thresholds are engineering rules of thumb</strong>, not
+          derived from a fleet dataset, and are recalibrated as assessed cases and their actual
+          outcomes accumulate.</span></li>
+        <li><span class="ar-only"><strong>منحنيات الحمل الجزئي متاحة لبعض الفئات فقط</strong> —
+          محركات الديزل والغاز، الجرارات، وحدات الحرق، والتبريد بالانضغاط. وما لا منحنى له
+          يُترك دون تصحيح بدل استعارة منحنى لا يصفه.</span>
+          <span class="en-only"><strong>Part-load curves exist for some classes only</strong> —
+          diesel and gas engines, tractors, combustion plant and vapour-compression cooling.
+          Classes without one are left uncorrected rather than borrowing a curve that does not
+          describe them.</span></li>
+        <li><span class="ar-only"><strong>التقييم يتناول كل أصل منفردًا</strong> ولا يتعامل بعد
+          مع الاحتياطي — مجموعة <span class="lat num">N+1</span> تحتمل وحدة أسوأ مما تحتمله وحدة
+          وحيدة بلا بديل.</span>
+          <span class="en-only"><strong>Assets are assessed individually</strong>; redundancy is
+          not yet modelled — an <span class="num">N+1</span> set tolerates a worse unit than a
+          single point of failure does.</span></li>
+        <li><span class="ar-only"><strong>الأصول الاحتياطية قليلة التشغيل</strong> لا يخدمها
+          تقييم مبني على ساعات التشغيل، لأن خطرها الحقيقي هو موثوقية بدء التشغيل عند الحاجة.</span>
+          <span class="en-only"><strong>Low-hour standby assets</strong> are poorly served by
+          run-hour scoring; their real risk is starting reliability on demand.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="close">
+    <div class="sig">
+      <span class="ar-only">eff<span>إطار تقييم جاهزية المعدات</span></span>
+      <span class="en-only">eff<span>Equipment Fitness Framework</span></span>
+    </div>
+    <div class="contact">
+      <span class="ar-only">لتحديد نطاق العمل وجدولة العرض التقديمي</span>
+      <span class="en-only">To scope the engagement and schedule the presentation</span><br>
+      <span class="num" style="color:var(--ink-2); font-weight:700">010 3220 8322</span>
+      <span style="color:var(--ink-3)"> · </span>
+      <span class="num" style="color:var(--ink-2); font-weight:700">015 5744 3731</span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var doc = document.getElementById('doc');
+  var ar = document.getElementById('btn-ar');
+  var en = document.getElementById('btn-en');
+  function set(lang){
+    doc.setAttribute('data-doc-lang', lang);
+    doc.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    ar.setAttribute('aria-pressed', String(lang === 'ar'));
+    en.setAttribute('aria-pressed', String(lang === 'en'));
+  }
+  ar.addEventListener('click', function(){ set('ar'); });
+  en.addEventListener('click', function(){ set('en'); });
+})();
+</script>

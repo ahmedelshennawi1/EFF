@@ -1,0 +1,278 @@
+<meta charset="utf-8">
+﻿<title>مذكرة تنفيذية — تقييم جاهزية معدات مجموعة الدقهلية | Executive Brief</title>
+<style>
+:root{
+  --ground:#FAFBFA; --surface:#FFFFFF; --surface-2:#EFF3F1; --sunk:#E4EBE8;
+  --line:#D3DEDA; --line-soft:#E3EAE7;
+  --ink:#1B2124; --ink-2:#4A5A5C; --ink-3:#728285;
+  --teal-deep:#0E6E66; --teal:#14958A; --brass:#B8934A;
+  --f:"Segoe UI","Dubai","Geeza Pro","Noto Sans Arabic",Tahoma,Arial,sans-serif;
+  --f-mono:"Consolas","SF Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ground:#12191A; --surface:#182122; --surface-2:#1E2829; --sunk:#141D1E;
+  --line:#2C3B3C; --line-soft:#243132; --ink:#E7EFEC; --ink-2:#A6BAB6; --ink-3:#7C9290;
+  --teal-deep:#5CCBBB; --teal:#3FB5A6; --brass:#D4B173;}}
+:root[data-theme="dark"]{
+  --ground:#12191A; --surface:#182122; --surface-2:#1E2829; --sunk:#141D1E;
+  --line:#2C3B3C; --line-soft:#243132; --ink:#E7EFEC; --ink-2:#A6BAB6; --ink-3:#7C9290;
+  --teal-deep:#5CCBBB; --teal:#3FB5A6; --brass:#D4B173;}
+
+*{box-sizing:border-box;}
+body{margin:0; background:var(--ground); color:var(--ink); font-family:var(--f);
+  font-size:15.5px; line-height:1.75; -webkit-font-smoothing:antialiased;}
+.page{max-width:52rem; margin:0 auto; padding:0 1.4rem 4.5rem;}
+.page[dir="rtl"]{text-align:right;} .page[dir="ltr"]{text-align:left;}
+/* Specificity (0,3,0): must beat any element-typed display rules below. */
+.page[data-doc-lang="ar"] .en-only{display:none;}
+.page[data-doc-lang="en"] .ar-only{display:none;}
+h1,h2{margin:0; line-height:1.3; text-wrap:balance;}
+p{margin:0;} strong{color:var(--ink);}
+.num{font-family:var(--f-mono); font-variant-numeric:tabular-nums; direction:ltr; unicode-bidi:isolate;}
+
+.bar{display:flex; justify-content:flex-end; gap:.35rem; padding:1.1rem 0 0;}
+.bar button{font-family:var(--f); font-size:.8125rem; font-weight:700; padding:.3rem .95rem;
+  border:1px solid var(--line); background:var(--surface); color:var(--ink-2);
+  cursor:pointer; border-radius:3px;}
+.bar button[aria-pressed="true"]{background:var(--teal-deep); color:#fff; border-color:var(--teal-deep);}
+.bar button:focus-visible{outline:2px solid var(--brass); outline-offset:2px;}
+
+.mast{border-bottom:2px solid var(--teal-deep); padding:1.2rem 0 1.4rem;
+  display:flex; flex-direction:column; gap:.55rem;}
+.kind{font-size:.8125rem; font-weight:700; letter-spacing:.12em; color:var(--brass);}
+h1{font-size:1.75rem; font-weight:700; letter-spacing:-.015em; color:var(--teal-deep);}
+.to{font-size:.9375rem; color:var(--ink-2); border-inline-start:3px solid var(--brass);
+  padding:.35rem .9rem; background:var(--sunk); border-radius:0 3px 3px 0; margin-top:.4rem;}
+.meta{font-size:.8125rem; color:var(--ink-3); display:flex; gap:1.4rem; flex-wrap:wrap;}
+
+section{padding-top:1.9rem;}
+h2{font-size:1.0625rem; font-weight:700; color:var(--teal-deep); margin-bottom:.5rem;
+  display:flex; align-items:center; gap:.55rem;}
+h2::before{content:""; width:1.1rem; height:2px; background:var(--brass); flex:none;}
+.two{color:var(--ink-2);}
+ul{margin:.5rem 0 0; padding:0; list-style:none; display:flex; flex-direction:column; gap:.55rem;}
+ul li{padding-inline-start:1.3rem; position:relative; color:var(--ink-2);}
+ul li::before{content:""; position:absolute; inset-inline-start:0; top:.7em;
+  width:.4rem; height:.4rem; background:var(--teal); border-radius:1px;}
+
+.tw{overflow-x:auto; border:1px solid var(--line); border-radius:4px;
+  background:var(--surface); margin-top:.7rem;}
+table{width:100%; border-collapse:collapse; font-size:.875rem;}
+th{background:var(--surface-2); padding:.55rem .85rem; font-weight:700; color:var(--teal-deep);
+  border-bottom:1px solid var(--line); white-space:nowrap;}
+.page[dir="rtl"] th,.page[dir="rtl"] td{text-align:right;}
+.page[dir="ltr"] th,.page[dir="ltr"] td{text-align:left;}
+td{padding:.55rem .85rem; border-bottom:1px solid var(--line-soft); color:var(--ink-2); vertical-align:top;}
+tr:last-child td{border-bottom:0;}
+td.f{color:var(--ink); font-weight:700; white-space:nowrap;}
+
+.ask{background:var(--surface); border:1px solid var(--teal); border-radius:5px;
+  padding:1.15rem 1.3rem; margin-top:.7rem; color:var(--ink-2);}
+.ask strong{color:var(--teal-deep);}
+.note{font-size:.8125rem; color:var(--ink-3); margin-top:.6rem;}
+
+.close{margin-top:2.6rem; padding-top:1.4rem; border-top:2px solid var(--teal-deep);
+  display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:1rem;}
+.sig{font-weight:700; color:var(--teal-deep); font-size:1.0625rem;}
+.sig span{display:block; font-weight:400; font-size:.8125rem; color:var(--ink-3); margin-top:.2rem;}
+
+@media print{ body{background:#fff; font-size:13px;} .bar{display:none;}
+  .page{max-width:none; padding:0;} section{break-inside:avoid;} }
+</style>
+
+<div class="page" id="doc" dir="rtl" data-doc-lang="ar">
+
+  <div class="bar">
+    <button type="button" id="btn-ar" aria-pressed="true">العربية</button>
+    <button type="button" id="btn-en" aria-pressed="false">English</button>
+  </div>
+
+  <header class="mast">
+    <div class="kind">
+      <span class="ar-only">مذكرة تنفيذية — للعرض والموافقة</span>
+      <span class="en-only">Executive Brief — for review and approval</span>
+    </div>
+    <h1>
+      <span class="ar-only">تقييم جاهزية معدات المجموعة وتكلفة الطاقة اليومية</span>
+      <span class="en-only">Group Equipment Fitness &amp; Daily Energy Cost Assessment</span>
+    </h1>
+    <div class="to">
+      <span class="ar-only">مقدَّمة إلى: المهندس / خالد العناني — الرئيس التنفيذي ونائب رئيس مجلس الإدارة، مجموعة الدقهلية</span>
+      <span class="en-only">Submitted to: Eng. Khaled Al-Anani — CEO &amp; Deputy Chairman, Dakahlia Group</span>
+    </div>
+    <div class="meta">
+      <span class="ar-only">مقدمة من: أحمد الشناوي</span>
+      <span class="en-only">From: Ahmed Elshennawi</span>
+      <span class="num">19-08-2026</span>
+      <span class="ar-only">إطار عمل EFF — الإصدار <span class="num">2.0</span></span>
+      <span class="en-only">EFF Framework v<span class="num">2.0</span></span>
+    </div>
+  </header>
+
+  <section>
+    <h2><span class="ar-only">الموضوع في سطرين</span><span class="en-only">The matter in two lines</span></h2>
+    <p class="two">
+      <span class="ar-only">المجموعة تملك أسطولًا كبيرًا من المولدات والدفايات ومراوح التهوية والجرارات
+        ومعدات الأعلاف، وتُتخذ قرارات إصلاحها أو استبدالها اليوم بالخبرة لا بالقياس. أطلب الموافقة على
+        تقييم منهجي شامل لهذا الأسطول يحدد — بالأرقام وبالجنيه — أي معدة تبقى، وأيها تُستبدل،
+        وكم تحرق كل معدة يوميًا من وقود وكهرباء فوق حاجتها الفعلية.</span>
+      <span class="en-only">The Group operates a large fleet of generators, brooders, ventilation
+        fans, tractors and feed-milling machinery, and repair-or-replace decisions are made today
+        by experience, not measurement. I request approval for a systematic fleet assessment that
+        determines — in numbers, in pounds — which machines stay, which get replaced, and how much
+        each burns daily in fuel and power beyond what its work requires.</span>
+    </p>
+  </section>
+
+  <section>
+    <h2><span class="ar-only">لماذا الآن</span><span class="en-only">Why now</span></h2>
+    <ul>
+      <li><span class="ar-only"><strong>الطاقة تستهلك نحو ثلث تكاليف تشغيل قطاع الدواجن في مصر</strong>،
+        وأسعار السولار والكهرباء ارتفعت مرارًا ولا تتجه إلا صعودًا. كل معدة متدهورة أو أكبر من
+        مهمتها تدفع المجموعة ثمنها يوميًا، في صمت.</span>
+        <span class="en-only"><strong>Energy consumes roughly a third of poultry operating costs in
+        Egypt</strong>, and diesel and electricity prices have risen repeatedly with one direction of
+        travel. Every degraded or oversized machine charges the Group for it daily, silently.</span></li>
+      <li><span class="ar-only"><strong>قرار الإحلال يُتخذ عادةً بعد العطل الكبير</strong> — أي بعد وقوع
+        التكلفة. المنهجية تعكس الترتيب: إنذار مبكر مدعوم بالأرقام قبل العطل، لا بعده.</span>
+        <span class="en-only"><strong>Replacement decisions are usually made after the major
+        breakdown</strong> — after the cost has landed. This methodology reverses the order:
+        numbers-backed early warning before failure, not after.</span></li>
+      <li><span class="ar-only"><strong>في تقييم تجريبي لأسطول من <span class="num">13</span> معدة</strong>
+        (أسطول عرض توضيحي، لا بيانات المجموعة) حددت المنهجية هدرًا قدره
+        <span class="num">3,715</span> جنيه/يوم — منه <span class="num">134,000</span> جنيه سنويًا
+        لا يحتاج توفيره أي إنفاق رأسمالي، بل إعادة توزيع مهام فقط.</span>
+        <span class="en-only"><strong>On a <span class="num">13</span>-asset demonstration fleet</strong>
+        (demonstration data, not the Group's) the methodology identified waste of
+        EGP <span class="num">3,715</span>/day — of which EGP <span class="num">134,000</span>/year
+        needs no capital at all to recover, only task reallocation.</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><span class="ar-only">ما الذي تستلمه الإدارة</span><span class="en-only">What management receives</span></h2>
+    <ul>
+      <li><span class="ar-only"><strong>سجل مُرقَّم لكل معدة</strong> — درجة جاهزية من
+        <span class="num">0</span> إلى <span class="num">100</span> عبر ثمانية مؤشرات موثقة، وحكم
+        واضح: استمرار / مراقبة / تخطيط للإحلال / إخراج من الخدمة.</span>
+        <span class="en-only"><strong>A scored register of every machine</strong> — fitness
+        <span class="num">0–100</span> across eight documented indicators, and a clear verdict:
+        keep / monitor / plan replacement / retire.</span></li>
+      <li><span class="ar-only"><strong>دفتر حرق الطاقة اليومي</strong> — كم تدفع المجموعة كل يوم فوق
+        الحاجة، موزعًا بين تدهور فني (مسؤولية الصيانة) وسوء تخصيص (مسؤولية التشغيل).</span>
+        <span class="en-only"><strong>The daily energy-burn ledger</strong> — what the Group pays
+        each day above requirement, split between technical degradation (maintenance's
+        responsibility) and misallocation (operations' responsibility).</span></li>
+      <li><span class="ar-only"><strong>حساب اقتصادي بالجنيه</strong> لكل معدة مرشحة للإحلال:
+        هل الاستبدال يوفر فعلًا أم أن الاحتفاظ أرخص.</span>
+        <span class="en-only"><strong>Per-asset replacement economics in pounds</strong>: whether
+        replacing actually saves, or keeping is cheaper.</span></li>
+      <li><span class="ar-only"><strong>خطة قياس</strong> للمعدات التي لا تكفي سجلاتها لحكم أمين —
+        بالعداد المطلوب وموضعه ودورية قراءته.</span>
+        <span class="en-only"><strong>A measurement plan</strong> for machines whose records cannot
+        support an honest verdict — meter, location, reading cadence.</span></li>
+    </ul>
+    <p class="note">
+      <span class="ar-only">المنهجية لا تصدر حكمًا لا تسنده القياسات: المعدة ناقصة البيانات تُعلن
+        كذلك صراحةً بدل تجميلها — وهذا بحد ذاته كشف لواقع سجلات الأسطول.</span>
+      <span class="en-only">The methodology issues no verdict measurements cannot support: a
+        data-poor machine is declared as such rather than dressed up — itself a revealing audit of
+        the fleet's records.</span>
+    </p>
+  </section>
+
+  <section>
+    <h2><span class="ar-only">ما المطلوب من المجموعة</span><span class="en-only">What is required from the Group</span></h2>
+    <div class="tw"><table>
+      <tbody>
+        <tr><td class="f"><span class="ar-only">النطاق</span><span class="en-only">Scope</span></td>
+          <td><span class="ar-only">مرحلة أولى على <span class="num">2–3</span> مواقع مختارة تمثل
+            أنشطة المجموعة (معمل تفريخ، مصنع أعلاف، عنابر تسمين بمولداتها)، ثم التعميم على باقي
+            المواقع وفق النتائج</span>
+            <span class="en-only">Phase one on <span class="num">2–3</span> representative sites
+            (a hatchery, a feed mill, broiler houses with their generators), then group-wide
+            rollout based on results</span></td></tr>
+        <tr><td class="f"><span class="ar-only">تكليف منسق</span><span class="en-only">A named coordinator</span></td>
+          <td><span class="ar-only">مهندس صيانة أو أمين مخزن واحد لكل موقع</span>
+            <span class="en-only">One maintenance engineer or storekeeper per site</span></td></tr>
+        <tr><td class="f"><span class="ar-only">وقت الفريق</span><span class="en-only">Staff time</span></td>
+          <td><span class="ar-only">‏2–3 ساعات لكل موقع لتعبئة كراسة بيانات مُعدة بلغة غير هندسية،
+            من السجلات ولوحات التعريف — <strong>دون أي إيقاف للمعدات ودون زيارات تعطّل التشغيل</strong></span>
+            <span class="en-only">2–3 hours per site filling a plain-language data sheet from
+            records and nameplates — <strong>no machine stoppage, no disruptive visits</strong></span></td></tr>
+        <tr><td class="f"><span class="ar-only">إتاحة السجلات</span><span class="en-only">Records access</span></td>
+          <td><span class="ar-only">سجلات الصيانة وفواتير الوقود والكهرباء لآخر <span class="num">12</span> شهرًا</span>
+            <span class="en-only">Maintenance records and fuel/electricity invoices for the last
+            <span class="num">12</span> months</span></td></tr>
+        <tr><td class="f"><span class="ar-only">المدة</span><span class="en-only">Duration</span></td>
+          <td><span class="ar-only">ثلاثة أسابيع من التكليف إلى عرض النتائج على الإدارة</span>
+            <span class="en-only">Three weeks from go-ahead to the executive presentation</span></td></tr>
+        <tr><td class="f"><span class="ar-only">التكلفة</span><span class="en-only">Cost</span></td>
+          <td><span class="ar-only"><strong>بلا أتعاب لهذه المرحلة التجريبية</strong> ولا شراء أي
+            برمجيات — في مقابل إمكانية الإشارة إلى المجموعة كأول مرجع تطبيقي للمنهجية، بموافقة
+            الإدارة على الصيغة. وأي أجهزة قياس تُوصى بها لاحقًا قرار منفصل بعروض أسعار مستقلة</span>
+            <span class="en-only"><strong>No fees for this pilot phase</strong> and no software
+            purchases — in exchange for the ability to cite the Group as the methodology's first
+            applied reference, in wording management approves. Any later metering recommendations
+            are a separate decision with independent quotations</span></td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <h2><span class="ar-only">ما يبقى لدى المجموعة بعد التقييم</span><span class="en-only">What remains with the Group afterwards</span></h2>
+    <p class="two">
+      <span class="ar-only">لا ينتهي الأمر بتقرير يُقرأ مرة واحدة. يبقى لدى المجموعة سجل أصول
+        مُرقَّم قابل للتحديث، وخط أساس موثق لاستهلاك كل معدة، وخطة قياس تُمكِّن فرق الصيانة من
+        متابعة الاتجاه بأنفسهم — أي قدرة دائمة على اتخاذ قرارات الإحلال بالأرقام، لا خدمة تُستهلك
+        وتنتهي. البيانات والتقارير ملك للمجموعة بالكامل وبصيغ مفتوحة.</span>
+      <span class="en-only">This does not end with a report read once. The Group keeps an
+        updatable scored asset register, a documented consumption baseline for every machine, and
+        a measurement plan its own maintenance teams can carry forward — a permanent capability to
+        make replacement decisions by the numbers, not a service consumed and gone. All data and
+        reports belong entirely to the Group, in open formats.</span>
+    </p>
+  </section>
+
+  <section>
+    <h2><span class="ar-only">المطلوب اعتماده</span><span class="en-only">Approval requested</span></h2>
+    <div class="ask">
+      <span class="ar-only"><strong>الموافقة على تنفيذ التقييم على أسطول المجموعة</strong> وتسمية
+        منسق لكل موقع، على أن تُعرض النتائج كاملة على سيادتكم خلال ثلاثة أسابيع من التكليف.</span>
+      <span class="en-only"><strong>Approval to run the assessment on the Group's fleet</strong>
+        and the naming of a coordinator per site, with full results presented to you within three
+        weeks of go-ahead.</span>
+    </div>
+  </section>
+
+  <div class="close">
+    <div class="sig">
+      <span class="ar-only">أحمد الشناوي<span>مؤسِّس إطار EFF لتقييم جاهزية المعدات — كيان مستقل قيد التأسيس</span></span>
+      <span class="en-only">Ahmed Elshennawi<span>Founder, EFF Equipment Fitness Framework — independent venture in formation</span></span>
+    </div>
+    <div class="note">
+      <div style="margin-bottom:.5rem">
+        <span class="num" style="color:var(--ink-2); font-weight:700">010 3220 8322</span>
+        <span style="color:var(--ink-3)"> · </span>
+        <span class="num" style="color:var(--ink-2); font-weight:700">015 5744 3731</span>
+      </div>
+      <span class="ar-only">مرفق عند الطلب: منهجية التقييم كاملة بمؤشراتها وأوزانها ومعادلاتها.</span>
+      <span class="en-only">Available on request: the full methodology — indicators, weights, formulas.</span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var doc=document.getElementById('doc'),
+      ar=document.getElementById('btn-ar'), en=document.getElementById('btn-en');
+  function set(l){
+    doc.setAttribute('data-doc-lang', l);
+    doc.setAttribute('dir', l==='ar'?'rtl':'ltr');
+    ar.setAttribute('aria-pressed', String(l==='ar'));
+    en.setAttribute('aria-pressed', String(l==='en'));
+  }
+  ar.addEventListener('click', function(){ set('ar'); });
+  en.addEventListener('click', function(){ set('en'); });
+})();
+</script>

@@ -1,0 +1,119 @@
+{
+  "_about": "Parked product models. Re-enable by moving an entry back into data/products.json under 'products'. Kept out of the shipped set so the demonstration stays ONE simple example.",
+  "products": {
+    "broiler_meat": {
+      "label_en": "Broiler meat (live weight)",
+      "label_ar": "لحم دواجن (وزن حي)",
+      "unit": "tonne",
+      "inputs": {
+        "feed_tonnes": {
+          "ideal": 1.5,
+          "typical": 1.85,
+          "ef_product": "compound_feed",
+          "src": "ncc_fcr"
+        },
+        "house_heating_m3gas": {
+          "ideal": 210,
+          "typical": 380,
+          "climate": "heating",
+          "ef": "natural_gas_m3",
+          "src": "est"
+        },
+        "ventilation_kwh": {
+          "ideal": 95,
+          "typical": 165,
+          "climate": "cooling",
+          "ef": "electricity_kwh",
+          "src": "est"
+        },
+        "water_m3": {
+          "ideal": 4.5,
+          "typical": 7.0,
+          "climate": "irrigation",
+          "kind": "water",
+          "src": "est"
+        },
+        "processing_kwh": {
+          "ideal": 120,
+          "typical": 210,
+          "ef": "electricity_kwh",
+          "src": "est"
+        },
+        "chilling_kwh": {
+          "ideal": 90,
+          "typical": 160,
+          "climate": "cooling",
+          "ef": "electricity_kwh",
+          "src": "est"
+        },
+        "packaging_kg": {
+          "ideal": 12,
+          "typical": 22,
+          "ef": "plastic_kg",
+          "src": "est"
+        },
+        "reefer_freight_tkm": {
+          "ideal": 150,
+          "typical": 320,
+          "ef": "reefer_freight_tkm",
+          "src": "est"
+        }
+      },
+      "published_range_kg_per_t": [
+        3300,
+        4600
+      ],
+      "range_src": "lca_broiler_range",
+      "_scope_note": "Not modelled: manure and litter N2O, chick supply, bedding, mortality. The literature check will therefore read low — that is an honest scope gap, not a calibration error."
+    },
+    "compound_feed": {
+      "label_en": "Compound feed",
+      "label_ar": "أعلاف مركّبة",
+      "unit": "tonne",
+      "inputs": {
+        "ingredient_carbon_kg": {
+          "ideal": 480,
+          "typical": 700,
+          "ef": "direct_kgco2e",
+          "src": "lca_feed_ingredients",
+          "_note": "Embedded carbon of the ration. The lever is sourcing: local grain and deforestation-free soy sit near the low end, imported LUC-risk soy at the high."
+        },
+        "milling_kwh": {
+          "ideal": 28,
+          "typical": 48,
+          "ef": "electricity_kwh",
+          "src": "est"
+        },
+        "conditioning_m3gas": {
+          "ideal": 9,
+          "typical": 17,
+          "ef": "natural_gas_m3",
+          "src": "est"
+        },
+        "drying_kwh": {
+          "ideal": 12,
+          "typical": 26,
+          "ef": "electricity_kwh",
+          "src": "est"
+        },
+        "packaging_kg": {
+          "ideal": 1.2,
+          "typical": 2.4,
+          "ef": "plastic_kg",
+          "src": "est"
+        },
+        "road_freight_tkm": {
+          "ideal": 90,
+          "typical": 190,
+          "ef": "road_freight_tkm",
+          "src": "est"
+        }
+      },
+      "published_range_kg_per_t": [
+        400,
+        900
+      ],
+      "range_src": "lca_feed_ingredients"
+    }
+  }
+}

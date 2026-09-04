@@ -1,0 +1,411 @@
+﻿<title>eff — عرض تقديمي | Pitch Deck</title>
+<style>
+:root{
+  --ink:#0F1416; --surface:#171E21; --surface-2:#1D262A; --well:#0B1012;
+  --line:#263135; --text:#E9EEEF; --text-2:#9FB0B5; --text-3:#5F7076;
+  --ember:#F0692F; --ember-hi:#FF8A4D;
+  --keep:#2FA98C; --monitor:#D9A441; --plan:#C4574D; --retire:#8C2F22;
+  --f:"Rubik","Segoe UI","Noto Sans Arabic",Tahoma,sans-serif;
+  --mono:"IBM Plex Mono","Consolas",ui-monospace,monospace;
+}
+*{box-sizing:border-box;}
+html,body{height:100%;}
+body{margin:0; background:var(--ink); color:var(--text); font-family:var(--f);
+  overflow:hidden; -webkit-font-smoothing:antialiased;}
+#deck[data-lang="ar"] .en{display:none;}
+#deck[data-lang="en"] .ar{display:none;}
+#deck{height:100dvh; position:relative;}
+#deck[dir="rtl"]{text-align:right;} #deck[dir="ltr"]{text-align:left;}
+
+.slide{position:absolute; inset:0; display:none; flex-direction:column;
+  justify-content:center; padding:clamp(1.5rem,5vw,5rem); gap:clamp(.6rem,1.8vh,1.5rem);
+  overflow-y:auto;}
+.slide.on{display:flex; animation:in .35s ease both;}
+@keyframes in{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:none;}}
+@media (prefers-reduced-motion:reduce){.slide.on{animation:none;}}
+
+.kicker{font-family:var(--mono); font-size:clamp(.65rem,1.4vw,.8rem); letter-spacing:.16em;
+  color:var(--ember); text-transform:uppercase;}
+h1{margin:0; font-size:clamp(2rem,6.5vw,4.5rem); font-weight:700; letter-spacing:-.03em;
+  line-height:1.06; text-wrap:balance;}
+h2{margin:0; font-size:clamp(1.4rem,4vw,3rem); font-weight:700; letter-spacing:-.02em;
+  line-height:1.18; text-wrap:balance; max-width:24ch;}
+.lede{font-size:clamp(.95rem,1.8vw,1.35rem); color:var(--text-2); max-width:48ch; line-height:1.6;}
+.note{font-size:clamp(.72rem,1.3vw,.88rem); color:var(--text-3); max-width:58ch; line-height:1.6;}
+
+.cols{display:grid; gap:clamp(.7rem,2vw,1.4rem);
+  grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));}
+.card{background:var(--surface); border:1px solid var(--line); border-radius:10px;
+  padding:clamp(.9rem,2vw,1.4rem); display:flex; flex-direction:column; gap:.35rem;}
+.card .n{font-family:var(--mono); font-size:clamp(1.4rem,3.2vw,2.1rem); font-weight:600;
+  line-height:1.1; color:var(--ember); direction:ltr;}
+#deck[dir="rtl"] .card .n{text-align:right;}
+.card .t{font-weight:600; font-size:clamp(.85rem,1.5vw,1.05rem);}
+.card .d{font-size:clamp(.72rem,1.3vw,.85rem); color:var(--text-2); line-height:1.55;}
+
+/* the deliberately empty box — filled by the pilot, not by us */
+.blank{background:transparent; border:2px dashed var(--line); border-radius:10px;
+  padding:clamp(.9rem,2vw,1.4rem); display:flex; flex-direction:column; gap:.3rem;}
+.blank .q{font-family:var(--mono); font-size:clamp(1.8rem,4.5vw,3rem); color:var(--text-3);
+  line-height:1; direction:ltr;}
+#deck[dir="rtl"] .blank .q{text-align:right;}
+.blank .t{font-weight:600; font-size:clamp(.85rem,1.5vw,1.05rem); color:var(--text-2);}
+.blank .d{font-size:clamp(.72rem,1.3vw,.85rem); color:var(--text-3);}
+
+ul.pts{list-style:none; margin:0; padding:0; display:flex; flex-direction:column;
+  gap:clamp(.45rem,1.4vh,.95rem); max-width:54ch;}
+ul.pts li{padding-inline-start:1.5rem; position:relative; color:var(--text-2);
+  font-size:clamp(.85rem,1.6vw,1.1rem); line-height:1.55;}
+ul.pts li::before{content:""; position:absolute; inset-inline-start:0; top:.62em;
+  width:.5rem; height:.5rem; background:var(--ember); border-radius:1px;}
+ul.pts li b{color:var(--text);}
+
+.ind{display:grid; grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));
+  gap:.5rem clamp(1rem,3vw,2.5rem); max-width:56rem;}
+.ind div{display:flex; gap:.6rem; align-items:baseline; font-size:clamp(.78rem,1.4vw,.98rem);
+  color:var(--text-2); border-bottom:1px solid var(--line); padding-bottom:.35rem;}
+.ind span{font-family:var(--mono); font-size:.75em; color:var(--ember); flex:none;}
+
+.scale{display:flex; height:clamp(1.8rem,4vh,2.6rem); border-radius:6px; overflow:hidden;
+  gap:3px; max-width:54rem;}
+.scale i{display:flex; align-items:center; justify-content:center; height:100%;
+  font-size:clamp(.62rem,1.2vw,.82rem); font-weight:600;}
+
+.ask{background:var(--surface); border:1px solid var(--ember); border-radius:12px;
+  padding:clamp(1rem,2.5vw,1.8rem); max-width:48rem;}
+.ask .h{font-size:clamp(1rem,2vw,1.4rem); font-weight:700; color:var(--ember); margin-bottom:.4rem;}
+
+.bar{position:fixed; inset-inline:0; bottom:0; display:flex; align-items:center;
+  gap:.8rem; padding:.6rem clamp(1rem,3vw,2rem);
+  background:linear-gradient(transparent,var(--ink) 45%); z-index:5;}
+.dots{display:flex; gap:.35rem; flex:1; flex-wrap:wrap;}
+.dots button{width:1.35rem; height:.22rem; border-radius:99px; background:var(--line);
+  cursor:pointer; border:0; padding:0;}
+.dots button.on{background:var(--ember);}
+.nav{display:flex; gap:.35rem;}
+.nav button,.lang button{font-family:var(--f); font-size:.75rem; font-weight:600;
+  padding:.3rem .75rem; border:1px solid var(--line); background:var(--surface);
+  color:var(--text-2); border-radius:5px; cursor:pointer;}
+.nav button:hover{border-color:var(--ember); color:var(--text);}
+.lang{display:flex; gap:.3rem;}
+.lang button[aria-pressed="true"]{background:var(--ember); color:#fff; border-color:var(--ember);}
+button:focus-visible{outline:2px solid var(--ember-hi); outline-offset:2px;}
+.count{font-family:var(--mono); font-size:.72rem; color:var(--text-3); direction:ltr;}
+.mark{position:fixed; top:clamp(1rem,3vw,2rem); inset-inline-end:clamp(1rem,3vw,2rem);
+  display:flex; align-items:center; gap:.5rem; z-index:5; opacity:.85;}
+.mark .wm{font-weight:700; font-size:1.05rem; letter-spacing:-.04em;}
+
+@page{ size:A4 landscape; margin:0; }
+@media print{
+  html,body{overflow:visible; height:auto; background:var(--ink);
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;}
+  #deck{height:auto; position:static;}
+  .bar,.mark{display:none;}
+  /* `.slide.on` (0,2,0) outranks a bare `.slide` rule, so the entry animation
+     survives into print and the active slide renders blank. Both, !important. */
+  .slide,.slide.on{animation:none !important; opacity:1 !important;
+    position:static; display:flex !important; height:auto; min-height:99vh;
+    background:var(--ink); break-after:page; page-break-after:always;
+    break-inside:avoid; padding:6vh 7vw;}
+  .slide:last-of-type{break-after:auto; page-break-after:auto;}
+}
+</style>
+
+<div id="deck" dir="rtl" data-lang="ar">
+
+  <div class="mark">
+    <svg width="26" height="26" viewBox="0 0 48 48" aria-label="eff"><rect width="48" height="48" rx="12" fill="#F0692F"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+    <span class="wm">eff</span>
+  </div>
+
+  <!-- 1 -->
+  <section class="slide on">
+    <div class="kicker"><span class="ar">تقييم جاهزية المعدات وكفاءة الطاقة</span><span class="en">Equipment Fitness &amp; Energy Performance</span></div>
+    <h1><span class="ar">معداتك بتحرق فلوس<br>كل يوم — وإنت مش شايفها.</span>
+        <span class="en">Your machines burn money<br>every day — invisibly.</span></h1>
+    <p class="lede"><span class="ar">قياس بدل التخمين: أي معدة تفضل، وأيها تتغيّر، وأيها تتنقل
+      لمهمة تانية — وكام بالجنيه، وكام بالكربون.</span>
+      <span class="en">Measurement instead of guesswork: which machines stay, which get replaced,
+      which get reassigned — priced in pounds, and in carbon.</span></p>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide">
+    <div class="kicker"><span class="ar">المشكلة</span><span class="en">The problem</span></div>
+    <h2><span class="ar">التكلفة الوحيدة اللي مالهاش بند في الميزانية</span>
+        <span class="en">The one cost with no line in the budget</span></h2>
+    <ul class="pts">
+      <li><span class="ar"><b>المعدة المتدهورة ما بتتعطلش — بتاكل.</b> بتشتغل عادي، وبتستهلك وقود
+        وكهربا أكتر من اللازم كل ساعة تشغيل، وما فيش عطل ينبّهك.</span>
+        <span class="en"><b>A degraded machine does not break — it eats.</b> It runs normally,
+        consuming more fuel and power than it should every hour, with no failure to alert you.</span></li>
+      <li><span class="ar"><b>الفاتورة بتقول صرفت كام، مش كنت تقدر توفّر كام.</b> فاتورة السولار
+        رقم إجمالي — ما بتقولش أي معدة هي السبب.</span>
+        <span class="en"><b>The invoice says what you spent, not what you could have saved.</b>
+        A fuel bill is one total — it never names the machine responsible.</span></li>
+      <li><span class="ar"><b>وقرار الإحلال بيتاخد بعد العطل الكبير</b> — يعني بعد ما التكلفة تكون
+        وقعت بالفعل، مش قبلها.</span>
+        <span class="en"><b>And the replacement decision comes after the major failure</b> — after
+        the cost has already landed, not before.</span></li>
+    </ul>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide">
+    <div class="kicker"><span class="ar">المنهجية</span><span class="en">The method</span></div>
+    <h2><span class="ar">ثمانية مؤشرات موثقة لكل معدة</span><span class="en">Eight documented indicators, per machine</span></h2>
+    <div class="ind">
+      <div><span>01</span><span class="ar">استهلاك العمر التشغيلي</span><span class="en">Life consumed</span></div>
+      <div><span>02</span><span class="ar">الاعتمادية</span><span class="en">Reliability</span></div>
+      <div><span>03</span><span class="ar">تدهور الكفاءة</span><span class="en">Efficiency decay</span></div>
+      <div><span>04</span><span class="ar">تراجع الطاقة الإنتاجية</span><span class="en">Capacity derating</span></div>
+      <div><span>05</span><span class="ar">عبء تكلفة الصيانة</span><span class="en">Maintenance burden</span></div>
+      <div><span>06</span><span class="ar">الحالة الفنية</span><span class="en">Physical condition</span></div>
+      <div><span>07</span><span class="ar">التقادم وقطع الغيار</span><span class="en">Parts supportability</span></div>
+      <div><span>08</span><span class="ar">السلامة والامتثال</span><span class="en">Safety &amp; compliance</span></div>
+    </div>
+    <p class="lede" style="margin-top:.4rem"><span class="ar">النتيجة درجة من <span class="mono">0</span>
+      إلى <span class="mono">100</span> وحكم واحد واضح:</span>
+      <span class="en">The result is a score from <span class="mono">0</span> to
+      <span class="mono">100</span> and one clear verdict:</span></p>
+    <div class="scale">
+      <i style="flex:25;background:var(--keep);color:#08110E"><span class="ar">استمرار</span><span class="en">Keep</span></i>
+      <i style="flex:20;background:var(--monitor);color:#171D1F"><span class="ar">مراقبة</span><span class="en">Monitor</span></i>
+      <i style="flex:20;background:var(--plan);color:#fff"><span class="ar">تخطيط للإحلال</span><span class="en">Plan replacement</span></i>
+      <i style="flex:35;background:var(--retire);color:#fff"><span class="ar">إخراج من الخدمة</span><span class="en">Retire</span></i>
+    </div>
+    <p class="note"><span class="ar">وإذا كانت البيانات لا تكفي، <b>لا يصدر حكم</b> — تصدر خطة قياس
+      بدلًا منه. المنهجية لا تجمّل غياب البيانات.</span>
+      <span class="en">And where the data is insufficient, <b>no verdict is issued</b> — a
+      measurement plan is issued instead. The method never dresses up missing data.</span></p>
+  </section>
+
+  <!-- 3b -->
+  <section class="slide">
+    <div class="kicker"><span class="ar">كيف تُتخذ القرارات</span><span class="en">How the decisions are made</span></div>
+    <h2><span class="ar">الذكاء الاصطناعي يراقب. المعايير الهندسية تحكم.</span>
+        <span class="en">AI monitors. Engineering criteria decide.</span></h2>
+    <div class="cols">
+      <div class="card">
+        <div class="t"><span class="ar">دور الذكاء الاصطناعي</span><span class="en">What the AI does</span></div>
+        <div class="d"><span class="ar">يتابع القراءات شهريًا، ويرصد الانحراف قبل أن يصبح عطلًا،
+          ويكشف التناقضات في البيانات المُدخلة، ويحضّر التحليل والتقارير. أي: <b>المتابعة المستمرة
+          التي لا يقدر عليها فريق بشري لكل معدة كل شهر</b>.</span>
+          <span class="en">Tracks readings month by month, catches drift before it becomes a
+          failure, detects contradictions in the entered data, and prepares the analysis and
+          reports. In short: <b>the continuous watch no human team can keep on every machine every
+          month</b>.</span></div>
+      </div>
+      <div class="card">
+        <div class="t"><span class="ar">دور المعايير الهندسية</span><span class="en">What the criteria do</span></div>
+        <div class="d"><span class="ar">كل درجة وكل حكم يرجع إلى معادلة وعتبة منشورة مأخوذة من مراجع
+          معتمدة — مناطق الاهتزاز حسب <span class="mono">ISO 20816</span>، واختبار العزل حسب
+          <span class="mono">IEEE 43</span>، ومنحنيات الحمل الجزئي من بيانات الصانع.
+          <b>لا يوجد رقم واحد مصدره رأي نموذج</b>.</span>
+          <span class="en">Every score and verdict traces to a published formula and threshold from
+          recognised references — vibration zones per <span class="mono">ISO 20816</span>,
+          insulation testing per <span class="mono">IEEE 43</span>, part-load curves from OEM data.
+          <b>Not one number originates in a model's opinion</b>.</span></div>
+      </div>
+    </div>
+    <p class="note"><span class="ar">هذا الفصل مقصود. الذكاء الاصطناعي ممتاز في الملاحظة والمتابعة،
+      وضعيف في تحمّل المسؤولية عن قرار رأسمالي. لذلك <b>أي رقم في التقرير يمكن تتبعه إلى معادلته
+      ومصدره</b> — ومراجعته من أي مهندس لديكم.</span>
+      <span class="en">The separation is deliberate. AI is excellent at watching and flagging, and
+      unfit to carry responsibility for a capital decision. So <b>every figure in the report can be
+      traced to its formula and its source</b> — and audited by any engineer on your team.</span></p>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide">
+    <div class="kicker"><span class="ar">الفرق الجوهري</span><span class="en">The distinction that matters</span></div>
+    <h2><span class="ar">نوعان من الهدر — ولكل واحد صاحبه وعلاجه</span>
+        <span class="en">Two kinds of waste, each with its own owner and remedy</span></h2>
+    <div class="cols">
+      <div class="card">
+        <div class="t"><span class="ar">تدهور فني</span><span class="en">Technical degradation</span></div>
+        <div class="d"><span class="ar">المعدة نفسها ضعفت مقارنةً بخط أساسها المصحَّح على حملها الفعلي.
+          <b>مسؤولية الصيانة</b> — العلاج عمرة أو إحلال.</span>
+          <span class="en">The machine has weakened against its own baseline, corrected for the load
+          it actually runs at. <b>Maintenance's problem</b> — the remedy is overhaul or replacement.</span></div>
+      </div>
+      <div class="card">
+        <div class="t"><span class="ar">سوء تخصيص</span><span class="en">Misallocation</span></div>
+        <div class="d"><span class="ar">المعدة سليمة تمامًا لكنها مخصصة لمهمة أصغر أو أكبر من قدرتها،
+          فتستهلك أكثر مما يتطلبه الشغل. <b>مسؤولية التشغيل</b> — العلاج قرار إداري بلا أي إنفاق.</span>
+          <span class="en">The machine is perfectly sound but assigned to a duty above or below its
+          rating, so it consumes more than the work needs. <b>Operations' problem</b> — the remedy is
+          a management decision costing nothing.</span></div>
+      </div>
+    </div>
+    <p class="note"><span class="ar">الفصل بينهما هو جوهر المنهجية. لو خلطناهم، هتشتري معدة جديدة
+      لمشكلة مش في المعدة أصلًا — وهو أغلى خطأ ممكن في هذا الملف.</span>
+      <span class="en">Separating the two is the heart of the method. Merge them and you buy a new
+      machine for a problem the machine never had — the most expensive mistake available here.</span></p>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide">
+    <div class="kicker"><span class="ar">لماذا يهم الربح</span><span class="en">Why it matters to profit</span></div>
+    <h2><span class="ar">الجنيه اللي بتوفّره ربح صافي. الجنيه اللي بتبيعه لأ.</span>
+        <span class="en">A pound saved is net profit. A pound sold is not.</span></h2>
+    <p class="lede"><span class="ar">لما تبيع بجنيه، بتكسب هامشك منه فقط. ولما توفّر جنيه من
+      المصاريف، بينزل على صافي الربح كامل — لأنك أصلًا ما صرفتهوش.</span>
+      <span class="en">Sell a pound and you earn only your margin on it. Save a pound of cost and
+      the whole pound reaches net profit — because you never spent it.</span></p>
+    <p class="lede"><span class="ar"><b>التوفير ÷ هامش ربحك = المبيعات اللي كنت محتاجها لتحقيق نفس
+      الربح.</b> وكل ما الهامش يقل، الرقم يكبر — يعني الشركة ذات الهامش الرفيع هي أكثر من يفرق
+      معها التوفير.</span>
+      <span class="en"><b>Saving ÷ your net margin = the sales you would have needed for the same
+      profit.</b> The thinner the margin, the larger that figure — so a thin-margin business is
+      precisely the one saving matters most to.</span></p>
+    <p class="note"><span class="ar">الهامش رقمكم، ورقم التوفير يخرج من التقييم. المعادلة ثابتة
+      مهما كانا.</span>
+      <span class="en">The margin is your figure; the saving comes out of the assessment. The
+      arithmetic holds whatever both turn out to be.</span></p>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide">
+    <div class="kicker"><span class="ar">البُعد البيئي</span><span class="en">The environmental dimension</span></div>
+    <h2><span class="ar">نفس الهدر — مقروءًا كربونًا</span><span class="en">The same waste, read as carbon</span></h2>
+    <ul class="pts">
+      <li><span class="ar"><b>الرقم محسوب من نفس الكميات.</b> كل لتر وقود زائد وكل كيلوواط-ساعة زائدة
+        تُضرب في معامل انبعاث وقودها. التوفير والانبعاث بيتحركوا مع بعض بحكم المعادلة — مش تقدير منفصل.</span>
+        <span class="en"><b>Computed from the identical quantities.</b> Every excess litre and
+        kilowatt-hour multiplied by its fuel's emission factor. Saving and emissions move together
+        by construction — not as a separate estimate.</span></li>
+      <li><span class="ar"><b>شرط سوق، مش رفاهية.</b> المشترون الأوروبيون بيطلبوا بيانات انبعاثات
+        موثقة من مورّديهم، لأنهم هما نفسهم ملزمون بالإفصاح عن انبعاثات سلسلة التوريد. المورّد اللي
+        معاه الرقم بيفضل في القائمة.</span>
+        <span class="en"><b>A market condition, not a nicety.</b> European buyers require
+        documented emissions data from suppliers, because they are themselves obliged to disclose
+        supply-chain emissions. The supplier who has the number stays on the list.</span></li>
+      <li><span class="ar"><b>وأرصدة الكربون دخل محتمل، مش تكلفة.</b> مصر بقى عندها سوق طوعي منظّم
+        لتداول أرصدة الكربون في البورصة المصرية منذ أغسطس ٢٠٢٤، تحت إشراف الهيئة العامة للرقابة
+        المالية. خفض الانبعاثات الموثّق قابل — بعد اعتماد — للتحول إلى أرصدة قابلة للتداول.</span>
+        <span class="en"><b>And carbon credits are potential income, not cost.</b> Egypt has had a
+        regulated voluntary carbon market on the Egyptian Exchange since August 2024, under the
+        Financial Regulatory Authority. Documented emission reductions can — after certification —
+        become tradable credits.</span></li>
+      <li><span class="ar"><b>وكل ده محتاج أساس واحد: قياس موثّق.</b> الاعتماد وخطوط التمويل الأخضر
+        وطلبات المشترين كلها بتطلب خط أساس مُوثَّق وقياسًا متتابعًا — وهو بالظبط ما يُخرجه التقييم
+        كمنتج جانبي، بدون أي مجهود إضافي.</span>
+        <span class="en"><b>All of it rests on one thing: documented measurement.</b> Certification,
+        green credit lines and buyer requirements all demand a documented baseline and ongoing
+        measurement — precisely what the assessment produces as a by-product, at no extra effort.</span></li>
+    </ul>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide">
+    <div class="kicker"><span class="ar">المقترح</span><span class="en">The proposal</span></div>
+    <h2><span class="ar">خمس معدات. أربعتاشر يوم. أرقامكم إنتم.</span>
+        <span class="en">Five machines. Fourteen days. Your own numbers.</span></h2>
+    <p class="lede"><span class="ar">مش هعرض عليكم أمثلة من عند حد تاني. اختاروا خمس معدات رئيسية
+      سهل حصر بياناتها، ونشتغل عليها بالمنهجية دي بالظبط — والنتيجة تبقى أرقامكم:</span>
+      <span class="en">No borrowed examples. Pick five major machines whose data is easy to gather,
+      we run exactly this methodology on them, and the result is your figures:</span></p>
+    <div class="cols">
+      <div class="blank"><div class="q">—</div>
+        <div class="t"><span class="ar">جنيه/يوم</span><span class="en">EGP / day</span></div>
+        <div class="d"><span class="ar">حرق الطاقة فوق حاجة الشغل</span><span class="en">energy burned above requirement</span></div></div>
+      <div class="blank"><div class="q">—</div>
+        <div class="t"><span class="ar">جنيه/سنة بلا رأس مال</span><span class="en">EGP/yr, no capital</span></div>
+        <div class="d"><span class="ar">وفر من إعادة التخصيص وحدها</span><span class="en">saving from reallocation alone</span></div></div>
+      <div class="blank"><div class="q">—</div>
+        <div class="t"><span class="ar">طن CO₂/سنة</span><span class="en">t CO₂e / year</span></div>
+        <div class="d"><span class="ar">من نفس الهدر</span><span class="en">from the same waste</span></div></div>
+    </div>
+    <p class="note"><span class="ar">الخانات دي فاضية عن قصد. بعد أربعتاشر يوم من الموافقة تبقى
+      مليانة بأرقام معداتكم — وساعتها تقرروا لو التوسّع يستاهل ولا لأ.</span>
+      <span class="en">These boxes are deliberately empty. Fourteen days after approval they hold
+      your machines' figures — and then you decide whether widening the scope is worth it.</span></p>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide">
+    <div class="kicker"><span class="ar">المطلوب</span><span class="en">The ask</span></div>
+    <h2><span class="ar">اختيار خمس معدات، ومنسق واحد</span><span class="en">Five machines, and one coordinator</span></h2>
+    <div class="ask">
+      <div class="h"><span class="ar">ساعتان من وقت الفريق. لا زيارات، لا إيقاف معدات، لا أتعاب.</span>
+        <span class="en">Two hours of staff time. No visits, no stoppage, no fee.</span></div>
+      <p class="lede" style="max-width:none"><span class="ar">تُنفَّذ هذه المرحلة ضمن برنامج العملاء
+        المؤسِّسين، مقابل حق الإشارة إلى المجموعة كعميل مرجعي بصيغة تعتمدها الإدارة — ودون أي التزام
+        بالتوسّع بعدها.</span>
+        <span class="en">Delivered under the Founding Client Programme in exchange for citing the
+        Group as a reference client, in wording management approves — with no obligation to
+        proceed further.</span></p>
+    </div>
+    <div style="display:flex; gap:clamp(.8rem,2.5vw,2rem); flex-wrap:wrap; align-items:baseline;
+      margin-top:.5rem">
+      <span style="font-weight:700; font-size:clamp(.9rem,1.8vw,1.2rem)">
+        <span class="ar">أحمد الشناوي</span><span class="en">Ahmed Elshennawi</span>
+        <span style="color:var(--text-3); font-weight:400"> · eff</span></span>
+      <span class="mono" style="color:var(--ember); font-size:clamp(.9rem,1.9vw,1.3rem);
+        font-weight:600; direction:ltr">010 3220 8322 · 015 5744 3731</span>
+    </div>
+  </section>
+
+  <div class="bar">
+    <div class="dots" id="dots"></div>
+    <span class="count" id="count">1 / 9</span>
+    <div class="nav">
+      <button type="button" id="prev" aria-label="previous">‹</button>
+      <button type="button" id="next" aria-label="next">›</button>
+    </div>
+    <div class="lang">
+      <button type="button" id="bar" aria-pressed="true">ع</button>
+      <button type="button" id="ben" aria-pressed="false">EN</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var deck=document.getElementById('deck');
+  var slides=[].slice.call(deck.querySelectorAll('.slide'));
+  var dots=document.getElementById('dots'), count=document.getElementById('count');
+  var i=0;
+
+  slides.forEach(function(_,n){
+    var b=document.createElement('button');
+    b.type='button'; b.setAttribute('aria-label','slide '+(n+1));
+    b.addEventListener('click',function(){go(n);});
+    dots.appendChild(b);
+  });
+  var marks=[].slice.call(dots.children);
+
+  function go(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach(function(s,k){ s.classList.toggle('on',k===i); });
+    marks.forEach(function(m,k){ m.classList.toggle('on',k===i); });
+    count.textContent=(i+1)+' / '+slides.length;
+  }
+  // RTL reading order: the right arrow moves backwards.
+  function step(d){ go(i + (deck.getAttribute('dir')==='rtl' ? -d : d)); }
+
+  document.getElementById('next').addEventListener('click',function(){go(i+1);});
+  document.getElementById('prev').addEventListener('click',function(){go(i-1);});
+  window.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight') step(1);
+    else if(e.key==='ArrowLeft') step(-1);
+    else if(e.key===' '||e.key==='PageDown'){ e.preventDefault(); go(i+1); }
+    else if(e.key==='PageUp'){ e.preventDefault(); go(i-1); }
+    else if(e.key==='Home') go(0);
+    else if(e.key==='End') go(slides.length-1);
+  });
+
+  var ar=document.getElementById('bar'), en=document.getElementById('ben');
+  function lang(l){
+    deck.setAttribute('data-lang',l);
+    deck.setAttribute('dir', l==='ar'?'rtl':'ltr');
+    ar.setAttribute('aria-pressed',String(l==='ar'));
+    en.setAttribute('aria-pressed',String(l==='en'));
+  }
+  ar.addEventListener('click',function(){lang('ar');});
+  en.addEventListener('click',function(){lang('en');});
+
+  go(0);
+})();
+</script>

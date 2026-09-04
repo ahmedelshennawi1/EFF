@@ -1,0 +1,296 @@
+<meta charset="utf-8">
+<title>eff — معايير التسعير | Pricing Criteria</title>
+<style>
+:root{
+  --paper:#FAFAF8; --surface:#FFFFFF; --surface-2:#F1F2EF; --well:#ECEDE9;
+  --line:#D8DCD6; --line-soft:#E5E7E2;
+  --text:#171D1F; --text-2:#4C595D; --text-3:#7C898D;
+  --ember:#D4551E; --ember-soft:#FBEDE6;
+  --f:"Rubik","Segoe UI","Noto Sans Arabic",Tahoma,Arial,sans-serif;
+  --mono:"IBM Plex Mono","Consolas",ui-monospace,monospace;
+}
+*{box-sizing:border-box;}
+body{margin:0; background:var(--paper); color:var(--text); font-family:var(--f);
+  font-size:14.5px; line-height:1.7; -webkit-font-smoothing:antialiased;}
+.page{max-width:54rem; margin:0 auto; padding:0 1.4rem 4rem;}
+.page[dir="rtl"]{text-align:right;} .page[dir="ltr"]{text-align:left;}
+.page[data-doc-lang="ar"] .en-only{display:none;}
+.page[data-doc-lang="en"] .ar-only{display:none;}
+h1,h2,h3{margin:0; line-height:1.28; text-wrap:balance;}
+p{margin:0;} strong{color:var(--text);}
+.num{font-family:var(--mono); font-variant-numeric:tabular-nums; direction:ltr; unicode-bidi:isolate;}
+
+.bar{display:flex; justify-content:flex-end; gap:.35rem; padding:1rem 0 0;}
+.bar button{font-family:var(--f); font-size:.8125rem; font-weight:600; padding:.3rem .95rem;
+  border:1px solid var(--line); background:var(--surface); color:var(--text-2);
+  cursor:pointer; border-radius:5px;}
+.bar button[aria-pressed="true"]{background:var(--ember); color:#fff; border-color:var(--ember);}
+button:focus-visible{outline:2px solid var(--ember); outline-offset:2px;}
+
+.head{display:flex; justify-content:space-between; align-items:flex-start; gap:1.5rem;
+  flex-wrap:wrap; padding:1rem 0 1.1rem; border-bottom:2px solid var(--ember);}
+.brand{display:flex; align-items:center; gap:.65rem;}
+.brand .wm{font-weight:700; font-size:1.7rem; letter-spacing:-.045em; line-height:1;}
+.brand .tag{font-size:.6875rem; color:var(--text-3); margin-top:.2rem;}
+.docref{font-family:var(--mono); font-size:.6875rem; color:var(--text-3); line-height:1.9;}
+.page[dir="rtl"] .docref{text-align:left; direction:ltr;}
+.docref b{color:var(--ember); display:block; font-size:.75rem; letter-spacing:.1em;}
+
+.title{padding:1.4rem 0 .4rem;}
+h1{font-size:1.6rem; font-weight:700; letter-spacing:-.02em;}
+.lede{color:var(--text-2); margin-top:.5rem;}
+
+section{padding-top:1.8rem;}
+h2{font-size:1.0625rem; font-weight:700; margin-bottom:.5rem; display:flex;
+  align-items:center; gap:.6rem;}
+h2 .no{font-family:var(--mono); font-size:.75rem; color:var(--ember); font-weight:700;}
+
+.formula{background:var(--well); border-inline-start:3px solid var(--ember);
+  border-radius:0 6px 6px 0; padding:1rem 1.2rem; margin-top:.7rem;
+  font-family:var(--mono); font-size:.8125rem; line-height:2; color:var(--text-2);
+  direction:ltr; text-align:left; overflow-x:auto;}
+.formula b{color:var(--ember);}
+
+.tw{overflow-x:auto; border:1px solid var(--line); border-radius:7px;
+  background:var(--surface); margin-top:.7rem;}
+table{width:100%; border-collapse:collapse; font-size:.875rem;}
+th{background:var(--surface-2); padding:.55rem .9rem; font-weight:600; color:var(--text);
+  border-bottom:1px solid var(--line); white-space:nowrap; font-size:.8125rem;}
+.page[dir="rtl"] th,.page[dir="rtl"] td{text-align:right;}
+.page[dir="ltr"] th,.page[dir="ltr"] td{text-align:left;}
+td{padding:.5rem .9rem; border-bottom:1px solid var(--line-soft); color:var(--text-2);
+  vertical-align:top;}
+tr:last-child td{border-bottom:0;}
+td.f{color:var(--text); font-weight:600;}
+td.n,th.n{font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap;}
+.page[dir="rtl"] td.n,.page[dir="rtl"] th.n{text-align:left; direction:ltr;}
+.page[dir="ltr"] td.n,.page[dir="ltr"] th.n{text-align:right;}
+tr.total td{border-top:2px solid var(--line); font-weight:700; color:var(--text);
+  background:var(--surface-2);}
+
+.note{font-size:.8125rem; color:var(--text-3); margin-top:.6rem;}
+.callout{background:var(--ember-soft); border:1px solid var(--ember); border-radius:7px;
+  padding:1rem 1.2rem; margin-top:.7rem; font-size:.9375rem; color:var(--text-2);}
+.callout b{color:var(--ember);}
+
+footer{margin-top:2rem; padding-top:.9rem; border-top:1px solid var(--line);
+  display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+  font-size:.78125rem; color:var(--text-3);}
+footer .contact{font-family:var(--mono); color:var(--text-2); direction:ltr;}
+
+@media print{
+  body{font-size:12.5px; background:#fff;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;}
+  .bar{display:none;} .page{max-width:none; padding:0;} section{break-inside:avoid;}
+}
+</style>
+
+<div class="page" id="doc" dir="rtl" data-doc-lang="ar">
+
+  <div class="bar">
+    <button type="button" id="btn-ar" aria-pressed="true">العربية</button>
+    <button type="button" id="btn-en" aria-pressed="false">English</button>
+  </div>
+
+  <header class="head">
+    <div class="brand">
+      <svg width="42" height="42" viewBox="0 0 48 48" aria-label="eff"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+      <div><div class="wm">eff</div>
+        <div class="tag"><span class="ar-only">تقييم جاهزية المعدات وكفاءة الطاقة</span>
+          <span class="en-only">Equipment Fitness &amp; Energy Performance</span></div></div>
+    </div>
+    <div class="docref">
+      <b><span class="ar-only">معايير التسعير</span><span class="en-only">PRICING CRITERIA</span></b>
+      EFF-PRC-1.0<br>29-08-2026
+    </div>
+  </header>
+
+  <div class="title">
+    <h1><span class="ar-only">كيف تُحتسب الأتعاب</span><span class="en-only">How fees are calculated</span></h1>
+    <p class="lede">
+      <span class="ar-only">لا يوجد لدينا جدول أسعار ثابت. كل عرض سعر <strong>يُحسب</strong> من
+        عوامل معلنة، فيحصل أي عميلين لهما نفس الظروف على نفس الرقم، ويمكن الدفاع عن كل بند فيه
+        على حدة.</span>
+      <span class="en-only">There is no fixed price list. Every quote is <strong>computed</strong>
+        from declared factors, so any two clients with the same profile receive the same number,
+        and every line can be defended on its own.</span></p>
+  </div>
+
+  <section>
+    <h2><span class="no">01</span><span class="ar-only">المعادلة</span><span class="en-only">The formula</span></h2>
+    <div class="formula">
+      days&nbsp;&nbsp;= setup + (assets × per_asset) + (sites × per_site) + analysis + reporting<br>
+      days&nbsp;×= <b>data_readiness</b> × <b>urgency</b> × <b>diversity</b> × <b>language</b><br>
+      fee&nbsp;&nbsp;&nbsp;= days × day_rate − discounts
+    </div>
+    <p class="note"><span class="ar-only">سعر اليوم الاستشاري هو الرقم الوحيد الذي يتحرك منه كل
+      شيء. تغييره يعيد تسعير كل الخدمات دفعة واحدة.</span>
+      <span class="en-only">The consulting day rate is the single number everything scales from.
+      Changing it reprices every service at once.</span></p>
+  </section>
+
+  <section>
+    <h2><span class="no">02</span><span class="ar-only">عوامل الجهد</span><span class="en-only">Effort factors</span></h2>
+    <div class="tw"><table>
+      <thead><tr>
+        <th><span class="ar-only">البند</span><span class="en-only">COMPONENT</span></th>
+        <th class="n"><span class="ar-only">أيام</span><span class="en-only">DAYS</span></th>
+        <th><span class="ar-only">ما يغطيه</span><span class="en-only">WHAT IT COVERS</span></th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="f"><span class="ar-only">التهيئة</span><span class="en-only">Setup</span></td><td class="n">0.50</td>
+          <td><span class="ar-only">مكالمة تحديد النطاق وتهيئة كراسة البيانات للقطاع</span><span class="en-only">Scoping call and configuring the data sheet for the sector</span></td></tr>
+        <tr><td class="f"><span class="ar-only">لكل أصل</span><span class="en-only">Per asset</span></td><td class="n">0.03</td>
+          <td><span class="ar-only">مراجعة بيانات المعدة، استيفاء النواقص، تفسير نتيجتها</span><span class="en-only">Reviewing the machine's data, chasing gaps, interpreting its result</span></td></tr>
+        <tr><td class="f"><span class="ar-only">لكل موقع</span><span class="en-only">Per site</span></td><td class="n">0.25</td>
+          <td><span class="ar-only">التنسيق مع منسق الموقع ومتابعته</span><span class="en-only">Coordination with and follow-up of the site coordinator</span></td></tr>
+        <tr><td class="f"><span class="ar-only">التحليل</span><span class="en-only">Analysis</span></td><td class="n">0.50</td>
+          <td><span class="ar-only">تشغيل المنهجية ومراجعة النتائج الشاذة</span><span class="en-only">Running the methodology and reviewing outliers</span></td></tr>
+        <tr><td class="f"><span class="ar-only">التقرير</span><span class="en-only">Reporting</span></td><td class="n">1.50</td>
+          <td><span class="ar-only">إعداد التقرير الكامل وخطة القياس</span><span class="en-only">Producing the full report and measurement plan</span></td></tr>
+        <tr><td class="f"><span class="ar-only">العرض على الإدارة</span><span class="en-only">Presentation</span></td><td class="n">0.50</td>
+          <td><span class="ar-only">عرض النتائج ومناقشتها</span><span class="en-only">Presenting and discussing the findings</span></td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <h2><span class="no">03</span><span class="ar-only">معاملات التعديل</span><span class="en-only">Modifiers</span></h2>
+    <p class="note"><span class="ar-only">كل معامل يمثل سبب تكلفة حقيقيًا، لا وسيلة تفاوض. ويُذكر
+      صراحةً في عرض السعر عند تطبيقه.</span>
+      <span class="en-only">Each modifier names a real cost driver, not a negotiating tactic, and
+      is stated explicitly in the quote when applied.</span></p>
+    <div class="tw"><table>
+      <thead><tr>
+        <th><span class="ar-only">المعامل</span><span class="en-only">MODIFIER</span></th>
+        <th class="n"><span class="ar-only">القيمة</span><span class="en-only">VALUE</span></th>
+        <th><span class="ar-only">السبب</span><span class="en-only">WHY</span></th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="f"><span class="ar-only">جاهزية البيانات — جيدة</span><span class="en-only">Data readiness — good</span></td><td class="n">×1.00</td>
+          <td><span class="ar-only">سجلات منظمة ومتاحة</span><span class="en-only">Organised, available records</span></td></tr>
+        <tr><td class="f"><span class="ar-only">جاهزية البيانات — جزئية</span><span class="en-only">Data readiness — partial</span></td><td class="n">×1.15</td>
+          <td><span class="ar-only">سجلات متفرقة تحتاج تجميعًا ومتابعة</span><span class="en-only">Scattered records needing collation and chasing</span></td></tr>
+        <tr><td class="f"><span class="ar-only">جاهزية البيانات — ضعيفة</span><span class="en-only">Data readiness — poor</span></td><td class="n">×1.35</td>
+          <td><span class="ar-only">لا سجلات منظمة؛ جهد مضاعف في الاستيفاء</span><span class="en-only">No organised records; substantially more chasing</span></td></tr>
+        <tr><td class="f"><span class="ar-only">استعجال</span><span class="en-only">Expedited</span></td><td class="n">×1.30</td>
+          <td><span class="ar-only">ضغط الجدول الزمني وتأجيل أعمال أخرى</span><span class="en-only">Compresses the timeline and displaces other work</span></td></tr>
+        <tr><td class="f"><span class="ar-only">تنوّع المعدات (أكثر من 8 فئات)</span><span class="en-only">Equipment diversity (&gt; 8 classes)</span></td><td class="n">×1.10</td>
+          <td><span class="ar-only">خطوط أساس ووحدات قياس أكثر</span><span class="en-only">More baselines and measurement units to handle</span></td></tr>
+        <tr><td class="f"><span class="ar-only">لغة ثالثة</span><span class="en-only">Third language</span></td><td class="n">×1.12</td>
+          <td><span class="ar-only">العربية والإنجليزية قياسيتان بلا مقابل</span><span class="en-only">Arabic and English are standard at no premium</span></td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <h2><span class="no">04</span><span class="ar-only">أمثلة محسوبة</span><span class="en-only">Worked examples</span></h2>
+    <div class="tw"><table>
+      <thead><tr>
+        <th><span class="ar-only">الحالة</span><span class="en-only">CASE</span></th>
+        <th class="n"><span class="ar-only">أيام</span><span class="en-only">DAYS</span></th>
+        <th class="n"><span class="ar-only">الأتعاب</span><span class="en-only">FEE</span></th>
+        <th class="n"><span class="ar-only">الاشتراك/سنة</span><span class="en-only">RETAINER/YR</span></th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="f"><span class="ar-only">إثبات مفهوم — 5 معدات</span><span class="en-only">Proof of concept — 5 machines</span></td>
+          <td class="n">3.65</td><td class="n">47,500</td><td class="n">42,000</td></tr>
+        <tr><td class="f"><span class="ar-only">25 أصلًا · موقع · بيانات جيدة</span><span class="en-only">25 assets · 1 site · good data</span></td>
+          <td class="n">4.00</td><td class="n">52,000</td><td class="n">42,000</td></tr>
+        <tr><td class="f"><span class="ar-only">60 أصلًا · موقعان · بيانات جزئية · 9 فئات</span><span class="en-only">60 assets · 2 sites · partial data · 9 classes</span></td>
+          <td class="n">6.70</td><td class="n">87,000</td><td class="n">42,000</td></tr>
+        <tr><td class="f"><span class="ar-only">120 أصلًا · 4 مواقع · بيانات ضعيفة</span><span class="en-only">120 assets · 4 sites · poor data</span></td>
+          <td class="n">10.26</td><td class="n">120,000</td><td class="n">53,500</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note"><span class="ar-only">الأرقام أعلاه ناتج تشغيل المعادلة، لا أسعار محفوظة —
+      وتتغير تلقائيًا بتغيّر أي عامل. الصف الأخير مطبَّق عليه خصم تعدد المواقع
+      (<span class="num">10٪</span>)، ولذلك جاء الاشتراك محسوبًا على القيمة قبل الخصم. وصف
+      إثبات المفهوم يوضح قيمة العمل قبل تطبيق برنامج العملاء المؤسِّسين، الذي يجعل المستحق صفرًا.</span>
+      <span class="en-only">The figures above are the formula's output, not memorised prices, and
+      change automatically when any factor changes. The last row carries the multi-site discount
+      (<span class="num">10%</span>), which is why its retainer is computed on the pre-discount
+      value. The proof-of-concept row shows the value of the work before the Founding Client
+      Programme is applied, which brings the amount due to zero.</span></p>
+  </section>
+
+  <section>
+    <h2><span class="no">05</span><span class="ar-only">فحص القيمة</span><span class="en-only">The value check</span></h2>
+    <div class="callout">
+      <span class="ar-only"><b>الأتعاب الدفاعية تقع بين <span class="num">1٪</span> و<span class="num">3٪</span>
+        من فاتورة الطاقة السنوية للأسطول.</b> خارج هذا النطاق يُراجَع العرض: أقل من ذلك يعني بيع
+        الخدمة بأقل من قيمتها، وأعلى منه لن يجتاز مراجعة إدارة مالية. وهذا فحص للسلامة لا قاعدة
+        تسعير — لا يغيّر الرقم تلقائيًا، بل ينبّه إليه.</span>
+      <span class="en-only"><b>A defensible fee lands between <span class="num">1%</span> and
+        <span class="num">3%</span> of the fleet's annual energy bill.</b> Outside that band the
+        quote is reviewed: below it the service is underpriced; above it, the quote will not
+        survive a finance review. This is a sanity check, not a pricing rule — it flags, it never
+        silently changes the number.</span>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="no">06</span><span class="ar-only">الاشتراك والخدمات الإضافية</span><span class="en-only">Retainer &amp; add-ons</span></h2>
+    <div class="tw"><table>
+      <tbody>
+        <tr><td class="f"><span class="ar-only">المراقبة المستمرة</span><span class="en-only">Continuous monitoring</span></td>
+          <td><span class="ar-only"><span class="num">40٪</span> من قيمة التقييم سنويًا، بحد أدنى <span class="num">42,000</span> جنيه</span>
+            <span class="en-only"><span class="num">40%</span> of the assessment value per year, minimum EGP <span class="num">42,000</span></span></td></tr>
+        <tr><td class="f"><span class="ar-only">جلسة تعبئة موجهة</span><span class="en-only">Guided fill-in session</span></td><td class="n">6,500</td></tr>
+        <tr><td class="f"><span class="ar-only">إدخال البيانات نيابةً عن العميل</span><span class="en-only">Data entry on the client's behalf</span></td>
+          <td class="n">350 <span class="ar-only">/ أصل</span><span class="en-only">/ asset</span></td></tr>
+        <tr><td class="f"><span class="ar-only">زيارة تحقق ميدانية</span><span class="en-only">On-site verification visit</span></td>
+          <td class="n">18,000 <span class="ar-only">/ يوم</span><span class="en-only">/ day</span></td></tr>
+        <tr><td class="f"><span class="ar-only">تصميم منظومة القياس</span><span class="en-only">Measurement system design</span></td>
+          <td class="n">28,000 <span class="ar-only">/ موقع</span><span class="en-only">/ site</span></td></tr>
+        <tr><td class="f"><span class="ar-only">تدريب فريق الصيانة</span><span class="en-only">Maintenance team training</span></td><td class="n">14,000</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note"><span class="ar-only">الاشتراك يُحتسب على قيمة التقييم <strong>قبل أي خصم</strong>،
+      حتى لا يجعل التقييم المجاني الاشتراكَ مجانيًا.</span>
+      <span class="en-only">The retainer is priced off the assessment value <strong>before any
+      discount</strong>, so a free assessment never makes the retainer free.</span></p>
+  </section>
+
+  <section>
+    <h2><span class="no">07</span><span class="ar-only">الخصومات</span><span class="en-only">Discounts</span></h2>
+    <div class="tw"><table>
+      <tbody>
+        <tr><td class="f"><span class="ar-only">برنامج العملاء المؤسِّسين</span><span class="en-only">Founding Client Programme</span></td>
+          <td class="n">100٪</td>
+          <td><span class="ar-only">أول ثلاث منشآت، مقابل حق الإشارة كعميل مرجعي</span><span class="en-only">First three organisations, for reference rights</span></td></tr>
+        <tr><td class="f"><span class="ar-only">تعدد المواقع (3 فأكثر)</span><span class="en-only">Multi-site (3+)</span></td>
+          <td class="n">10٪</td>
+          <td><span class="ar-only">وفر حقيقي في التهيئة المتكررة</span><span class="en-only">A real saving in repeated setup</span></td></tr>
+        <tr><td class="f"><span class="ar-only">الالتزام بالاشتراك</span><span class="en-only">Retainer committed</span></td>
+          <td class="n">15٪</td>
+          <td><span class="ar-only">يقابله دخل متكرر مؤكد</span><span class="en-only">Offset by assured recurring income</span></td></tr>
+      </tbody>
+    </table></div>
+    <p class="note"><span class="ar-only">لا تُمنح خصومات خارج هذا الجدول. الخصم غير المبرر يفسد
+      المعيار ويجعل السعر موضع تفاوض في كل مرة.</span>
+      <span class="en-only">No discount is given outside this table. An unjustified discount breaks
+      the criteria and makes price a negotiation every time.</span></p>
+  </section>
+
+  <footer>
+    <span><span class="ar-only">eff — معايير التسعير · الإصدار 1.0 · بالجنيه المصري، غير شامل الضرائب</span>
+      <span class="en-only">eff — Pricing criteria · v1.0 · EGP, exclusive of taxes</span></span>
+    <span class="contact">010 3220 8322 · 015 5744 3731</span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var doc=document.getElementById('doc'),
+      ar=document.getElementById('btn-ar'), en=document.getElementById('btn-en');
+  function set(l){
+    doc.setAttribute('data-doc-lang', l);
+    doc.setAttribute('dir', l==='ar'?'rtl':'ltr');
+    ar.setAttribute('aria-pressed', String(l==='ar'));
+    en.setAttribute('aria-pressed', String(l==='en'));
+  }
+  ar.addEventListener('click', function(){ set('ar'); });
+  en.addEventListener('click', function(){ set('en'); });
+})();
+</script>

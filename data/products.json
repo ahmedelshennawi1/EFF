@@ -1,0 +1,155 @@
+{
+  "_about": "Product carbon intensity, benchmarked against a REGIONAL optimum. Ships with ONE worked example - potatoes - on purpose: it demonstrates the idea without implying eff intends to audit every part of a client's operation. Add a product only when a client asks for it.",
+  "version": "1.0",
+  "_calibration_warning": "Values carry a 'src' key naming their source. Those marked 'est' are still planning estimates pending calibration. Even fully-sourced results are a SCREENING footprint for ranking sites and sizing opportunities — a declarable product carbon footprint requires ISO 14067 / GHG Protocol Product Standard work with verified primary data and, for any public claim, third-party verification.",
+  "functional_unit": "tonne",
+  "_ef_about": "kg CO2e per unit. Grid factor is Egypt-specific and moves with the generation mix.",
+  "emission_factors": {
+    "electricity_kwh": 0.46,
+    "diesel_l": 2.68,
+    "natural_gas_m3": 1.93,
+    "lpg_kg": 2.98,
+    "fertilizer_n_kg": 5.5,
+    "fertilizer_p_kg": 1.0,
+    "organic_matter_kg": 0.06,
+    "plastic_kg": 2.1,
+    "carton_kg": 0.9,
+    "road_freight_tkm": 0.12,
+    "reefer_freight_tkm": 0.18,
+    "direct_kgco2e": 1.0
+  },
+  "_pump_about": "Water becomes carbon through the energy lifting it. kWh/m3 = rho*g*H / (3.6e6 * eta); at 65% wire-to-water efficiency that is 0.0042 kWh per m3 per metre of head. This is why water-table depth is a REGIONAL factor and not a national constant.",
+  "pump_kwh_per_m3_per_m": 0.0042,
+  "pump_efficiency_assumed": 0.65,
+  "_regions_about": "Factors multiply the national ideal for inputs tagged with the matching climate driver. Derived from mean temperature, typical water-table depth and cooling/heating degree days — replace with local data as it is gathered.",
+  "regions": {
+    "delta": {
+      "label_en": "Nile Delta",
+      "label_ar": "الدلتا",
+      "mean_temp_c": 21.0,
+      "water_lift_m": 12,
+      "irrigation_factor": 1.0,
+      "cooling_factor": 1.0,
+      "heating_factor": 1.0
+    },
+    "upper_egypt": {
+      "label_en": "Upper Egypt",
+      "label_ar": "الصعيد",
+      "mean_temp_c": 25.5,
+      "water_lift_m": 18,
+      "irrigation_factor": 1.28,
+      "cooling_factor": 1.35,
+      "heating_factor": 0.55
+    },
+    "new_valley": {
+      "label_en": "New Valley / reclaimed desert",
+      "label_ar": "الوادي الجديد والأراضي المستصلحة",
+      "mean_temp_c": 24.0,
+      "water_lift_m": 65,
+      "irrigation_factor": 1.45,
+      "cooling_factor": 1.25,
+      "heating_factor": 0.7
+    },
+    "north_coast": {
+      "label_en": "North coast",
+      "label_ar": "الساحل الشمالي",
+      "mean_temp_c": 19.5,
+      "water_lift_m": 10,
+      "irrigation_factor": 0.9,
+      "cooling_factor": 0.85,
+      "heating_factor": 1.2
+    },
+    "canal_east": {
+      "label_en": "Canal & Sinai",
+      "label_ar": "القناة وسيناء",
+      "mean_temp_c": 22.5,
+      "water_lift_m": 20,
+      "irrigation_factor": 1.12,
+      "cooling_factor": 1.1,
+      "heating_factor": 0.9
+    }
+  },
+  "_products_about": "ideal = best practice achievable in the Delta reference region. typical = what an unoptimised operation runs at. climate tags the regional factor that scales the ideal.",
+  "products": {
+    "potatoes": {
+      "label_en": "Potatoes",
+      "label_ar": "بطاطس",
+      "unit": "tonne",
+      "inputs": {
+        "irrigation_water_m3": {
+          "ideal": 260,
+          "typical": 400,
+          "climate": "irrigation",
+          "kind": "water",
+          "src": "fao_cropwat"
+        },
+        "field_diesel_l": {
+          "ideal": 20,
+          "typical": 34,
+          "ef": "diesel_l",
+          "src": "est"
+        },
+        "fertilizer_n_kg": {
+          "ideal": 4.0,
+          "typical": 7.5,
+          "ef": "fertilizer_n_kg",
+          "src": "est"
+        },
+        "organic_matter_kg": {
+          "ideal": 250,
+          "typical": 120,
+          "ef": "organic_matter_kg",
+          "higher_is_better": true,
+          "src": "est"
+        },
+        "cold_storage_kwh": {
+          "ideal": 22,
+          "typical": 55,
+          "climate": "cooling",
+          "ef": "electricity_kwh",
+          "src": "est"
+        },
+        "grading_packing_kwh": {
+          "ideal": 8,
+          "typical": 16,
+          "ef": "electricity_kwh",
+          "src": "est"
+        },
+        "packaging_kg": {
+          "ideal": 7,
+          "typical": 13,
+          "ef": "carton_kg",
+          "src": "est"
+        },
+        "road_freight_tkm": {
+          "ideal": 120,
+          "typical": 260,
+          "ef": "road_freight_tkm",
+          "src": "est"
+        }
+      },
+      "published_range_kg_per_t": [
+        71,
+        241
+      ],
+      "range_src": "lca_potato_range"
+    }
+  },
+  "standards": {
+    "_note": "The methodology frame this model follows in structure, without claiming conformity.",
+    "iso_14067": "ISO 14067:2018 — Carbon footprint of products: quantification and communication. The international reference standard for PCF.",
+    "ghg_protocol_product": "GHG Protocol Product Life Cycle Accounting and Reporting Standard.",
+    "pas_2050": "PAS 2050 (BSI, 2008) — the first PCF standard; more prescriptive than ISO 14067.",
+    "iso_14064": "ISO 14064 — organisation-level GHG quantification, the frame for any credit certification.",
+    "water": "Mekonnen & Hoekstra (2011), UNESCO-IHE Report 47 — green/blue/grey water footprint of crops."
+  },
+  "sources": {
+    "mh2011": "Mekonnen & Hoekstra (2011), Water Footprint of Crops, UNESCO-IHE Report 47 — potato global average 287 m3/t (green+blue+grey).",
+    "fao_cropwat": "FAO Irrigation & Drainage Paper 24/56 — potato seasonal crop water requirement 500-700 mm; applied volume derived at 70% (surface) to 90% (drip) efficiency.",
+    "lca_potato_range": "Published potato LCAs, farm gate: NL table 77 and 97, CN 172 (CI 139-213), CY spring 147 / winter 241 kg CO2e per tonne.",
+    "ncc_fcr": "Feed conversion ratio for modern broilers approx. 1.5 kg feed per kg live weight (industry LCA literature, 2018-2020).",
+    "lca_broiler_range": "Published broiler LCAs: 3.3-4.6 kg CO2e per kg live weight (farm gate). Cradle-to-grave retail figures are far higher and not comparable.",
+    "est": "eff planning estimate — NOT yet sourced. Calibrate from client data.",
+    "lca_feed_ingredients": "Feed ingredient LCAs: maize 0.39-0.81 and soybean 0.39-1.7 kg CO2e/kg; feed production is 60-80% of poultry GHG. Composite for a maize/soy broiler ration."
+  }
+}

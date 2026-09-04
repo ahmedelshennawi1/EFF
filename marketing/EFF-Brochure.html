@@ -1,0 +1,201 @@
+<meta charset="utf-8">
+<title>eff — بروشور | Brochure</title>
+<style>
+:root{
+  --ink:#0F1416; --surface:#171E21; --surface-2:#1D262A; --well:#0B1012;
+  --line:#263135; --line-soft:#1F292D;
+  --text:#E9EEEF; --text-2:#9FB0B5; --text-3:#5F7076;
+  --ember:#F0692F; --ember-hi:#FF8A4D;
+  --keep:#2FA98C; --monitor:#D9A441; --plan:#C4574D; --retire:#8C2F22;
+  --f:"Rubik","Segoe UI","Noto Sans Arabic",Tahoma,sans-serif;
+  --mono:"IBM Plex Mono","Consolas",ui-monospace,monospace;
+}
+*{box-sizing:border-box;}
+body{margin:0; background:#3A4144; font-family:var(--f); padding:2rem 0;}
+.num{font-family:var(--mono); font-variant-numeric:tabular-nums; direction:ltr; unicode-bidi:isolate;}
+
+.bar{display:flex; justify-content:center; gap:.4rem; padding-bottom:1.4rem;}
+.bar button{font-family:var(--f); font-size:.8rem; font-weight:600; padding:.4rem 1.1rem;
+  border:1px solid #4b5457; background:#232a2c; color:#c7cdcb; cursor:pointer; border-radius:6px;}
+.bar button[aria-pressed="true"]{background:var(--ember); color:#fff; border-color:var(--ember);}
+
+/* A4 portrait sheet, bento-grid modern layout */
+.sheet{width:210mm; min-height:297mm; margin:0 auto 2rem; background:var(--ink); color:var(--text);
+  box-shadow:0 10px 50px rgba(0,0,0,.45); padding:14mm 13mm 12mm; position:relative; overflow:hidden;}
+.sheet[dir="rtl"]{text-align:right;} .sheet[dir="ltr"]{text-align:left;}
+.sheet[data-lang="ar"] .en{display:none;} .sheet[data-lang="en"] .ar{display:none;}
+h1,h2,h3{margin:0; line-height:1.15; text-wrap:balance; letter-spacing:-.02em;} p{margin:0;}
+
+.bgbars{position:absolute; inset-inline-end:-30mm; top:-10mm; opacity:.05; z-index:0;
+  display:flex; flex-direction:column; gap:6mm;}
+.bgbars i{display:block; height:16mm; background:var(--ember); border-radius:4mm;}
+.bgbars i:nth-child(1){width:110mm;} .bgbars i:nth-child(2){width:78mm;} .bgbars i:nth-child(3){width:44mm;}
+
+.head{display:flex; justify-content:space-between; align-items:flex-start; position:relative; z-index:1;}
+.brand{display:flex; align-items:center; gap:2.2mm;}
+.brand .wm{font-weight:700; font-size:2rem; letter-spacing:-.05em;}
+.docref{font-family:var(--mono); font-size:.62rem; color:var(--text-3); text-align:left; direction:ltr; line-height:1.8;}
+.docref b{color:var(--ember); display:block; font-size:.7rem; letter-spacing:.1em;}
+
+.hero{padding:10mm 0 8mm; position:relative; z-index:1; border-bottom:1px solid var(--line);}
+.eyebrow{font-family:var(--mono); font-size:.68rem; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--ember); margin-bottom:3mm;}
+.hero h1{font-size:2.5rem; font-weight:700; max-width:22ch;}
+.hero .lede{color:var(--text-2); margin-top:4mm; max-width:56ch; font-size:1rem; line-height:1.65;}
+
+/* bento grid */
+.bento{display:grid; grid-template-columns:repeat(6,1fr); gap:3mm; margin-top:9mm; position:relative; z-index:1;}
+.bento > *{background:var(--surface); border:1px solid var(--line); border-radius:5mm; padding:5mm;}
+.b-wide{grid-column:span 4;} .b-narrow{grid-column:span 2;}
+.b-third{grid-column:span 2;} .b-half{grid-column:span 3;}
+.bento .k{font-family:var(--mono); font-size:.62rem; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--ember); margin-bottom:2mm;}
+.bento h3{font-size:1.05rem; font-weight:700;}
+.bento .d{color:var(--text-2); font-size:.82rem; margin-top:2mm; line-height:1.55;}
+.bento .v{font-family:var(--mono); font-weight:600; color:var(--ember); font-size:1.9rem; line-height:1;}
+.bento .accent{background:var(--ember); border-color:var(--ember);}
+.bento .accent .k,.bento .accent h3{color:#fff;}
+.bento .accent .d{color:rgba(255,255,255,.85);}
+
+.pills{display:flex; gap:1.2mm; flex-wrap:wrap; margin-top:3mm;}
+.pill{padding:1mm 2.6mm; border-radius:99px; font-size:.62rem; font-weight:600; color:#fff;}
+
+.foot{position:relative; z-index:1; margin-top:9mm; display:flex; justify-content:space-between;
+  align-items:center; padding-top:5mm; border-top:1px solid var(--line);
+  font-size:.72rem; color:var(--text-3);}
+.foot b{color:var(--ember);}
+
+@media print{
+  body{background:#fff; padding:0;}
+  .bar{display:none;}
+  .sheet{box-shadow:none; margin:0; width:auto; min-height:auto;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;}
+  @page{ size:A4; margin:0; }
+}
+</style>
+
+<div class="bar">
+  <button type="button" data-lang-btn="ar" aria-pressed="true">AR</button>
+  <button type="button" data-lang-btn="en" aria-pressed="false">EN</button>
+</div>
+
+<div class="sheet" id="sheet" dir="rtl" data-lang="ar">
+  <div class="bgbars"><i></i><i></i><i></i></div>
+
+  <div class="head">
+    <div class="brand">
+      <svg width="30" height="30" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#F0692F"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+      <span class="wm">eff</span>
+    </div>
+    <div class="docref"><b>BROCHURE · v2.0</b>2026 · eff-egypt.com</div>
+  </div>
+
+  <div class="hero">
+    <div class="eyebrow ar">تقييم كفاءة المعدات</div>
+    <div class="eyebrow en">EQUIPMENT FITNESS FRAMEWORK</div>
+    <h1 class="ar">قرارات المعدات بالأرقام، لا بالحدس</h1>
+    <h1 class="en">Machine decisions, by the numbers — not gut feel</h1>
+    <p class="lede ar">تمتلك معظم الشركات الصناعية المصرية قائمة بملكية معداتها، لا طبقة أداء.
+      يبني eff هذه الطبقة الناقصة — ساعات التشغيل، الاستهلاك، ومؤشرات التآكل — ويحوّلها إلى
+      حكم واحد واضح لكل معدة، مع درجة ثقة معلَنة.</p>
+    <p class="lede en">Most Egyptian industrial operations have an ownership list, not a
+      performance layer. eff builds that missing layer — run hours, consumption, wear signals
+      — and turns it into one clear verdict per machine, with a stated confidence.</p>
+  </div>
+
+  <div class="bento">
+    <div class="b-wide accent">
+      <div class="k">CORE ENGINE</div>
+      <h3 class="ar">محرك حتمي — دون تعلّم آلي</h3>
+      <h3 class="en">Deterministic engine — no machine learning</h3>
+      <div class="d ar">ثمانية مؤشرات موزونة، مصححة وفق معدل التحميل الفعلي للمعدة. يستند كل
+        حكم إلى معيار هندسي دولي معتمد — لا إلى تقدير شخصي.</div>
+      <div class="d en">8 weighted indicators, corrected for the machine's actual load factor.
+        Every verdict traces back to a recognized international engineering standard — never a
+        personal guess.</div>
+    </div>
+    <div class="b-narrow">
+      <div class="v num">8</div>
+      <div class="d ar">مؤشرات موزونة</div>
+      <div class="d en">weighted indicators</div>
+    </div>
+
+    <div class="b-third">
+      <div class="k ar">القاعدة 01</div>
+      <div class="k en">RULE 01</div>
+      <h3 class="ar" style="font-size:.95rem">الخانة الفارغة ليست صفرًا</h3>
+      <h3 class="en" style="font-size:.95rem">A blank cell is never zero</h3>
+      <div class="d ar">البيانات الناقصة تُستبعَد بأمانة، لا تُخمَّن</div>
+      <div class="d en">Missing data is excluded honestly, never guessed</div>
+    </div>
+    <div class="b-third">
+      <div class="k ar">القاعدة 02</div>
+      <div class="k en">RULE 02</div>
+      <h3 class="ar" style="font-size:.95rem">أقل من 60% ثقة، لا حكم</h3>
+      <h3 class="en" style="font-size:.95rem">Below 60% confidence, no verdict</h3>
+      <div class="d ar">يوضح التقرير عبارة "بيانات غير كافية" صراحةً</div>
+      <div class="d en">The report clearly states "insufficient data"</div>
+    </div>
+    <div class="b-third">
+      <div class="k ar">القاعدة 03</div>
+      <div class="k en">RULE 03</div>
+      <h3 class="ar" style="font-size:.95rem">الاقتصاد يوصي، لا يقرر</h3>
+      <h3 class="en" style="font-size:.95rem">Economics recommends, never decides</h3>
+      <div class="d ar">"الإخراج من الخدمة" يتطلب دليلًا ماديًا أو متعلقًا بالسلامة</div>
+      <div class="d en">"Retire now" needs physical or safety evidence</div>
+    </div>
+
+    <div class="b-half">
+      <div class="k ar">آلية العمل</div>
+      <div class="k en">HOW IT WORKS</div>
+      <h3 class="ar" style="font-size:.95rem">خدمة ذاتية، دون زيارات ميدانية</h3>
+      <h3 class="en" style="font-size:.95rem">Self-service, no site visits</h3>
+      <div class="d ar">يملأ فريقك نموذجًا بسيطًا لكل معدة، ونعود بتقرير كامل خلال 14 يومًا</div>
+      <div class="d en">Your team fills a simple kit per machine; a full report follows in 14 days</div>
+    </div>
+    <div class="b-half">
+      <div class="k ar">الأحكام</div>
+      <div class="k en">VERDICTS</div>
+      <div class="pills">
+        <span class="pill" style="background:var(--keep)"><span class="ar">استمرار</span><span class="en">Keep</span></span>
+        <span class="pill" style="background:var(--monitor)"><span class="ar">مراقبة</span><span class="en">Monitor</span></span>
+        <span class="pill" style="background:var(--plan)"><span class="ar">تخطيط</span><span class="en">Plan</span></span>
+        <span class="pill" style="background:var(--retire)"><span class="ar">إخراج</span><span class="en">Retire</span></span>
+      </div>
+    </div>
+
+    <div class="b-wide">
+      <div class="k ar">دفتر الطاقة اليومي</div>
+      <div class="k en">DAILY ENERGY LEDGER</div>
+      <h3 class="ar">كل جنيه تحرقه المعدة، مع تحديد المسؤولية عنه</h3>
+      <h3 class="en">Every pound the machine burns, with who's responsible</h3>
+      <div class="d ar">يبدأ كل تقرير بحرق الطاقة اليومي: ما مقدار مسؤولية الصيانة عنه، وما مقدار مسؤولية التشغيل.</div>
+      <div class="d en">Every report leads with the daily energy burn: how much is maintenance's problem, how much is operations'.</div>
+    </div>
+    <div class="b-narrow">
+      <div class="v num">14</div>
+      <div class="d ar">يومًا للتقرير الكامل</div>
+      <div class="d en">days to full report</div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span class="ar"><b>eff</b> · تقييم كفاءة المعدات</span>
+    <span class="en"><b>eff</b> · Equipment Fitness Framework</span>
+    <span class="mono">info@eff-egypt.com</span>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('[data-lang-btn]').forEach(function(b){
+  b.addEventListener('click', function(){
+    var lang = b.getAttribute('data-lang-btn');
+    var sheet = document.getElementById('sheet');
+    sheet.setAttribute('data-lang', lang);
+    sheet.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    document.querySelectorAll('[data-lang-btn]').forEach(function(x){
+      x.setAttribute('aria-pressed', x.getAttribute('data-lang-btn') === lang ? 'true' : 'false');
+    });
+  });
+});
+</script>

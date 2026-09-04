@@ -1,0 +1,246 @@
+<meta charset="utf-8">
+<title>eff — القدرات والمنهجية (نسخة طباعة ثنائية اللغة) | Capabilities (Bilingual Print)</title>
+<style>
+:root{
+  --paper:#FAFAF8; --surface:#FFFFFF; --surface-2:#F1F2EF; --well:#ECEDE9;
+  --line:#D8DCD6; --line-soft:#E5E7E2;
+  --text:#171D1F; --text-2:#4C595D; --text-3:#7C898D;
+  --ember:#D4551E; --ember-hi:#F0692F;
+  --keep:#177E66; --monitor:#9A741B; --plan:#A83E35; --retire:#7C2418;
+  --f:"Rubik","Segoe UI","Noto Sans Arabic",Tahoma,sans-serif;
+  --mono:"IBM Plex Mono","Consolas",ui-monospace,monospace;
+}
+*{box-sizing:border-box;}
+body{margin:0; background:#DADFDB; font-family:var(--f); padding:2rem 0;}
+.num{font-family:var(--mono); font-variant-numeric:tabular-nums; direction:ltr; unicode-bidi:isolate;}
+h1,h2,h3{margin:0; line-height:1.25; text-wrap:balance;} p{margin:0;}
+
+.note{max-width:40rem; margin:0 auto 1.2rem; text-align:center; color:#4C595D; font-size:.85rem;}
+
+/* A4 landscape sheet = two A5 columns. Right = Arabic, Left = English. */
+.sheet{width:297mm; height:210mm; margin:0 auto 8mm; background:var(--paper);
+  box-shadow:0 6px 30px rgba(0,0,0,.18); display:flex; position:relative; overflow:hidden;}
+.col{width:148.5mm; height:210mm; padding:11mm 10mm; overflow:hidden; position:relative; font-size:11px; line-height:1.5;}
+.col-en{direction:ltr; text-align:left; color:var(--text); border-inline-end:1px dashed var(--line);}
+.col-ar{direction:rtl; text-align:right; color:var(--text);}
+
+.brand{display:flex; align-items:center; gap:1.8mm;}
+.brand .wm{font-weight:700; font-size:1.35rem; letter-spacing:-.05em; color:var(--text);}
+.docref{font-family:var(--mono); font-size:.55rem; color:var(--text-3); margin-top:.5mm;}
+.pagenum{position:absolute; bottom:6mm; inset-inline-end:10mm; font-family:var(--mono); font-size:.55rem; color:var(--text-3);}
+
+.eyebrow{font-family:var(--mono); font-size:.55rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--ember); margin:5mm 0 1.5mm;}
+h1{font-size:1.25rem; font-weight:700; letter-spacing:-.02em;}
+.lede{color:var(--text-2); margin-top:2.5mm; font-size:.72rem;}
+
+h2{font-size:.7rem; font-weight:700; margin:4.5mm 0 1.5mm; color:var(--ember); text-transform:uppercase; letter-spacing:.04em;}
+
+.mod{border-bottom:1px solid var(--line-soft); padding:2mm 0; display:grid; grid-template-columns:6mm 1fr; gap:2mm;}
+.mod .no{font-family:var(--mono); color:var(--ember); font-weight:700; font-size:.68rem;}
+.mod h3{font-size:.72rem; font-weight:700;}
+.mod .d{color:var(--text-2); font-size:.64rem; margin-top:.5mm;}
+
+.rule{background:var(--well); border-inline-start:2px solid var(--ember); border-radius:0 3px 3px 0;
+  padding:1.8mm 2.5mm; margin-bottom:1.8mm;}
+.rule b{display:block; font-size:.68rem;}
+.rule span{color:var(--text-2); font-size:.62rem;}
+
+.tw{border:1px solid var(--line); border-radius:4px; overflow:hidden; margin-top:2mm;}
+table{width:100%; border-collapse:collapse; font-size:.64rem;}
+th{background:var(--surface-2); padding:1.5mm 2.5mm; font-weight:700; border-bottom:1px solid var(--line); font-size:.6rem;}
+td{padding:1.4mm 2.5mm; border-bottom:1px solid var(--line-soft); color:var(--text-2);}
+tr:last-child td{border-bottom:0;}
+
+.standards{display:flex; flex-wrap:wrap; gap:1.3mm; margin-top:2mm;}
+.std{font-family:var(--mono); font-size:.55rem; color:var(--text-2); background:var(--surface);
+  border:1px solid var(--line); border-radius:3px; padding:1mm 2mm;}
+
+.foot{position:absolute; bottom:6mm; inset-inline:10mm; padding-top:1.5mm; border-top:1px solid var(--line);
+  font-size:.55rem; color:var(--text-3); display:flex; justify-content:space-between;}
+.foot b{color:var(--ember);}
+
+@media print{
+  body{background:#fff; padding:0;}
+  .note{display:none;}
+  .sheet{box-shadow:none; margin:0; -webkit-print-color-adjust:exact; print-color-adjust:exact;
+    break-after:page; page-break-after:always;}
+  .sheet:last-of-type{break-after:auto; page-break-after:auto;}
+  @page{ size:A4 landscape; margin:0; }
+}
+</style>
+
+<div class="note">نسخة طباعة ثنائية اللغة — A4 أفقي مقسّم لعمودَي A5: العربية يمين، الإنجليزية يسار.<br>Bilingual print version — landscape A4 split into two A5 columns: Arabic right, English left.</div>
+
+<!-- page 1 -->
+<div class="sheet">
+  <div class="col col-en">
+    <div class="brand">
+      <svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+      <span class="wm">eff</span>
+    </div>
+    <div class="docref">CAPABILITIES · v1.1 · 2026 · eff-egypt.com</div>
+    <div class="eyebrow">CAPABILITIES &amp; METHODOLOGY</div>
+    <h1>How eff reaches its verdict, step by step</h1>
+    <p class="lede">This document explains what gets calculated, how, and against which
+      standards — without invented examples or numbers.</p>
+
+    <h2>What eff computes</h2>
+    <div class="mod"><div class="no">01</div><div><h3>The fitness score</h3>
+      <div class="d">Age, reliability, efficiency, capacity, maintenance cost, condition, spare-parts availability, and safety combine into one score out of 100 — no machine learning.</div></div></div>
+    <div class="mod"><div class="no">02</div><div><h3>Does replacing it save money?</h3>
+      <div class="d">Comparing the cost of keeping the machine against replacing it — the real difference only. The most this test can recommend is "plan for replacement", never "retire now".</div></div></div>
+    <div class="mod"><div class="no">03</div><div><h3>Daily energy-burn ledger</h3>
+      <div class="d">One daily EGP number, split into maintenance's share (wear) and operations' share (misallocated load).</div></div></div>
+    <div class="mod"><div class="no">04</div><div><h3>Matching the machine to the job</h3>
+      <div class="d">A sound machine on the wrong job is an operations problem to fix by reassignment — never a reason to replace it.</div></div></div>
+
+    <div class="foot"><span><b>eff</b> · Equipment Fitness Framework</span><span class="mono">info@eff-egypt.com</span></div>
+    <div class="pagenum">01</div>
+  </div>
+  <div class="col col-ar">
+    <div class="brand">
+      <svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+      <span class="wm">eff</span>
+    </div>
+    <div class="docref">القدرات والمنهجية · v1.1 · 2026 · eff-egypt.com</div>
+    <div class="eyebrow">القدرات والمنهجية</div>
+    <h1>كيف يصل eff إلى حكمه، خطوة بخطوة</h1>
+    <p class="lede">توضح هذه الوثيقة ما يُحسب، وكيف، وبناءً على أي معايير — دون أمثلة أو أرقام مختلقة.</p>
+
+    <h2>ما يحسبه eff</h2>
+    <div class="mod"><div class="no">01</div><div><h3>درجة الجاهزية</h3>
+      <div class="d">العمر والاعتمادية والكفاءة والسعة وتكلفة الصيانة والحالة وتوفر قطع الغيار والسلامة، مجموعة في رقم واحد من 100 — دون تعلّم آلي.</div></div></div>
+    <div class="mod"><div class="no">02</div><div><h3>هل يوفر الاستبدال المال فعلًا؟</h3>
+      <div class="d">مقارنة تكلفة الاحتفاظ بالمعدة بتكلفة استبدالها — استنادًا إلى الفرق الحقيقي فقط. أقصى توصية اقتصادية هي "التخطيط للإحلال"، لا "الإخراج من الخدمة".</div></div></div>
+    <div class="mod"><div class="no">03</div><div><h3>دفتر حرق الطاقة اليومي</h3>
+      <div class="d">رقم يومي واحد بالجنيه، مقسَّم إلى نصيب الصيانة (التآكل) ونصيب التشغيل (سوء توزيع الحمل).</div></div></div>
+    <div class="mod"><div class="no">04</div><div><h3>مطابقة المعدة للمهمة</h3>
+      <div class="d">معدة سليمة على مهمة غير مناسبة هي مشكلة تشغيلية تُحل بإعادة التوزيع، لا سبب لاستبدالها.</div></div></div>
+
+    <div class="foot"><span class="mono">info@eff-egypt.com</span><span><b>eff</b> · تقييم كفاءة المعدات</span></div>
+    <div class="pagenum">01</div>
+  </div>
+</div>
+
+<!-- page 2 -->
+<div class="sheet">
+  <div class="col col-en">
+    <div class="brand">
+      <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+      <span class="wm" style="font-size:1.1rem">eff</span>
+    </div>
+    <div class="docref">CAPABILITIES · v1.1 · 2026 · eff-egypt.com</div>
+
+    <div class="mod"><div class="no">05</div><div><h3>Emissions, from the same numbers</h3>
+      <div class="d">Carbon footprint calculated from the same excess-burn numbers in the energy ledger — never a separate estimate.</div></div></div>
+    <div class="mod"><div class="no">06</div><div><h3>Product carbon footprint, by region</h3>
+      <div class="d">Carbon per tonne of product, and how far from the best achievable in your region — water depth and irrigation distance vary by location.</div></div></div>
+    <div class="mod"><div class="no">07</div><div><h3>A fee calculated for you</h3>
+      <div class="d">The fee is set by the actual effort your fleet requires — assets, sites, data readiness.</div></div></div>
+
+    <h2>Honesty by design</h2>
+    <div class="rule"><b>No zero for a missing measurement</b>
+      <span>A missing indicator is excluded and its weight redistributes to what was measured</span></div>
+    <div class="rule"><b>Benchmark figures carry "~"</b>
+      <span>Any figure resting on a benchmark instead of a direct measurement is marked indicative</span></div>
+    <div class="rule"><b>Every reference value carries a source</b>
+      <span>A source field states whether it's from published research or an eff estimate awaiting sourcing</span></div>
+
+    <div class="foot"><span><b>eff</b> · Equipment Fitness Framework</span><span class="mono">info@eff-egypt.com</span></div>
+    <div class="pagenum">02</div>
+  </div>
+  <div class="col col-ar">
+    <div class="brand">
+      <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+      <span class="wm" style="font-size:1.1rem">eff</span>
+    </div>
+    <div class="docref">القدرات والمنهجية · v1.1 · 2026 · eff-egypt.com</div>
+
+    <div class="mod"><div class="no">05</div><div><h3>الانبعاثات، من الأرقام نفسها</h3>
+      <div class="d">تُحسب بصمة الكربون من أرقام الحرق الزائد نفسها الظاهرة في دفتر الطاقة — لا من تقدير منفصل.</div></div></div>
+    <div class="mod"><div class="no">06</div><div><h3>بصمة كربون المنتج حسب المنطقة</h3>
+      <div class="d">كمية الكربون لكل طن منتج، ومدى بُعدها عن أفضل أداء ممكن في منطقتك — عمق المياه ومسافة الري يختلفان جغرافيًا.</div></div></div>
+    <div class="mod"><div class="no">07</div><div><h3>أتعاب تُحسب لك، لا تُنتقى من جدول</h3>
+      <div class="d">تُحدَّد الأتعاب بناءً على المجهود الفعلي المطلوب لأسطولك — عدد الأصول والمواقع وجاهزية بياناتك.</div></div></div>
+
+    <h2>تصميم الأمانة</h2>
+    <div class="rule"><b>لا صفر لغياب القياس</b>
+      <span>يُستبعد المؤشر الناقص، ويُعاد توزيع وزنه على ما قِيس فعليًا</span></div>
+    <div class="rule"><b>الأرقام الإرشادية تُميَّز بعلامة "~"</b>
+      <span>أي رقم يستند إلى معيار قياسي بدلًا من قياس فعلي يُعلَّم كإرشادي</span></div>
+    <div class="rule"><b>لكل قيمة مرجعية مصدرها</b>
+      <span>حقل المصدر يوضح إن كانت القيمة من بحث منشور أو تقدير من eff لم يُوثَّق بعد</span></div>
+
+    <div class="foot"><span class="mono">info@eff-egypt.com</span><span><b>eff</b> · تقييم كفاءة المعدات</span></div>
+    <div class="pagenum">02</div>
+  </div>
+</div>
+
+<!-- page 3 -->
+<div class="sheet">
+  <div class="col col-en">
+    <div class="brand">
+      <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+      <span class="wm" style="font-size:1.1rem">eff</span>
+    </div>
+    <div class="docref">CAPABILITIES · v1.1 · 2026 · eff-egypt.com</div>
+
+    <h2>The report's shape</h2>
+    <p class="lede">The report's real line items, with empty values — real numbers come only from your own data.</p>
+    <div class="tw">
+      <table>
+        <tr><th>Item</th><th>Value</th></tr>
+        <tr><td>Daily energy burn</td><td>— EGP/day</td></tr>
+        <tr><td>Fitness score</td><td>— out of 100</td></tr>
+        <tr><td>Verdict</td><td>Keep / Monitor / Plan / Retire</td></tr>
+        <tr><td>Confidence</td><td>— %</td></tr>
+        <tr><td>Driving indicator</td><td>e.g. age / reliability / efficiency</td></tr>
+        <tr><td>Economic test</td><td>— EGP/year</td></tr>
+      </table>
+    </div>
+
+    <h2>Reference standards</h2>
+    <p class="lede">Every verdict traces back to a recognized international engineering standard.</p>
+    <div class="standards">
+      <span class="std">ISO 20816</span><span class="std">IEEE 43</span><span class="std">ISO 50001</span>
+      <span class="std">ISO 55000</span><span class="std">ISO 14067</span><span class="std">GHG Protocol</span>
+      <span class="std">Mekonnen &amp; Hoekstra 2011</span>
+    </div>
+
+    <div class="foot"><span><b>eff</b> · Equipment Fitness Framework</span><span class="mono">info@eff-egypt.com</span></div>
+    <div class="pagenum">03</div>
+  </div>
+  <div class="col col-ar">
+    <div class="brand">
+      <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+      <span class="wm" style="font-size:1.1rem">eff</span>
+    </div>
+    <div class="docref">القدرات والمنهجية · v1.1 · 2026 · eff-egypt.com</div>
+
+    <h2>شكل التقرير</h2>
+    <p class="lede">بنود التقرير الحقيقية، بقيم فارغة — الأرقام الحقيقية تأتي من بياناتك وحدها.</p>
+    <div class="tw">
+      <table>
+        <tr><th>البند</th><th>القيمة</th></tr>
+        <tr><td>حرق الطاقة اليومي</td><td>— جنيه/يوم</td></tr>
+        <tr><td>درجة الجاهزية</td><td>— من 100</td></tr>
+        <tr><td>الحكم</td><td>استمرار / مراقبة / تخطيط / إخراج</td></tr>
+        <tr><td>درجة الثقة</td><td>— %</td></tr>
+        <tr><td>المؤشر القائد</td><td>مثلًا: العمر / الاعتمادية / الكفاءة</td></tr>
+        <tr><td>الاختبار الاقتصادي</td><td>— جنيه/سنة</td></tr>
+      </table>
+    </div>
+
+    <h2>المعايير المرجعية</h2>
+    <p class="lede">يستند كل حكم إلى معيار هندسي دولي معترف به.</p>
+    <div class="standards">
+      <span class="std">ISO 20816</span><span class="std">IEEE 43</span><span class="std">ISO 50001</span>
+      <span class="std">ISO 55000</span><span class="std">ISO 14067</span><span class="std">GHG Protocol</span>
+      <span class="std">Mekonnen &amp; Hoekstra 2011</span>
+    </div>
+
+    <div class="foot"><span class="mono">info@eff-egypt.com</span><span><b>eff</b> · تقييم كفاءة المعدات</span></div>
+    <div class="pagenum">03</div>
+  </div>
+</div>

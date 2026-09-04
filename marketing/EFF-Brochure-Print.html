@@ -1,0 +1,152 @@
+<meta charset="utf-8">
+<title>eff — بروشور (نسخة طباعة ثنائية اللغة) | Brochure (Bilingual Print)</title>
+<style>
+:root{
+  --paper:#FAFAF8; --surface:#FFFFFF; --surface-2:#F1F2EF; --well:#ECEDE9;
+  --line:#D8DCD6; --line-soft:#E5E7E2;
+  --text:#171D1F; --text-2:#4C595D; --text-3:#7C898D;
+  --ember:#D4551E; --ember-hi:#F0692F;
+  --keep:#177E66; --monitor:#9A741B; --plan:#A83E35; --retire:#7C2418;
+  --f:"Rubik","Segoe UI","Noto Sans Arabic",Tahoma,sans-serif;
+  --mono:"IBM Plex Mono","Consolas",ui-monospace,monospace;
+}
+*{box-sizing:border-box;}
+body{margin:0; background:#DADFDB; font-family:var(--f); padding:2rem 0;}
+.num{font-family:var(--mono); font-variant-numeric:tabular-nums; direction:ltr; unicode-bidi:isolate;}
+h1,h2,h3{margin:0; line-height:1.2; text-wrap:balance;} p{margin:0;}
+
+.note{max-width:40rem; margin:0 auto 1.2rem; text-align:center; color:#4C595D; font-size:.85rem;}
+
+/* A4 landscape sheet = two A5 columns side by side. Right = Arabic, Left = English. */
+.sheet{width:297mm; height:210mm; margin:0 auto 8mm; background:var(--paper);
+  box-shadow:0 10px 50px rgba(0,0,0,.2); display:flex; position:relative; overflow:hidden;}
+.col{width:148.5mm; height:210mm; padding:12mm 11mm; overflow:hidden; position:relative;}
+.col-en{direction:ltr; text-align:left; color:var(--text); border-inline-end:1px dashed var(--line);}
+.col-ar{direction:rtl; text-align:right; color:var(--text);}
+
+.brand{display:flex; align-items:center; gap:2mm;}
+.brand .wm{font-weight:700; font-size:1.7rem; letter-spacing:-.05em; color:var(--text);}
+.docref{font-family:var(--mono); font-size:.6rem; color:var(--text-3); margin-top:1mm;}
+
+.eyebrow{font-family:var(--mono); font-size:.62rem; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--ember); margin:6mm 0 2mm;}
+h1{font-size:1.55rem; font-weight:700; letter-spacing:-.02em; max-width:22ch;}
+.lede{color:var(--text-2); margin-top:3mm; font-size:.8rem; line-height:1.6;}
+
+h2{font-size:.82rem; font-weight:700; margin:5mm 0 1.5mm; color:var(--ember);
+  text-transform:uppercase; letter-spacing:.04em;}
+.card{background:var(--surface); border:1px solid var(--line); border-radius:4mm; padding:3mm 3.5mm; margin-bottom:2mm;}
+.card h3{font-size:.78rem; font-weight:700;}
+.card .d{color:var(--text-2); font-size:.68rem; margin-top:1mm; line-height:1.5;}
+
+.stat-row{display:flex; gap:2mm; margin:3mm 0;}
+.stat{flex:1; background:var(--surface); border:1px solid var(--line); border-radius:3mm; padding:2mm; text-align:center;}
+.stat .v{font-family:var(--mono); font-weight:700; color:var(--ember); font-size:1.15rem;}
+.stat .l{color:var(--text-2); font-size:.6rem; margin-top:.5mm;}
+
+.pills{display:flex; gap:1mm; flex-wrap:wrap; margin-top:1.5mm;}
+.pill{padding:.8mm 2.2mm; border-radius:99px; font-size:.6rem; font-weight:600; color:#fff;}
+
+.foot{position:absolute; bottom:9mm; inset-inline:11mm; padding-top:2mm; border-top:1px solid var(--line);
+  font-size:.62rem; color:var(--text-3); display:flex; justify-content:space-between;}
+.foot b{color:var(--ember);}
+
+@media print{
+  body{background:#fff; padding:0;}
+  .note{display:none;}
+  .sheet{box-shadow:none; margin:0; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
+  @page{ size:A4 landscape; margin:0; }
+}
+</style>
+
+<div class="note">نسخة طباعة ثنائية اللغة — A4 أفقي مقسّم لعمودَي A5: العربية يمين، الإنجليزية يسار.<br>Bilingual print version — landscape A4 split into two A5 columns: Arabic right, English left.</div>
+
+<div class="sheet">
+
+  <div class="col col-en">
+    <div class="brand">
+      <svg width="26" height="26" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+      <span class="wm">eff</span>
+    </div>
+    <div class="docref">BROCHURE · v2.1 · 2026 · eff-egypt.com</div>
+
+    <div class="eyebrow">EQUIPMENT FITNESS FRAMEWORK</div>
+    <h1>Machine decisions, by the numbers — not gut feel</h1>
+    <p class="lede">Most Egyptian industrial operations have an ownership list, not a
+      performance layer. eff builds that missing layer — run hours, consumption, wear signals
+      — and turns it into one clear verdict per machine, with a stated confidence.</p>
+
+    <div class="stat-row">
+      <div class="stat"><div class="v num">8</div><div class="l">weighted indicators</div></div>
+      <div class="stat"><div class="v num">14</div><div class="l">days to full report</div></div>
+      <div class="stat"><div class="v num">0</div><div class="l">site visits from us</div></div>
+    </div>
+
+    <h2>Core engine</h2>
+    <div class="card"><h3>Deterministic — no machine learning</h3>
+      <div class="d">8 weighted indicators, corrected for the machine's actual load factor.
+        Every verdict traces back to a recognized international engineering standard.</div></div>
+
+    <h2>Non-negotiable rules</h2>
+    <div class="card"><h3>A blank cell is never zero</h3>
+      <div class="d">Missing data is excluded honestly, never guessed.</div></div>
+    <div class="card"><h3>Below 60% confidence, no verdict</h3>
+      <div class="d">The report clearly states "insufficient data".</div></div>
+    <div class="card"><h3>Economics recommends, never decides</h3>
+      <div class="d">"Retire now" needs physical or safety evidence.</div></div>
+
+    <h2>Verdicts</h2>
+    <div class="pills">
+      <span class="pill" style="background:var(--keep)">Keep</span>
+      <span class="pill" style="background:var(--monitor)">Monitor</span>
+      <span class="pill" style="background:var(--plan)">Plan</span>
+      <span class="pill" style="background:var(--retire)">Retire</span>
+    </div>
+
+    <div class="foot"><span><b>eff</b> · Equipment Fitness Framework</span><span class="mono">info@eff-egypt.com</span></div>
+  </div>
+
+  <div class="col col-ar">
+    <div class="brand">
+      <svg width="26" height="26" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+      <span class="wm">eff</span>
+    </div>
+    <div class="docref">بروشور · v2.1 · 2026 · eff-egypt.com</div>
+
+    <div class="eyebrow">تقييم كفاءة المعدات</div>
+    <h1>قرارات المعدات بالأرقام، لا بالحدس</h1>
+    <p class="lede">تمتلك معظم الشركات الصناعية المصرية قائمة بملكية معداتها، لا طبقة أداء.
+      يبني eff هذه الطبقة الناقصة — ساعات التشغيل، الاستهلاك، ومؤشرات التآكل — ويحوّلها إلى
+      حكم واحد واضح لكل معدة، مع درجة ثقة معلَنة.</p>
+
+    <div class="stat-row">
+      <div class="stat"><div class="v num">8</div><div class="l">مؤشرات موزونة</div></div>
+      <div class="stat"><div class="v num">14</div><div class="l">يومًا للتقرير الكامل</div></div>
+      <div class="stat"><div class="v num">0</div><div class="l">زيارات ميدانية منا</div></div>
+    </div>
+
+    <h2>محرك حتمي</h2>
+    <div class="card"><h3>دون تعلّم آلي</h3>
+      <div class="d">ثمانية مؤشرات موزونة، مصححة وفق معدل التحميل الفعلي للمعدة. يستند كل
+        حكم إلى معيار هندسي دولي معتمد.</div></div>
+
+    <h2>قواعد لا تُنتهك</h2>
+    <div class="card"><h3>الخانة الفارغة ليست صفرًا</h3>
+      <div class="d">البيانات الناقصة تُستبعَد بأمانة، لا تُخمَّن.</div></div>
+    <div class="card"><h3>أقل من 60% ثقة، لا حكم</h3>
+      <div class="d">يوضح التقرير عبارة "بيانات غير كافية" صراحةً.</div></div>
+    <div class="card"><h3>الاقتصاد يوصي، لا يقرر</h3>
+      <div class="d">"الإخراج من الخدمة" يتطلب دليلًا ماديًا أو متعلقًا بالسلامة.</div></div>
+
+    <h2>الأحكام</h2>
+    <div class="pills">
+      <span class="pill" style="background:var(--keep)">استمرار</span>
+      <span class="pill" style="background:var(--monitor)">مراقبة</span>
+      <span class="pill" style="background:var(--plan)">تخطيط</span>
+      <span class="pill" style="background:var(--retire)">إخراج</span>
+    </div>
+
+    <div class="foot"><span class="mono">info@eff-egypt.com</span><span><b>eff</b> · تقييم كفاءة المعدات</span></div>
+  </div>
+
+</div>

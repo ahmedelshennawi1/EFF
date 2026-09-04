@@ -1,0 +1,88 @@
+<meta charset="utf-8">
+<title>eff — بوستر | Poster</title>
+<style>
+:root{
+  --ink:#0F1416; --ember:#F0692F; --text:#E9EEEF; --text-2:#9FB0B5;
+  --f:"Rubik","Segoe UI","Noto Sans Arabic",Tahoma,sans-serif;
+  --mono:"IBM Plex Mono","Consolas",ui-monospace,monospace;
+}
+*{box-sizing:border-box;}
+body{margin:0; background:#3A4144; font-family:var(--f);}
+.bar{display:flex; justify-content:center; gap:.4rem; padding:1rem;}
+.bar button{font-family:var(--f); font-size:.8rem; font-weight:600; padding:.35rem 1rem;
+  border:1px solid #5b6467; background:#fff; color:#333; cursor:pointer; border-radius:5px;}
+.bar button[aria-pressed="true"]{background:var(--ember); color:#fff; border-color:var(--ember);}
+
+.poster{width:297mm; height:420mm; margin:0 auto 2rem; background:var(--ink); color:var(--text);
+  box-shadow:0 6px 40px rgba(0,0,0,.4); position:relative; overflow:hidden; padding:20mm;
+  display:flex; flex-direction:column; justify-content:space-between;}
+.poster[dir="rtl"]{text-align:right;} .poster[dir="ltr"]{text-align:left;}
+.poster[data-lang="ar"] .en{display:none;} .poster[data-lang="en"] .ar{display:none;}
+
+.bars{position:absolute; inset-inline-end:-40mm; top:50%; transform:translateY(-50%) rotate(0deg);
+  opacity:.08; display:flex; flex-direction:column; gap:10mm;}
+.bars i{display:block; height:26mm; background:var(--ember); border-radius:6mm;}
+.bars i:nth-child(1){width:180mm;} .bars i:nth-child(2){width:130mm;} .bars i:nth-child(3){width:75mm;}
+
+.top{display:flex; align-items:center; gap:6mm; position:relative; z-index:1;}
+.top .wm{font-weight:700; font-size:16mm; letter-spacing:-.045em;}
+
+.mid{position:relative; z-index:1;}
+.mid .eyebrow{font-family:var(--mono); font-size:5.5mm; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--ember); margin-bottom:8mm;}
+.mid h1{margin:0; font-size:20mm; font-weight:700; letter-spacing:-.02em; line-height:1.12; max-width:90%;}
+.mid .lede{margin-top:10mm; font-size:7mm; color:var(--text-2); max-width:80%; line-height:1.55;}
+
+.bottom{position:relative; z-index:1; display:flex; justify-content:space-between; align-items:flex-end;
+  border-top:1px solid #263135; padding-top:8mm; font-size:5mm; color:var(--text-2);}
+.bottom b{color:var(--ember); display:block; font-size:6mm;}
+
+@media print{
+  body{background:#fff;}
+  .bar{display:none;}
+  .poster{box-shadow:none; margin:0;}
+  @page{ size:A3; margin:0; }
+}
+</style>
+
+<div class="bar">
+  <button type="button" data-lang-btn="ar" aria-pressed="true">AR</button>
+  <button type="button" data-lang-btn="en" aria-pressed="false">EN</button>
+</div>
+
+<div class="poster" id="poster" dir="rtl" data-lang="ar">
+  <div class="bars"><i></i><i></i><i></i></div>
+
+  <div class="top">
+    <svg width="60" height="60" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#F0692F"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+    <span class="wm">eff</span>
+  </div>
+
+  <div class="mid">
+    <div class="eyebrow ar">تقييم كفاءة المعدات</div>
+    <div class="eyebrow en">EQUIPMENT FITNESS FRAMEWORK</div>
+    <h1 class="ar">قرارات المعدات<br>بالأرقام، لا<br>بالحدس</h1>
+    <h1 class="en">Machine decisions,<br>by the numbers —<br>not gut feel</h1>
+    <p class="lede ar">ثمانية مؤشرات موزونة. درجة ثقة معلَنة. لا تخمين، ولا صفر مكان البيانات الناقصة.</p>
+    <p class="lede en">Eight weighted indicators. A stated confidence. No guessing, no zero for missing data.</p>
+  </div>
+
+  <div class="bottom">
+    <span><b class="ar">eff</b><b class="en">eff</b><span class="ar">تقييم كفاءة المعدات — 2026</span><span class="en">Equipment Fitness Framework — 2026</span></span>
+    <span class="mono">info@eff-egypt.com</span>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('[data-lang-btn]').forEach(function(b){
+  b.addEventListener('click', function(){
+    var lang = b.getAttribute('data-lang-btn');
+    var el = document.getElementById('poster');
+    el.setAttribute('data-lang', lang);
+    el.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    document.querySelectorAll('[data-lang-btn]').forEach(function(x){
+      x.setAttribute('aria-pressed', x.getAttribute('data-lang-btn') === lang ? 'true' : 'false');
+    });
+  });
+});
+</script>

@@ -1,0 +1,92 @@
+{
+  "_about": "Pricing criteria for eff engagements. Every fee is COMPUTED from these factors, never quoted from a table — so any two clients with the same profile get the same price, and every line of a quote can be defended. Edit this file to reprice the whole business.",
+  "version": "1.0",
+  "currency": "EGP",
+
+  "_rate_about": "The one number everything scales from. Change it and every quote moves.",
+  "day_rate": 13000,
+  "rounding": 500,
+
+  "_effort_about": "Days of work, built bottom-up. per_asset_days is the real driver: reviewing one machine's data, chasing what is missing, and interpreting its result.",
+  "effort": {
+    "setup_days": 0.5,
+    "per_asset_days": 0.03,
+    "per_site_days": 0.25,
+    "analysis_days": 0.5,
+    "reporting_days": 1.5,
+    "presentation_days": 0.5
+  },
+
+  "_modifiers_about": "Multipliers on total effort. Each one names a real cost driver, not a negotiating tactic.",
+  "modifiers": {
+    "data_readiness": {
+      "_note": "How much chasing the data will need. Judged from the first call, stated in the quote.",
+      "good": 1.0,
+      "partial": 1.15,
+      "poor": 1.35
+    },
+    "urgency": {
+      "_note": "Expedited compresses the timeline and displaces other work.",
+      "standard": 1.0,
+      "expedited": 1.3
+    },
+    "diversity": {
+      "_note": "Many distinct equipment classes means more baselines and units to handle.",
+      "threshold_classes": 8,
+      "factor": 1.1
+    },
+    "multi_language": {
+      "_note": "Bilingual reporting is standard and carries no premium. A third language does.",
+      "factor": 1.12
+    }
+  },
+
+  "_discounts_about": "Applied after modifiers, in this order, and always shown as separate lines.",
+  "discounts": {
+    "founding_client": 1.0,
+    "sites_3plus": 0.1,
+    "retainer_committed": 0.15
+  },
+
+  "_tiers_about": "What is being bought. proof_of_concept is deliberately tiny and is what the Founding Client Programme covers.",
+  "tiers": {
+    "proof_of_concept": {
+      "label_en": "Proof of concept",
+      "label_ar": "إثبات مفهوم",
+      "max_assets": 5,
+      "includes_presentation": true
+    },
+    "baseline": {
+      "label_en": "Baseline assessment",
+      "label_ar": "التقييم التأسيسي",
+      "includes_presentation": true
+    },
+    "measurement_setup": {
+      "label_en": "Measurement system setup",
+      "label_ar": "تأسيس نظام القياس",
+      "per_point_fee": 4500,
+      "per_site_fee": 28000,
+      "training_fee": 14000
+    }
+  },
+
+  "_retainer_about": "Continuous monitoring, priced off the baseline it follows so the two can never drift apart.",
+  "retainer": {
+    "share_of_baseline_per_year": 0.4,
+    "minimum_per_year": 42000
+  },
+
+  "_value_check_about": "A sanity band, not a pricing rule. A defensible fee lands between 1% and 3% of what the fleet spends on energy in a year. Outside that band the quote is flagged for review - too low leaves value on the table, too high will not survive a CFO.",
+  "value_check": {
+    "min_share_of_energy_spend": 0.01,
+    "max_share_of_energy_spend": 0.03
+  },
+
+  "_addons_about": "Priced per unit, never bundled into the base fee.",
+  "addons": {
+    "guided_session": 6500,
+    "data_entry_per_asset": 350,
+    "site_visit_per_day": 18000,
+    "extra_presentation": 7500
+  }
+}

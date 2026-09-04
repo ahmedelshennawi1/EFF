@@ -1,0 +1,295 @@
+<meta charset="utf-8">
+<title>eff — برنامج التقييم التجريبي (نسخة طباعة ثنائية اللغة) | Pilot Program (Bilingual Print)</title>
+<style>
+:root{
+  --paper:#FAFAF8; --surface:#FFFFFF; --surface-2:#F1F2EF; --well:#ECEDE9;
+  --line:#D8DCD6; --line-soft:#E5E7E2;
+  --text:#171D1F; --text-2:#4C595D; --text-3:#7C898D;
+  --ember:#D4551E; --ember-hi:#F0692F;
+  --keep:#177E66; --monitor:#9A741B; --plan:#A83E35; --retire:#7C2418;
+  --f:"Rubik","Segoe UI","Noto Sans Arabic",Tahoma,sans-serif;
+  --mono:"IBM Plex Mono","Consolas",ui-monospace,monospace;
+}
+*{box-sizing:border-box;}
+body{margin:0; background:#DADFDB; font-family:var(--f); padding:2rem 0;}
+.num{font-family:var(--mono); font-variant-numeric:tabular-nums; direction:ltr; unicode-bidi:isolate;}
+h1,h2,h3{margin:0; line-height:1.25; text-wrap:balance;} p{margin:0;}
+
+.note{max-width:40rem; margin:0 auto 1.2rem; text-align:center; color:#4C595D; font-size:.85rem;}
+
+/* A4 landscape sheet = two A5 columns. Right = Arabic, Left = English. */
+.sheet{width:297mm; height:210mm; margin:0 auto 8mm; background:var(--paper);
+  box-shadow:0 6px 30px rgba(0,0,0,.18); display:flex; position:relative; overflow:hidden;}
+.col{width:148.5mm; height:210mm; padding:11mm 10mm; overflow:hidden; position:relative; font-size:11px; line-height:1.5;}
+.col-en{direction:ltr; text-align:left; color:var(--text); border-inline-end:1px dashed var(--line);}
+.col-ar{direction:rtl; text-align:right; color:var(--text);}
+
+.brand{display:flex; align-items:center; gap:1.8mm;}
+.brand .wm{font-weight:700; font-size:1.35rem; letter-spacing:-.05em; color:var(--text);}
+.docref{font-family:var(--mono); font-size:.55rem; color:var(--text-3); margin-top:.5mm;}
+.pagenum{position:absolute; bottom:6mm; inset-inline-end:10mm; font-family:var(--mono); font-size:.55rem; color:var(--text-3);}
+
+.eyebrow{font-family:var(--mono); font-size:.55rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--ember); margin:5mm 0 1.5mm;}
+h1{font-size:1.2rem; font-weight:700; letter-spacing:-.02em;}
+.lede{color:var(--text-2); margin-top:2.5mm; font-size:.72rem;}
+
+h2{font-size:.7rem; font-weight:700; margin:4.5mm 0 1.5mm; color:var(--ember); text-transform:uppercase; letter-spacing:.04em;}
+
+.facts{display:flex; gap:2mm; margin-top:3mm;}
+.fact{flex:1; background:var(--surface); border:1px solid var(--line); border-radius:3mm; padding:2mm; text-align:center;}
+.fact .v{font-family:var(--mono); font-weight:700; color:var(--ember); font-size:1.05rem;}
+.fact .l{color:var(--text-2); font-size:.58rem; margin-top:.5mm;}
+
+.tw{border:1px solid var(--line); border-radius:4px; overflow:hidden; margin-top:2mm;}
+table{width:100%; border-collapse:collapse; font-size:.62rem;}
+th{background:var(--surface-2); padding:1.5mm 2.2mm; font-weight:700; border-bottom:1px solid var(--line); font-size:.58rem;}
+td{padding:1.4mm 2.2mm; border-bottom:1px solid var(--line-soft); color:var(--text-2); vertical-align:top;}
+tr:last-child td{border-bottom:0;}
+td.stage{font-family:var(--mono); font-weight:700; color:var(--ember); white-space:nowrap;}
+
+ul.chk{list-style:none; margin:2mm 0 0; padding:0; display:flex; flex-direction:column; gap:1.2mm;}
+ul.chk li{padding-inline-start:3.5mm; position:relative; font-size:.62rem; color:var(--text-2);}
+ul.chk li::before{content:"—"; position:absolute; inset-inline-start:0; color:var(--ember);}
+
+.uiframe{border:1px solid var(--line); border-radius:5px; overflow:hidden; margin-top:2mm; background:#fff;}
+.uiframe .chrome{background:var(--surface-2); padding:1.2mm 2mm; display:flex; gap:1mm; align-items:center; border-bottom:1px solid var(--line);}
+.uiframe .chrome i{width:1.6mm; height:1.6mm; border-radius:50%; background:var(--line);}
+.uiframe .chrome span{font-family:var(--mono); font-size:.5rem; color:var(--text-3); margin-inline-start:1.5mm;}
+.uiframe .body{padding:2.5mm;}
+.clirow{display:grid; grid-template-columns:2fr .8fr 1.2fr .7fr; gap:1.5mm; font-family:var(--mono);
+  font-size:.54rem; padding:.8mm 0; border-bottom:1px dashed var(--line-soft); color:var(--text-2);}
+.clirow.hd{color:var(--text-3); border-bottom:1px solid var(--line); font-weight:700;}
+.clirow .ph{color:var(--ember); opacity:.55;}
+.kpis{display:flex; gap:1.5mm; margin-top:2mm;}
+.kpi{flex:1; background:var(--surface-2); border:1px solid var(--line); border-radius:3px; padding:1.8mm; text-align:center;}
+.kpi .v{font-family:var(--mono); font-weight:700; color:var(--ember); opacity:.55; font-size:.85rem;}
+.kpi .l{color:var(--text-3); font-size:.5rem; margin-top:.5mm;}
+.uinote{margin-top:1.5mm; font-size:.54rem; color:var(--text-3); font-style:italic;}
+
+.foot{position:absolute; bottom:6mm; inset-inline:10mm; padding-top:1.5mm; border-top:1px solid var(--line);
+  font-size:.55rem; color:var(--text-3); display:flex; justify-content:space-between;}
+.foot b{color:var(--ember);}
+
+@media print{
+  body{background:#fff; padding:0;}
+  .note{display:none;}
+  .sheet{box-shadow:none; margin:0; -webkit-print-color-adjust:exact; print-color-adjust:exact;
+    break-after:page; page-break-after:always;}
+  .sheet:last-of-type{break-after:auto; page-break-after:auto;}
+  @page{ size:A4 landscape; margin:0; }
+}
+</style>
+
+<div class="note">نسخة طباعة ثنائية اللغة — A4 أفقي مقسّم لعمودَي A5: العربية يمين، الإنجليزية يسار.<br>Bilingual print version — landscape A4 split into two A5 columns: Arabic right, English left.</div>
+
+<!-- page 1 -->
+<div class="sheet">
+  <div class="col col-en">
+    <div class="brand">
+      <svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+      <span class="wm">eff</span>
+    </div>
+    <div class="docref">PILOT PROGRAM · v1.1 · 2026 · eff-egypt.com</div>
+    <div class="eyebrow">FOUNDING CLIENT PROGRAMME</div>
+    <h1>The Pilot Assessment Program: how it works</h1>
+    <p class="lede">Before committing to a full-fleet assessment, the pilot lets you see the
+      methodology run on five core machines from your own facility — with minimal effort from
+      your team, and full transparency about exactly what you'll receive.</p>
+
+    <div class="facts">
+      <div class="fact"><div class="v num">5</div><div class="l">core machines</div></div>
+      <div class="fact"><div class="v num">2</div><div class="l">approx. hours of your team</div></div>
+      <div class="fact"><div class="v num">14</div><div class="l">days to full report</div></div>
+    </div>
+
+    <h2>Why we start with a pilot</h2>
+    <p class="lede">The methodology's first rule is that no verdict is issued below 60% data
+      confidence. The pilot is the safest way to verify your data readiness and show the shape
+      of the final report before scaling to any fleet size.</p>
+
+    <div class="foot"><span><b>eff</b> · Equipment Fitness Framework</span><span class="mono">info@eff-egypt.com</span></div>
+    <div class="pagenum">01</div>
+  </div>
+  <div class="col col-ar">
+    <div class="brand">
+      <svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+      <span class="wm">eff</span>
+    </div>
+    <div class="docref">برنامج التقييم التجريبي · v1.1 · 2026 · eff-egypt.com</div>
+    <div class="eyebrow">برنامج العميل المؤسِّس</div>
+    <h1>برنامج التقييم التجريبي: كيف يعمل</h1>
+    <p class="lede">قبل الالتزام بتقييم الأسطول الكامل، يتيح لك البرنامج التجريبي رؤية
+      المنهجية تعمل فعليًا على خمس معدات رئيسية من منشأتك — بأقل مجهود من فريقك، وبأكبر قدر
+      من الشفافية حول ما ستحصل عليه بالضبط.</p>
+
+    <div class="facts">
+      <div class="fact"><div class="v num">5</div><div class="l">معدات رئيسية</div></div>
+      <div class="fact"><div class="v num">2</div><div class="l">ساعتان تقريبًا من فريقك</div></div>
+      <div class="fact"><div class="v num">14</div><div class="l">يومًا حتى التقرير الكامل</div></div>
+    </div>
+
+    <h2>لماذا يبدأ العمل بتقييم تجريبي</h2>
+    <p class="lede">القاعدة الأولى للمنهجية أن أي حكم أقل من 60% ثقة في البيانات لا يُصدَر
+      كحكم نهائي. التقييم التجريبي هو الطريقة الأضمن للتحقق من جاهزية بياناتك، وتوضيح شكل
+      التقرير النهائي، قبل توسيع النطاق.</p>
+
+    <div class="foot"><span class="mono">info@eff-egypt.com</span><span><b>eff</b> · تقييم كفاءة المعدات</span></div>
+    <div class="pagenum">01</div>
+  </div>
+</div>
+
+<!-- page 2 -->
+<div class="sheet">
+  <div class="col col-en">
+    <div class="brand">
+      <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+      <span class="wm" style="font-size:1.1rem">eff</span>
+    </div>
+    <div class="docref">PILOT PROGRAM · v1.1 · 2026 · eff-egypt.com</div>
+
+    <h2 style="margin-top:0">Timeline</h2>
+    <p class="lede">Three clear phases, with no site visits from us at any stage.</p>
+    <div class="tw">
+      <table>
+        <tr><th>Stage</th><th>What happens</th></tr>
+        <tr><td class="stage">D+0</td><td>Kickoff: your team receives the DataKit for the five selected machines, with clear step-by-step instructions.</td></tr>
+        <tr><td class="stage">D+7</td><td>Mid-point check: we verify the submitted data's completeness and flag any fields needing clarification.</td></tr>
+        <tr><td class="stage">D+14</td><td>Full report delivery: a verdict per machine, a confidence score, and the daily energy-burn ledger — printable.</td></tr>
+      </table>
+    </div>
+
+    <h2>Required from you</h2>
+    <ul class="chk">
+      <li>Selecting five core, easy-to-survey machines</li>
+      <li>Filling the DataKit — no prior engineering expertise needed</li>
+      <li>One point of contact for questions during review</li>
+    </ul>
+    <h2>You receive</h2>
+    <ul class="chk">
+      <li>A full eff-branded report, ready to print or present internally</li>
+      <li>A stated confidence score for every verdict — no guessing</li>
+      <li>No obligation to widen scope to the rest of the fleet</li>
+    </ul>
+
+    <div class="foot"><span><b>eff</b> · Equipment Fitness Framework</span><span class="mono">info@eff-egypt.com</span></div>
+    <div class="pagenum">02</div>
+  </div>
+  <div class="col col-ar">
+    <div class="brand">
+      <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+      <span class="wm" style="font-size:1.1rem">eff</span>
+    </div>
+    <div class="docref">برنامج التقييم التجريبي · v1.1 · 2026 · eff-egypt.com</div>
+
+    <h2 style="margin-top:0">الجدول الزمني</h2>
+    <p class="lede">ثلاث مراحل واضحة، دون زيارات ميدانية منّا في أي منها.</p>
+    <div class="tw">
+      <table>
+        <tr><th>المرحلة</th><th>ما يحدث</th></tr>
+        <tr><td class="stage">D+0</td><td>بدء التقييم: يستلم فريقك نموذج DataKit لخمس المعدات المختارة، مع تعليمات واضحة خطوة بخطوة.</td></tr>
+        <tr><td class="stage">D+7</td><td>مراجعة منتصف المدة: نتحقق من اكتمال البيانات المُدخلة، ونوضح أي حقول ناقصة.</td></tr>
+        <tr><td class="stage">D+14</td><td>تسليم التقرير الكامل: حكم لكل معدة، درجة ثقة، ودفتر حرق الطاقة اليومي — قابل للطباعة.</td></tr>
+      </table>
+    </div>
+
+    <h2>مطلوب منك</h2>
+    <ul class="chk">
+      <li>اختيار خمس معدات رئيسية يسهل قياسها</li>
+      <li>تعبئة نموذج DataKit — بلا خبرة هندسية مسبقة</li>
+      <li>توفر شخص تواصل واحد للأسئلة أثناء المراجعة</li>
+    </ul>
+    <h2>تحصل عليه</h2>
+    <ul class="chk">
+      <li>تقرير كامل بهوية eff، جاهز للطباعة أو العرض الداخلي</li>
+      <li>درجة ثقة معلَنة لكل حكم — لا تخمين</li>
+      <li>دون التزام بتوسيع النطاق لبقية الأسطول</li>
+    </ul>
+
+    <div class="foot"><span class="mono">info@eff-egypt.com</span><span><b>eff</b> · تقييم كفاءة المعدات</span></div>
+    <div class="pagenum">02</div>
+  </div>
+</div>
+
+<!-- page 3 -->
+<div class="sheet">
+  <div class="col col-en">
+    <div class="brand">
+      <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+      <span class="wm" style="font-size:1.1rem">eff</span>
+    </div>
+    <div class="docref">PILOT PROGRAM · v1.1 · 2026 · eff-egypt.com</div>
+
+    <h2 style="margin-top:0">The user interface</h2>
+    <p class="lede">An illustrative mockup of the summary and report you'll see — with empty
+      values instead of real numbers.</p>
+
+    <h2>Fleet summary</h2>
+    <div class="uiframe">
+      <div class="chrome"><i></i><i></i><i></i><span>eff --detail</span></div>
+      <div class="body">
+        <div class="clirow hd"><span>Asset</span><span>Score</span><span>Verdict</span><span>Conf.</span></div>
+        <div class="clirow"><span class="ph">— · —</span><span class="ph">—.—</span><span class="ph">—</span><span class="ph">—%</span></div>
+        <div class="clirow"><span class="ph">— · —</span><span class="ph">—.—</span><span class="ph">—</span><span class="ph">—%</span></div>
+        <div class="clirow"><span class="ph">— · —</span><span class="ph">—.—</span><span class="ph">—</span><span class="ph">—%</span></div>
+        <div class="clirow"><span class="ph">— · —</span><span class="ph">—.—</span><span class="ph">—</span><span class="ph">—%</span></div>
+      </div>
+    </div>
+    <div class="uinote">Matches the real assessment engine's output exactly — only names and scores are withheld here.</div>
+
+    <h2>Client report — indicator cards</h2>
+    <div class="uiframe">
+      <div class="chrome"><i></i><i></i><i></i><span>out/report.html</span></div>
+      <div class="body">
+        <div class="kpis">
+          <div class="kpi"><div class="v num">—</div><div class="l">Daily burn (EGP)</div></div>
+          <div class="kpi"><div class="v num">—/100</div><div class="l">Fitness score</div></div>
+          <div class="kpi"><div class="v num">—%</div><div class="l">Confidence</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="uinote">The final report is a standalone eff-branded HTML page, printable to PDF as needed.</div>
+
+    <div class="foot"><span><b>eff</b> · Equipment Fitness Framework</span><span class="mono">info@eff-egypt.com</span></div>
+    <div class="pagenum">03</div>
+  </div>
+  <div class="col col-ar">
+    <div class="brand">
+      <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+      <span class="wm" style="font-size:1.1rem">eff</span>
+    </div>
+    <div class="docref">برنامج التقييم التجريبي · v1.1 · 2026 · eff-egypt.com</div>
+
+    <h2 style="margin-top:0">واجهة الاستخدام</h2>
+    <p class="lede">مخطط توضيحي لشكل الملخص والتقرير اللذين ستراهما — بقيم فارغة بدلًا من أرقام حقيقية.</p>
+
+    <h2>ملخص الأسطول</h2>
+    <div class="uiframe">
+      <div class="chrome"><i></i><i></i><i></i><span>eff --detail</span></div>
+      <div class="body">
+        <div class="clirow hd"><span>المعدة</span><span>الدرجة</span><span>الحكم</span><span>الثقة</span></div>
+        <div class="clirow"><span class="ph">— · —</span><span class="ph">—.—</span><span class="ph">—</span><span class="ph">—%</span></div>
+        <div class="clirow"><span class="ph">— · —</span><span class="ph">—.—</span><span class="ph">—</span><span class="ph">—%</span></div>
+        <div class="clirow"><span class="ph">— · —</span><span class="ph">—.—</span><span class="ph">—</span><span class="ph">—%</span></div>
+        <div class="clirow"><span class="ph">— · —</span><span class="ph">—.—</span><span class="ph">—</span><span class="ph">—%</span></div>
+      </div>
+    </div>
+    <div class="uinote">مطابق تمامًا لمخرجات محرك التقييم الفعلي — الأسماء والدرجات هنا فقط غير معروضة.</div>
+
+    <h2>تقرير العميل — بطاقات المؤشرات</h2>
+    <div class="uiframe">
+      <div class="chrome"><i></i><i></i><i></i><span>out/report.html</span></div>
+      <div class="body">
+        <div class="kpis">
+          <div class="kpi"><div class="v num">—</div><div class="l">الحرق اليومي (جنيه)</div></div>
+          <div class="kpi"><div class="v num">—/100</div><div class="l">درجة الجاهزية</div></div>
+          <div class="kpi"><div class="v num">—%</div><div class="l">درجة الثقة</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="uinote">التقرير النهائي صفحة HTML مستقلة بهوية eff، وتُطبع بصيغة PDF عند الحاجة.</div>
+
+    <div class="foot"><span class="mono">info@eff-egypt.com</span><span><b>eff</b> · تقييم كفاءة المعدات</span></div>
+    <div class="pagenum">03</div>
+  </div>
+</div>

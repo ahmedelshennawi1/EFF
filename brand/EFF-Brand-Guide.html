@@ -1,0 +1,326 @@
+<meta charset="utf-8">
+<title>EFF Brand System</title>
+<style>
+/* Dark-first: the product lives in dashboards. Light theme fully defined. */
+:root{
+  --ink:#0F1416; --surface:#171E21; --surface-2:#1D262A; --well:#0B1012;
+  --line:#263135; --line-soft:#1F292D;
+  --text:#E9EEEF; --text-2:#9FB0B5; --text-3:#5F7076;
+  --ember:#F0692F; --ember-hi:#FF8A4D; --ember-ink:#FFFFFF;
+  --keep:#2FA98C; --monitor:#D9A441; --plan:#C4574D; --retire:#8C2F22; --nodata:#5F7076;
+  --f:"Rubik","Segoe UI","Noto Sans Arabic",Tahoma,sans-serif;
+  --mono:"IBM Plex Mono","Consolas",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:light){
+  :root:not([data-theme="dark"]){
+    --ink:#FAFAF8; --surface:#FFFFFF; --surface-2:#F1F2EF; --well:#ECEDE9;
+    --line:#D8DCD6; --line-soft:#E5E7E2;
+    --text:#171D1F; --text-2:#4C595D; --text-3:#7C898D;
+    --ember:#D4551E; --ember-hi:#F0692F; --ember-ink:#FFFFFF;
+    --keep:#177E66; --monitor:#9A741B; --plan:#A83E35; --retire:#7C2418; --nodata:#7C898D;
+  }
+}
+:root[data-theme="light"]{
+  --ink:#FAFAF8; --surface:#FFFFFF; --surface-2:#F1F2EF; --well:#ECEDE9;
+  --line:#D8DCD6; --line-soft:#E5E7E2;
+  --text:#171D1F; --text-2:#4C595D; --text-3:#7C898D;
+  --ember:#D4551E; --ember-hi:#F0692F; --ember-ink:#FFFFFF;
+  --keep:#177E66; --monitor:#9A741B; --plan:#A83E35; --retire:#7C2418; --nodata:#7C898D;
+}
+
+*{box-sizing:border-box;}
+body{margin:0; background:var(--ink); color:var(--text); font-family:var(--f);
+  font-size:15.5px; line-height:1.7; -webkit-font-smoothing:antialiased;}
+.wrap{max-width:62rem; margin:0 auto; padding:3.5rem 1.5rem 6rem;}
+h1,h2,h3{margin:0; line-height:1.25; text-wrap:balance;}
+p{margin:0;}
+.mono{font-family:var(--mono); font-variant-numeric:tabular-nums;}
+.ar{direction:rtl; unicode-bidi:isolate;}
+
+header{display:flex; flex-direction:column; gap:1.2rem; padding-bottom:2.5rem;
+  border-bottom:1px solid var(--line);}
+.eyebrow{font-family:var(--mono); font-size:.75rem; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--ember);}
+h1{font-size:2.5rem; font-weight:700; letter-spacing:-.02em;}
+.lede{color:var(--text-2); max-width:40rem; font-size:1.0625rem;}
+
+section{padding-top:3.2rem;}
+h2{font-size:1.375rem; font-weight:600; letter-spacing:-.01em; margin-bottom:.4rem;}
+h2 .no{font-family:var(--mono); color:var(--ember); font-size:.8125rem; vertical-align:.35em;
+  margin-inline-end:.5rem; letter-spacing:.1em;}
+.sub{color:var(--text-3); font-size:.875rem; margin-bottom:1.4rem; max-width:44rem;}
+h3{font-size:.9375rem; font-weight:600; margin-bottom:.6rem;}
+
+.panel{background:var(--surface); border:1px solid var(--line); border-radius:8px;
+  padding:1.5rem; margin-bottom:1rem;}
+.row{display:grid; gap:1rem; grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));}
+
+/* ---- logo ---- */
+.lockups{display:grid; gap:1rem; grid-template-columns:repeat(auto-fit,minmax(17rem,1fr));}
+.tile{border-radius:8px; padding:2.6rem 1.5rem; display:flex; align-items:center;
+  justify-content:center; gap:.9rem; border:1px solid var(--line);}
+.tile.dark{background:#0F1416;}
+.tile.light{background:#FAFAF8;}
+.tile.ember{background:#F0692F;}
+.wordmark{font-weight:700; font-size:2.6rem; letter-spacing:-.045em; line-height:1;
+  font-family:var(--f);}
+.tile.dark .wordmark{color:#E9EEEF;} .tile.light .wordmark{color:#171D1F;}
+.tile.ember .wordmark{color:#fff;}
+.cap{font-size:.6875rem; color:var(--text-3); font-family:var(--mono);
+  text-align:center; margin-top:.5rem;}
+.lockup-ar{display:flex; flex-direction:column; align-items:center; gap:.15rem;}
+.lockup-ar .desc{font-size:.8125rem; color:var(--text-2);}
+
+/* ---- color ---- */
+.swatches{display:grid; gap:.8rem; grid-template-columns:repeat(auto-fill,minmax(10.5rem,1fr));}
+.sw{border-radius:8px; overflow:hidden; border:1px solid var(--line);}
+.sw .chip{height:4.6rem; display:flex; align-items:flex-end; padding:.6rem .8rem;}
+.sw .info{background:var(--surface); padding:.55rem .8rem; font-size:.75rem;
+  color:var(--text-2); line-height:1.5;}
+.sw .info b{display:block; color:var(--text); font-size:.8125rem;}
+.sw .info .mono{color:var(--text-3);}
+.chip span{font-family:var(--mono); font-size:.6875rem; padding:.1rem .45rem;
+  border-radius:3px; background:rgba(0,0,0,.35); color:#fff;}
+.chip.on-light span{background:rgba(255,255,255,.6); color:#171D1F;}
+
+.rule{background:var(--well); border-inline-start:3px solid var(--ember);
+  border-radius:0 6px 6px 0; padding:1rem 1.2rem; font-size:.875rem;
+  color:var(--text-2); margin-top:1rem;}
+.rule b{color:var(--text);}
+
+/* ---- type ---- */
+.spec{display:flex; flex-direction:column; gap:1.1rem;}
+.spec .line{display:grid; grid-template-columns:9rem 1fr; gap:1.2rem; align-items:baseline;
+  border-bottom:1px solid var(--line-soft); padding-bottom:1.1rem;}
+.spec .tag{font-family:var(--mono); font-size:.6875rem; color:var(--text-3);}
+.d1{font-size:2.2rem; font-weight:700; letter-spacing:-.03em; line-height:1.15;}
+.d2{font-size:1.35rem; font-weight:600; letter-spacing:-.015em;}
+.body-sample{font-size:.9375rem; color:var(--text-2); max-width:38rem;}
+.num-sample{font-family:var(--mono); font-size:1.6rem; font-weight:500; color:var(--ember);}
+
+/* ---- applications ---- */
+.apps{display:grid; gap:1rem; grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));}
+.kpi{background:var(--surface); border:1px solid var(--line); border-radius:8px;
+  padding:1.2rem 1.3rem; display:flex; flex-direction:column; gap:.2rem;}
+.kpi .v{font-family:var(--mono); font-size:2rem; font-weight:600; color:var(--ember);
+  font-variant-numeric:tabular-nums; line-height:1.1;}
+.kpi .l{font-size:.8125rem; color:var(--text-2);}
+.kpi .t{font-size:.6875rem; color:var(--text-3); font-family:var(--mono);}
+.btn-row{display:flex; gap:.7rem; flex-wrap:wrap; align-items:center; margin-top:.6rem;}
+.btn{font-family:var(--f); font-weight:600; font-size:.875rem; padding:.55rem 1.25rem;
+  border-radius:6px; border:1px solid transparent; cursor:pointer;}
+.btn.primary{background:var(--ember); color:var(--ember-ink);}
+.btn.primary:hover{background:var(--ember-hi);}
+.btn.ghost{background:transparent; color:var(--text); border-color:var(--line);}
+.btn:focus-visible{outline:2px solid var(--ember-hi); outline-offset:2px;}
+.verdicts{display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.6rem;}
+.pill{padding:.2rem .8rem; border-radius:99px; font-size:.75rem; font-weight:600; color:#fff;}
+
+.dont{display:grid; gap:.6rem;}
+.dont li{list-style:none; padding-inline-start:1.4rem; position:relative; color:var(--text-2);
+  font-size:.9375rem;}
+.dont li::before{content:"×"; position:absolute; inset-inline-start:0; color:var(--plan);
+  font-weight:700;}
+ul.dont{margin:0; padding:0;}
+
+footer{margin-top:4rem; padding-top:1.4rem; border-top:1px solid var(--line);
+  color:var(--text-3); font-size:.8125rem; display:flex; justify-content:space-between;
+  flex-wrap:wrap; gap:1rem;}
+</style>
+
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Brand System · v1.0</div>
+  <div style="display:flex; align-items:center; gap:1rem;">
+    <svg width="56" height="56" viewBox="0 0 48 48" role="img" aria-label="EFF mark">
+      <rect width="48" height="48" rx="12" fill="#F0692F"/>
+      <rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/>
+      <rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/>
+      <rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/>
+    </svg>
+    <h1>eff</h1>
+  </div>
+  <p class="lede">Machine decisions, by the numbers. — <span class="ar">قرارات المعدات بالأرقام.</span><br>
+  A brand built like the product: an instrument, not an agency. Dark-first, one hot accent,
+  numbers as the hero.</p>
+</header>
+
+<section>
+  <h2><span class="no">01</span>The mark</h2>
+  <p class="sub">Three descending bars. It is the skeleton both letterforms share — E and F are
+  stacked horizontal strokes — and it is a falling meter reading: consumption, fitness, burn.
+  One shape, two readings, both true to the product. Draw it with geometry, never with a font.</p>
+
+  <div class="lockups">
+    <div>
+      <div class="tile dark">
+        <svg width="44" height="44" viewBox="0 0 48 48"><rect width="48" height="48" rx="12" fill="#F0692F"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+        <span class="wordmark">eff</span>
+      </div>
+      <div class="cap">primary · on ink</div>
+    </div>
+    <div>
+      <div class="tile light">
+        <svg width="44" height="44" viewBox="0 0 48 48"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+        <span class="wordmark">eff</span>
+      </div>
+      <div class="cap">on paper · ember deepens one step</div>
+    </div>
+    <div>
+      <div class="tile ember">
+        <svg width="44" height="44" viewBox="0 0 48 48"><rect width="48" height="48" rx="12" fill="#fff"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#F0692F"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#F0692F"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#F0692F"/></svg>
+        <span class="wordmark">eff</span>
+      </div>
+      <div class="cap">inverted · brand moments only</div>
+    </div>
+    <div>
+      <div class="tile dark">
+        <div class="lockup-ar">
+          <span class="wordmark" style="font-size:2rem">eff</span>
+          <span class="desc ar">لتقييم جاهزية المعدات</span>
+        </div>
+      </div>
+      <div class="cap">bilingual lockup · Arabic descriptor, never a transliterated wordmark</div>
+    </div>
+  </div>
+
+  <div class="rule"><b>The wordmark is lowercase, always.</b> "eff" reads as a product;
+  "EFF" reads as a committee. In running Arabic text the name stays in Latin script
+  (<span class="ar">منصة eff</span>) — no «إي إف إف». Clearspace around the mark: the height
+  of one bar on all sides. Minimum mark size 20px; below that, use the bars alone.</div>
+</section>
+
+<section>
+  <h2><span class="no">02</span>Color</h2>
+  <p class="sub">One hot accent on cold engineered neutrals. Ember is the burn — the money
+  leaving every day. Everything else stays out of its way.</p>
+
+  <div class="swatches">
+    <div class="sw"><div class="chip" style="background:#F0692F"><span>#F0692F</span></div>
+      <div class="info"><b>Ember</b>brand · CTA · the burn<br><span class="mono">light mode: #D4551E</span></div></div>
+    <div class="sw"><div class="chip" style="background:#FF8A4D"><span>#FF8A4D</span></div>
+      <div class="info"><b>Ember High</b>hover · emphasis marks</div></div>
+    <div class="sw"><div class="chip" style="background:#0F1416"><span>#0F1416</span></div>
+      <div class="info"><b>Ink</b>ground, dark theme</div></div>
+    <div class="sw"><div class="chip" style="background:#171E21"><span>#171E21</span></div>
+      <div class="info"><b>Surface</b>cards · panels</div></div>
+    <div class="sw"><div class="chip on-light" style="background:#FAFAF8"><span>#FAFAF8</span></div>
+      <div class="info"><b>Paper</b>ground, light theme &amp; print</div></div>
+    <div class="sw"><div class="chip" style="background:#9FB0B5"><span>#9FB0B5</span></div>
+      <div class="info"><b>Steel</b>secondary text · a cooled grey, never neutral grey</div></div>
+  </div>
+
+  <h3 style="margin-top:1.6rem">Verdict ramp — product semantics, not brand</h3>
+  <div class="swatches">
+    <div class="sw"><div class="chip" style="background:#2FA98C"><span>#2FA98C</span></div>
+      <div class="info"><b>Keep</b><span class="ar">استمرار</span></div></div>
+    <div class="sw"><div class="chip" style="background:#D9A441"><span>#D9A441</span></div>
+      <div class="info"><b>Monitor</b><span class="ar">مراقبة</span></div></div>
+    <div class="sw"><div class="chip" style="background:#C4574D"><span>#C4574D</span></div>
+      <div class="info"><b>Plan</b><span class="ar">تخطيط للإحلال</span></div></div>
+    <div class="sw"><div class="chip" style="background:#8C2F22"><span>#8C2F22</span></div>
+      <div class="info"><b>Retire</b><span class="ar">إخراج من الخدمة</span></div></div>
+  </div>
+
+  <div class="rule"><b>The collision rule.</b> Ember is orange; "Plan replacement" is red-clay.
+  They must never compete: ember appears only on interactive and brand elements (buttons, links,
+  KPI figures, the mark); verdict colors appear only on data (pills, bars, table cells). An
+  element is never both. If a layout puts them side by side, the verdict wins and ember retreats
+  to a neutral.</div>
+</section>
+
+<section>
+  <h2><span class="no">03</span>Typography</h2>
+  <p class="sub">One family for both scripts: <b>Rubik</b> carries Latin and Arabic in a single
+  design, so bilingual screens stay one voice — no bolted-on Arabic face. Data always in
+  <b>IBM Plex Mono</b>, tabular. (This guide renders in system fallbacks; production embeds
+  Rubik + Plex Mono.)</p>
+
+  <div class="panel spec">
+    <div class="line"><span class="tag">DISPLAY · Rubik 700</span>
+      <div class="d1">Your fleet burns EGP 4,405 a day.<br>
+        <span class="ar" style="font-weight:700">أسطولك يحرق 4,405 جنيهات يوميًا.</span></div></div>
+    <div class="line"><span class="tag">HEADING · Rubik 600</span>
+      <div class="d2">Twelve machines assessed — <span class="ar">تقييم اثنتي عشرة معدة</span></div></div>
+    <div class="line"><span class="tag">BODY · Rubik 400</span>
+      <p class="body-sample">A blank cell is better than a guessed number. Missing data is
+      excluded honestly; a wrong number corrupts the whole result.
+      <span class="ar">الخانة الفارغة أفضل من الرقم المُخمَّن.</span></p></div>
+    <div class="line"><span class="tag">DATA · Plex Mono 500</span>
+      <div class="num-sample">62.5 / 100 · EGP 1,043,488</div></div>
+  </div>
+
+  <div class="rule"><b>Numbers are the hero.</b> Western digits (123) in both languages —
+  the unit strings (L/kWh, EGP) make mixed numerals unreadable. Tabular figures wherever
+  numbers stack. Money and scores may take ember; body text never does.</div>
+</section>
+
+<section>
+  <h2><span class="no">04</span>Voice</h2>
+  <p class="sub">An instrument speaks in readings, not adjectives. Every claim carries its
+  number; every number carries its basis.</p>
+  <div class="row">
+    <div class="panel">
+      <h3 style="color:var(--keep)">Say</h3>
+      <p class="body-sample">"GEN-02 burns EGP 961/day above baseline — replacing it saves
+      EGP 1,043,488 a year."<br>
+      <span class="ar">«المولد يحرق 961 جنيهًا يوميًا فوق خط الأساس.»</span></p>
+    </div>
+    <div class="panel">
+      <h3 style="color:var(--plan)">Never</h3>
+      <p class="body-sample">"Cutting-edge AI-powered asset optimization solutions" — no
+      superlatives, no "solutions", no unexplained percentages, and never a verdict the data
+      cannot carry.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="no">05</span>In use</h2>
+  <p class="sub">The three surfaces everything else derives from.</p>
+  <div class="apps">
+    <div class="kpi">
+      <span class="t">ENERGY BURN · TODAY</span>
+      <span class="v">4,405</span>
+      <span class="l">EGP/day above requirement — <span class="ar">جنيه/يوم فوق الحاجة</span></span>
+    </div>
+    <div class="kpi">
+      <span class="t">FLEET · 13 ASSETS</span>
+      <div class="verdicts">
+        <span class="pill" style="background:var(--retire)">Retire 1</span>
+        <span class="pill" style="background:var(--plan)">Plan 6</span>
+        <span class="pill" style="background:var(--monitor)">Monitor 2</span>
+        <span class="pill" style="background:var(--keep)">Keep 3</span>
+      </div>
+      <span class="l" style="margin-top:.5rem">verdict pills — data colors only</span>
+    </div>
+    <div class="kpi">
+      <span class="t">ACTIONS</span>
+      <div class="btn-row">
+        <button class="btn primary" type="button">Run assessment</button>
+        <button class="btn ghost" type="button">Export report</button>
+      </div>
+      <span class="l" style="margin-top:.5rem">ember = interactive, one primary per view</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="no">06</span>Never</h2>
+  <ul class="dont">
+    <li>Uppercase the wordmark, transliterate it to Arabic script, or set it in another font.</li>
+    <li>Use ember on verdict data, or verdict colors on buttons and links.</li>
+    <li>Gradients, glassmorphism, purple — this is an instrument, not a landing-page trend.</li>
+    <li>Show a percentage or score without its basis (confidence, baseline, or benchmark).</li>
+    <li>Borrow the Ahmed Elshennawi teal identity — eff is a separate company with its own face.
+      The consulting brand may <i>refer</i> to eff; it never wraps it.</li>
+  </ul>
+</section>
+
+<footer>
+  <span>eff · Equipment Fitness Framework — <span class="ar">إطار تقييم جاهزية المعدات</span></span>
+  <span class="mono">v1.0 · 2026-08</span>
+</footer>
+
+</div>

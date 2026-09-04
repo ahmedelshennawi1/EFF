@@ -1,0 +1,36 @@
+{
+  "_about": "Egypt market model inputs. Sector rows transcribed from docs/market/gemini-research-2026-08.md (all counts are Gemini estimates, flag 'est'). Assumptions are ours and deliberately adjustable.",
+  "source": "Gemini research, 2026-08 (underlying figures mostly 2022-2024)",
+
+  "assumptions": {
+    "_basis": "Fees from the published offer (self-service model). Effort from the pricing build: ~3.7 days per 26-60 asset client.",
+    "avg_year1_fee_egp": 60000,
+    "_avg_year1_fee_note": "48,000 baseline (26-60 tier) + typical add-ons (guided sessions, measurement design share)",
+    "retainer_egp": 78000,
+    "retainer_conversion": 0.4,
+    "days_effort_per_client": 4.0,
+    "capacity_days_per_year": 180,
+    "penetration_scenarios": [0.005, 0.01, 0.02]
+  },
+
+  "sectors": {
+    "poultry":            {"targets": 800,  "est": true, "energy_share_pct": 30, "attractiveness": 5, "gemini_rank": 2},
+    "feed_milling":       {"targets": 300,  "est": true, "energy_share_pct": 20, "attractiveness": 3, "gemini_rank": null},
+    "agriculture":        {"targets": 250,  "est": true, "energy_share_pct": 25, "attractiveness": 3, "gemini_rank": null},
+    "food_processing":    {"targets": 1200, "est": true, "energy_share_pct": 15, "attractiveness": 5, "gemini_rank": 1},
+    "cold_chain":         {"targets": 400,  "est": true, "energy_share_pct": 40, "attractiveness": 4, "gemini_rank": 3},
+    "textiles":           {"targets": 900,  "est": true, "energy_share_pct": 20, "attractiveness": 4, "gemini_rank": 5},
+    "building_materials": {"targets": 400,  "est": true, "energy_share_pct": 45, "attractiveness": 4, "gemini_rank": 4},
+    "plastics":           {"targets": 700,  "est": true, "energy_share_pct": 25, "attractiveness": 3, "gemini_rank": null},
+    "metal_fabrication":  {"targets": 600,  "est": true, "energy_share_pct": 15, "attractiveness": 2, "gemini_rank": null},
+    "water_utilities":    {"targets": 200,  "est": true, "energy_share_pct": 35, "attractiveness": 2, "gemini_rank": null},
+    "general_facilities": {"targets": 1000, "est": true, "energy_share_pct": 20, "attractiveness": 3, "gemini_rank": null}
+  },
+
+  "flags": [
+    "Cross-cutting total (4,885 manufacturers with 10+ employees) contradicts the per-sector totals (food_processing alone claims 7,000). The bulletin figure is a narrow formal-sector sample; per-sector counts include informal/unregistered firms. Do not quote the two side by side.",
+    "All energy prices in the research are 2024 vintage; it is 2026-08. Diesel/tariffs have moved since. Refresh before quoting to a client.",
+    "Every establishment count is EST with stated-but-unverified reasoning. Treat as directional ranking input, not as a figure to publish.",
+    "ESCO audit benchmark EGP 50,000-150,000 [UNIDO 2023] - our 38,000-69,000 self-service pricing undercuts the low end with no site visit cost."
+  ]
+}

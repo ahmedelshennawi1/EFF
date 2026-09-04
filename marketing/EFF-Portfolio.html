@@ -1,0 +1,329 @@
+<meta charset="utf-8">
+<title>eff — القدرات والمنهجية | Capabilities</title>
+<style>
+:root{
+  --ink:#0F1416; --surface:#171E21; --surface-2:#1D262A; --well:#0B1012;
+  --line:#263135; --line-soft:#1F292D;
+  --text:#E9EEEF; --text-2:#9FB0B5; --text-3:#5F7076;
+  --ember:#F0692F; --ember-hi:#FF8A4D;
+  --keep:#2FA98C; --monitor:#D9A441; --plan:#C4574D; --retire:#8C2F22;
+  --f:"Rubik","Segoe UI","Noto Sans Arabic",Tahoma,sans-serif;
+  --mono:"IBM Plex Mono","Consolas",ui-monospace,monospace;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0; background:var(--ink); color:var(--text); font-family:var(--f);
+  font-size:16px; line-height:1.7; -webkit-font-smoothing:antialiased;}
+[dir="rtl"]{text-align:right;} [dir="ltr"]{text-align:left;}
+[data-lang="ar"] .en{display:none;} [data-lang="en"] .ar{display:none;}
+.num{font-family:var(--mono); font-variant-numeric:tabular-nums; direction:ltr; unicode-bidi:isolate;}
+h1,h2,h3{margin:0; line-height:1.2; text-wrap:balance;}
+p{margin:0;}
+.wrap{max-width:64rem; margin:0 auto; padding:0 1.5rem;}
+
+.topbar{position:sticky; top:0; z-index:10; background:rgba(15,20,22,.9);
+  backdrop-filter:blur(8px); border-bottom:1px solid var(--line);}
+.topbar .wrap{display:flex; align-items:center; justify-content:space-between; padding:1rem 1.5rem;}
+.brand{display:flex; align-items:center; gap:.6rem;}
+.brand .wm{font-weight:700; font-size:1.4rem; letter-spacing:-.045em;}
+.lang{display:flex; gap:.3rem;}
+.lang button{font-family:var(--f); font-size:.8rem; font-weight:600; padding:.35rem .9rem;
+  border:1px solid var(--line); background:var(--surface); color:var(--text-2);
+  cursor:pointer; border-radius:5px;}
+.lang button[aria-pressed="true"]{background:var(--ember); color:#fff; border-color:var(--ember);}
+button:focus-visible{outline:2px solid var(--ember-hi); outline-offset:2px;}
+
+.hero{padding:4.5rem 0 3.5rem; border-bottom:1px solid var(--line);}
+.eyebrow{font-family:var(--mono); font-size:.75rem; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--ember); margin-bottom:1rem;}
+.hero h1{font-size:clamp(2rem,5vw,3.2rem); font-weight:700; letter-spacing:-.03em; max-width:24ch;}
+.hero .lede{color:var(--text-2); max-width:40rem; font-size:1.0625rem; margin-top:1.1rem;}
+
+section{padding:3.6rem 0; border-bottom:1px solid var(--line);}
+section:last-of-type{border-bottom:0;}
+.kicker{font-family:var(--mono); font-size:.75rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--ember); margin-bottom:.6rem;}
+h2{font-size:clamp(1.4rem,2.6vw,1.9rem); font-weight:700; letter-spacing:-.02em; max-width:26ch;}
+.sub{color:var(--text-2); max-width:42rem; margin-top:.8rem; font-size:1rem;}
+
+/* module grid */
+.modules{display:grid; gap:1rem; grid-template-columns:repeat(auto-fit,minmax(15.5rem,1fr));
+  margin-top:2.2rem;}
+.module{background:var(--surface); border:1px solid var(--line); border-radius:10px;
+  padding:1.4rem;}
+.module .no{font-family:var(--mono); font-size:.72rem; color:var(--ember); letter-spacing:.08em;}
+.module h3{font-size:1.05rem; font-weight:600; margin-top:.5rem;}
+.module .d{color:var(--text-2); font-size:.875rem; margin-top:.5rem;}
+.module .formula{font-family:var(--mono); font-size:.72rem; color:var(--text-3);
+  margin-top:.8rem; padding-top:.8rem; border-top:1px solid var(--line-soft);
+  direction:ltr; text-align:left; overflow-x:auto; white-space:nowrap;}
+
+/* honesty rules recap */
+.rules{display:flex; flex-direction:column; gap:.9rem; margin-top:2rem; max-width:44rem;}
+.rule{background:var(--well); border-inline-start:3px solid var(--ember);
+  border-radius:0 8px 8px 0; padding:1rem 1.2rem;}
+.rule .t{font-weight:600; margin-bottom:.25rem; font-size:.95rem;}
+.rule .d{color:var(--text-2); font-size:.85rem;}
+
+/* report anatomy mockup */
+.anatomy{background:var(--surface); border:1px solid var(--line); border-radius:12px;
+  padding:1.8rem; margin-top:2.2rem; position:relative;}
+.anatomy .tag{position:absolute; top:-.7rem; inset-inline-start:1.4rem; background:var(--ember);
+  color:#fff; font-family:var(--mono); font-size:.65rem; padding:.25rem .7rem; border-radius:99px;
+  letter-spacing:.06em;}
+.anrow{display:flex; justify-content:space-between; align-items:center; padding:.7rem 0;
+  border-bottom:1px solid var(--line-soft); font-size:.85rem;}
+.anrow:last-child{border-bottom:0;}
+.anrow .l{color:var(--text-2);}
+.anrow .v{font-family:var(--mono); color:var(--text-3);}
+.anrow .v.ph{color:var(--ember); opacity:.6;}
+.an-note{margin-top:1rem; font-size:.78rem; color:var(--text-3); font-style:italic;}
+
+/* standards */
+.standards{display:flex; flex-wrap:wrap; gap:.6rem; margin-top:1.8rem;}
+.std{font-family:var(--mono); font-size:.75rem; color:var(--text-2); background:var(--surface);
+  border:1px solid var(--line); border-radius:6px; padding:.4rem .8rem;}
+
+.cta-final{text-align:center; padding:4.5rem 0;}
+.cta-final h2{max-width:none; margin:0 auto;}
+.cta-final .sub{margin:1rem auto 0;}
+.btn{font-family:var(--f); font-weight:600; font-size:.9375rem; padding:.75rem 1.5rem;
+  border-radius:7px; border:1px solid transparent; cursor:pointer; display:inline-block;
+  text-decoration:none; background:var(--ember); color:#fff; margin-top:1.6rem;}
+.btn:hover{background:var(--ember-hi);}
+footer{padding:2rem 1.5rem; color:var(--text-3); font-size:.8125rem;
+  display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem; max-width:64rem; margin:0 auto;}
+</style>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="brand">
+      <svg width="30" height="30" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#F0692F"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+      <span class="wm">eff</span>
+    </div>
+    <div class="lang">
+      <button type="button" data-lang-btn="ar" aria-pressed="true">AR</button>
+      <button type="button" data-lang-btn="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+</div>
+
+<main id="page" dir="rtl" data-lang="ar">
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow ar">القدرات والمنهجية</div>
+    <div class="eyebrow en">CAPABILITIES &amp; METHODOLOGY</div>
+    <h1 class="ar">كيف يصل eff إلى حكمه، خطوة بخطوة</h1>
+    <h1 class="en">How eff reaches its verdict, step by step</h1>
+    <p class="lede ar">توضح هذه الصفحة ما يُحسب، وكيف، وبناءً على أي معايير — دون أمثلة أو
+      أرقام مختلقة، لأن قاعدتنا أن كل رقم حقيقي يجب أن يصدر من بيانات عميل فعلي، لا من مثال
+      توضيحي.</p>
+    <p class="lede en">This page explains what gets calculated, how, and against which
+      standards — without invented examples or numbers, because our rule is that every real
+      figure must come from an actual client's data, never a demo example.</p>
+  </div>
+</section>
+
+<section id="modules">
+  <div class="wrap">
+    <div class="kicker ar">ما يحسبه eff</div>
+    <div class="kicker en">WHAT EFF COMPUTES</div>
+    <h2 class="ar">سبع طبقات تحليل، تلخَّص في رقم واحد يمكنك التصرف بناءً عليه</h2>
+    <h2 class="en">Seven layers of analysis, boiled down to one number you can act on</h2>
+
+    <div class="modules">
+      <div class="module">
+        <div class="no">01</div>
+        <h3 class="ar">درجة الجاهزية</h3>
+        <h3 class="en">The fitness score</h3>
+        <div class="d ar">يُجمَع العمر والاعتمادية والكفاءة والسعة وتكلفة الصيانة والحالة
+          وتوفر قطع الغيار والسلامة في رقم واحد من 100 — كل عامل بوزنه الحقيقي، ومقارنةً
+          بمعيار الصانع الأصلي، دون تعلّم آلي.</div>
+        <div class="d en">Age, reliability, efficiency, capacity, maintenance cost, condition,
+          spare-parts availability, and safety combine into one score out of 100 — each weighted
+          by how much it actually matters, measured against the manufacturer's own baseline, with
+          no machine learning involved.</div>
+      </div>
+
+      <div class="module">
+        <div class="no">02</div>
+        <h3 class="ar">هل يوفر الاستبدال المال فعلًا؟</h3>
+        <h3 class="en">Does replacing it actually save money?</h3>
+        <div class="d ar">تُحسب تكلفة الاحتفاظ بالمعدة عامًا إضافيًا مقابل تكلفة استبدالها —
+          استنادًا فقط إلى الفرق الحقيقي بينهما، لا إلى التكلفة الكاملة. وأقصى ما يمكن أن
+          يوصي به هذا الاختبار وحده هو "التخطيط للإحلال"، لا "الإخراج من الخدمة".</div>
+        <div class="d en">We compare the cost of keeping the machine one more year against
+          replacing it — counting only the real difference, not the full cost of either. The
+          most this test alone can ever recommend is "plan for replacement", never "retire now".</div>
+      </div>
+
+      <div class="module">
+        <div class="no">03</div>
+        <h3 class="ar">دفتر حرق الطاقة اليومي</h3>
+        <h3 class="en">Daily energy-burn ledger</h3>
+        <div class="d ar">يبدأ كل تقرير برقم واحد: مقدار ما يُحرَق زيادةً كل يوم بالجنيه
+          المصري، مقسَّمًا إلى نصيب الصيانة (التآكل) ونصيب التشغيل (سوء توزيع الحمل).</div>
+        <div class="d en">Every report opens with one number: how much extra you're burning
+          every day, in EGP. We split it into maintenance's share (wear) and operations' share
+          (misallocated load).</div>
+      </div>
+
+      <div class="module">
+        <div class="no">04</div>
+        <h3 class="ar">مطابقة المعدة للمهمة</h3>
+        <h3 class="en">Matching the machine to the job</h3>
+        <div class="d ar">معدة سليمة على مهمة غير مناسبة (جرار كبير على مهمة صغيرة) هي مشكلة
+          تشغيلية تُحل بإعادة التوزيع، لا سبب لاستبدالها.</div>
+        <div class="d en">A perfectly sound machine on the wrong job (an oversized tractor on a
+          small task) is an operations problem to fix by reassignment — never a reason to replace it.</div>
+      </div>
+
+      <div class="module">
+        <div class="no">05</div>
+        <h3 class="ar">الانبعاثات، من الأرقام نفسها</h3>
+        <h3 class="en">Emissions, from the same burn numbers</h3>
+        <div class="d ar">تُحسب بصمة الكربون من أرقام الحرق الزائد نفسها الظاهرة في دفتر
+          الطاقة — لا من تقدير منفصل قد يتناقض معها.</div>
+        <div class="d en">The carbon footprint is calculated from the exact same excess-burn
+          numbers shown in the energy ledger — never a separate estimate that could contradict it.</div>
+      </div>
+
+      <div class="module">
+        <div class="no">06</div>
+        <h3 class="ar">بصمة كربون المنتج حسب المنطقة</h3>
+        <h3 class="en">Product carbon footprint, by region</h3>
+        <div class="d ar">كمية الكربون التي يكلفها طن واحد من منتجك، ومدى بُعدها عن أفضل أداء
+          ممكن في منطقتك تحديدًا — إذ يختلف عمق المياه ومسافة الري من منطقة لأخرى، وتأخذ
+          المقارنة ذلك في الاعتبار.</div>
+        <div class="d en">What one tonne of your product costs in carbon, and how far that is
+          from the best achievable in your specific region — water-table depth and irrigation
+          distance differ by location, and the comparison accounts for that.</div>
+      </div>
+
+      <div class="module">
+        <div class="no">07</div>
+        <h3 class="ar">أتعاب تُحسب لك، لا تُنتقى من جدول</h3>
+        <h3 class="en">A fee calculated for you, never looked up in a table</h3>
+        <div class="d ar">تُحدَّد الأتعاب بناءً على المجهود الفعلي المطلوب لأسطولك تحديدًا —
+          عدد الأصول والمواقع ومدى جاهزية بياناتك — لا برقم ثابت واحد لجميع العملاء.</div>
+        <div class="d en">The fee is set by the actual effort your fleet requires — number of
+          assets, sites, and how ready your data is — not one fixed number for every client.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="honesty">
+  <div class="wrap">
+    <div class="kicker ar">تصميم الأمانة</div>
+    <div class="kicker en">HONESTY BY DESIGN</div>
+    <h2 class="ar">القواعد التي تحكم كل وحدة</h2>
+    <h2 class="en">The rules that govern every module</h2>
+    <div class="rules">
+      <div class="rule">
+        <div class="t ar">لا صفر لغياب القياس</div>
+        <div class="t en">No zero for a missing measurement</div>
+        <div class="d ar">يُستبعد المؤشر الناقص، ويُعاد توزيع وزنه على ما قِيس فعليًا</div>
+        <div class="d en">A missing indicator is excluded and its weight redistributes to what was measured</div>
+      </div>
+      <div class="rule">
+        <div class="t ar">الأرقام الإرشادية تُميَّز دائمًا بعلامة "~"</div>
+        <div class="t en">Benchmark-based figures always carry "~"</div>
+        <div class="d ar">أي رقم يستند إلى معيار قياسي بدلًا من قياس فعلي يُعلَّم كإرشادي</div>
+        <div class="d en">Any figure resting on a benchmark instead of a direct measurement is marked indicative</div>
+      </div>
+      <div class="rule">
+        <div class="t ar">لكل قيمة مرجعية مصدرها</div>
+        <div class="t en">Every reference value carries a source</div>
+        <div class="d ar">يوضح حقل المصدر ما إذا كانت القيمة من بحث منشور أو تقدير من eff لم يُوثَّق بعد</div>
+        <div class="d en">A src field states whether it's from published research or an eff estimate awaiting sourcing</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="anatomy">
+  <div class="wrap">
+    <div class="kicker ar">بنية التقرير</div>
+    <div class="kicker en">REPORT ANATOMY</div>
+    <h2 class="ar">شكل التقرير — دون أي أرقام عميل</h2>
+    <h2 class="en">The report's shape — without any client's numbers</h2>
+    <p class="sub ar">هذه بنود التقرير الحقيقية، بقيم فارغة بدلًا من الأرقام — لأن قاعدتنا
+      عدم إدراج أي رقم مختلق في أي شيء قد يراه العميل. الأرقام الحقيقية تأتي من بياناتك وحدها.</p>
+    <p class="sub en">These are the report's real line items, shown with empty values instead of
+      numbers — because our rule is no fabricated figures in anything a client might see. The
+      real numbers come only from your own data.</p>
+
+    <div class="anatomy">
+      <span class="tag ar">بنود التقرير — دون أرقام</span>
+      <span class="tag en">REPORT LINE ITEMS — NO NUMBERS SHOWN</span>
+      <div class="anrow"><span class="l ar">حرق الطاقة اليومي</span><span class="l en">Daily energy burn</span><span class="v ph num">— جنيه/يوم</span></div>
+      <div class="anrow"><span class="l ar">درجة الجاهزية</span><span class="l en">Fitness score</span><span class="v ph num">— من 100</span></div>
+      <div class="anrow"><span class="l ar">الحكم</span><span class="l en">Verdict</span><span class="v ph"><span class="ar">استمرار / مراقبة / تخطيط / إخراج</span><span class="en">Keep / Monitor / Plan / Retire</span></span></div>
+      <div class="anrow"><span class="l ar">درجة الثقة</span><span class="l en">Confidence</span><span class="v ph num">— %</span></div>
+      <div class="anrow"><span class="l ar">المؤشر القائد</span><span class="l en">Driving indicator</span><span class="v ph"><span class="ar">مثلًا: العمر / الاعتمادية / الكفاءة</span><span class="en">e.g. age / reliability / efficiency</span></span></div>
+      <div class="anrow"><span class="l ar">الاختبار الاقتصادي</span><span class="l en">Economic test</span><span class="v ph num">— جنيه/سنة</span></div>
+    </div>
+    <div class="an-note ar">تُملأ جميع هذه الخانات من نموذج تجميع البيانات (DataKit) الذي يعبئه فريق العميل بنفسه.</div>
+    <div class="an-note en">Every field here is filled from the client-run DataKit — no field is pre-populated by us.</div>
+  </div>
+</section>
+
+<section id="standards">
+  <div class="wrap">
+    <div class="kicker ar">المعايير المرجعية</div>
+    <div class="kicker en">REFERENCE STANDARDS</div>
+    <h2 class="ar">لا حكم دون سند منشور</h2>
+    <h2 class="en">No verdict without a published basis</h2>
+    <p class="sub ar">يستند كل حكم إلى معيار هندسي دولي معترف به، لا إلى تقدير شخصي —
+      وهذه أهم المعايير التي تقوم عليها المنهجية.</p>
+    <p class="sub en">Every verdict traces back to a recognized international engineering
+      standard, never a personal judgment call — these are the key standards the methodology
+      is built on.</p>
+    <div class="standards">
+      <span class="std">ISO 20816 — Mechanical vibration</span>
+      <span class="std">IEEE 43 — Insulation resistance</span>
+      <span class="std">ISO 50001 — Energy management</span>
+      <span class="std">ISO 55000 — Asset management</span>
+      <span class="std">ISO 14067 — Product carbon footprint</span>
+      <span class="std">GHG Protocol — Product Standard</span>
+      <span class="std">Mekonnen &amp; Hoekstra 2011 — Water footprint</span>
+    </div>
+  </div>
+</section>
+
+<section class="cta-final">
+  <div class="wrap">
+    <h2 class="ar">هل تريد رؤية المحرك يعمل على بياناتك؟</h2>
+    <h2 class="en">Want to see the engine run on your data?</h2>
+    <p class="sub ar">تقييم تجريبي على خمس معدات — دون أمثلة، دون تخمين، دون التزام.</p>
+    <p class="sub en">A pilot on five machines — no examples, no guessing, no obligation.</p>
+    <a class="btn ar" href="mailto:info@eff-egypt.com">اطلب تقييمًا تجريبيًا</a>
+    <a class="btn en" href="mailto:info@eff-egypt.com">Request a pilot</a>
+  </div>
+</section>
+
+</main>
+
+<footer dir="rtl" data-lang="ar">
+  <span class="ar">eff · تقييم كفاءة المعدات</span>
+  <span class="en">eff · Equipment Fitness Framework</span>
+  <span class="mono">info@eff-egypt.com</span>
+</footer>
+
+<script>
+document.querySelectorAll('[data-lang-btn]').forEach(function(b){
+  b.addEventListener('click', function(){
+    var lang = b.getAttribute('data-lang-btn');
+    [document.getElementById('page'), document.querySelector('footer')].forEach(function(el){
+      if(!el) return;
+      el.setAttribute('data-lang', lang);
+      el.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    });
+    document.querySelectorAll('[data-lang-btn]').forEach(function(x){
+      x.setAttribute('aria-pressed', x.getAttribute('data-lang-btn') === lang ? 'true' : 'false');
+    });
+  });
+});
+</script>
