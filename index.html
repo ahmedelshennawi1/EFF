@@ -3,52 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EFF Web App</title>
+    <title>eff</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0E6E66">
+    <meta name="theme-color" content="#F0692F">
     <link rel="icon" type="image/svg+xml" href="icon.svg">
     <style>
         :root {
-            --ink: #23292C;
-            --ink-soft: #4A5457;
-            --paper: #FAFBFA;
+            --ink: #FAFAF8;
             --surface: #FFFFFF;
-            --teal-deep: #0E6E66;
-            --teal: #14958A;
-            --line: #D5DEDC;
-            --sans: "Segoe UI", "IBM Plex Sans", -apple-system, system-ui, sans-serif;
+            --surface-2: #F1F2EF;
+            --line: #D8DCD6;
+            --ember: #D4551E;
+            --ember-hi: #F0692F;
+            --text: #171D1F;
+            --text-2: #4C595D;
+            --sans: "Rubik", "Segoe UI", "IBM Plex Sans", -apple-system, sans-serif;
         }
         @media (prefers-color-scheme: dark) {
             :root {
-                --ink: #E4EAE9;
-                --ink-soft: #A9B6B4;
-                --paper: #171C1D;
-                --surface: #1F2627;
-                --teal-deep: #3BB3A7;
-                --teal: #2AA79B;
-                --line: #35403F;
+                --ink: #0F1416;
+                --surface: #171E21;
+                --surface-2: #1D262A;
+                --line: #263135;
+                --ember: #F0692F;
+                --ember-hi: #FF8A4D;
+                --text: #E9EEEF;
+                --text-2: #9FB0B5;
             }
         }
         * { box-sizing: border-box; }
         body {
             margin: 0;
             font-family: var(--sans);
-            background: var(--paper);
-            color: var(--ink);
+            background: var(--ink);
+            color: var(--text);
             -webkit-tap-highlight-color: transparent;
         }
         header {
-            background: var(--teal-deep);
-            color: #fff;
+            background: var(--surface);
+            color: var(--text);
             padding: 20px 24px;
             text-align: center;
-            font-size: 22px;
+            font-size: 26px;
             font-weight: 700;
             position: sticky;
             top: 0;
             z-index: 10;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            letter-spacing: 0.02em;
+            border-bottom: 1px solid var(--line);
+            letter-spacing: -0.04em;
         }
         .container {
             padding: 24px 20px 80px;
@@ -60,7 +62,7 @@
             font-size: 14px;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            color: var(--teal);
+            color: var(--ember);
             font-weight: 700;
             padding-bottom: 8px;
             margin-bottom: 16px;
@@ -73,23 +75,20 @@
         .file-card {
             background: var(--surface);
             border: 1px solid var(--line);
-            border-radius: 12px;
+            border-radius: 8px;
             padding: 16px 20px;
             text-decoration: none;
-            color: var(--ink);
+            color: var(--text);
             display: flex;
             align-items: center;
             gap: 16px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
             transition: all 0.2s ease;
         }
         .file-card:active {
-            background: var(--line);
-            transform: scale(0.98);
+            background: var(--surface-2);
         }
         .file-card:hover {
-            border-color: var(--teal);
-            box-shadow: 0 4px 12px rgba(20, 149, 138, 0.1);
+            border-color: var(--ember);
         }
         .icon {
             font-size: 24px;
@@ -98,12 +97,12 @@
             justify-content: center;
             width: 40px;
             height: 40px;
-            background: var(--paper);
+            background: var(--surface-2);
             border-radius: 8px;
             flex-shrink: 0;
         }
-        .pdf-icon { color: #e74c3c; }
-        .html-icon { color: #3498db; }
+        .pdf-icon { color: var(--ember); }
+        .html-icon { color: var(--text-2); }
         
         .card-content {
             display: flex;
@@ -116,13 +115,13 @@
         }
         .file-ext {
             font-size: 12px;
-            color: var(--ink-soft);
+            color: var(--text-2);
             text-transform: uppercase;
         }
     </style>
 </head>
 <body>
-    <header>EFF Workspace</header>
+    <header>eff workspace</header>
     <div class="container">
         
         <div class="category">Brand</div>
