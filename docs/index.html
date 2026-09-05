@@ -1,0 +1,818 @@
+<meta charset="utf-8">
+<title>eff — منصة العميل التفاعلية | Interactive Client Platform</title>
+<style>
+:root{
+  --ink:#0F1416; --surface:#171E21; --surface-2:#1D262A; --well:#0B1012;
+  --line:#263135; --line-soft:#1F292D;
+  --text:#E9EEEF; --text-2:#9FB0B5; --text-3:#5F7076;
+  --ember:#F0692F; --ember-hi:#FF8A4D;
+  --keep:#2FA98C; --monitor:#D9A441; --plan:#C4574D; --retire:#8C2F22; --nodata:#5F7076;
+  --f:"Rubik","Segoe UI","Noto Sans Arabic",Tahoma,sans-serif;
+  --mono:"IBM Plex Mono","Consolas",ui-monospace,monospace;
+}
+*{box-sizing:border-box;}
+body{margin:0; background:var(--ink); color:var(--text); font-family:var(--f);
+  font-size:14px; line-height:1.65; -webkit-font-smoothing:antialiased;}
+.page{max-width:76rem; margin:0 auto; padding:0 1.25rem 5rem;}
+.page[dir="rtl"]{text-align:right;} .page[dir="ltr"]{text-align:left;}
+.page[data-doc-lang="ar"] .en-only{display:none;} .page[data-doc-lang="en"] .ar-only{display:none;}
+h1,h2,h3{margin:0; line-height:1.3; text-wrap:balance;}
+p{margin:0;}
+.mono{font-family:var(--mono); font-variant-numeric:tabular-nums; direction:ltr; unicode-bidi:isolate;}
+button:focus-visible,a:focus-visible{outline:2px solid var(--ember-hi); outline-offset:2px;}
+
+/* topbar */
+.top{display:flex; align-items:center; gap:.9rem; padding:1rem 0; flex-wrap:wrap; border-bottom:1px solid var(--line);}
+.brand{display:flex; align-items:center; gap:.6rem;}
+.brand .wm{font-weight:700; font-size:1.35rem; letter-spacing:-.04em;}
+.crumb{color:var(--text-3); font-size:.8125rem;}
+.langs{display:flex; gap:.3rem; margin-inline-start:auto;}
+.langs button{font-family:var(--f); font-size:.75rem; font-weight:600; padding:.25rem .7rem;
+  border:1px solid var(--line); background:var(--surface); color:var(--text-2); cursor:pointer; border-radius:4px;}
+.langs button[aria-pressed="true"]{background:var(--ember); color:#fff; border-color:var(--ember);}
+
+/* tab nav */
+.tabs{display:flex; gap:.4rem; flex-wrap:wrap; padding:1rem 0; border-bottom:1px solid var(--line);}
+.tabs button{font-family:var(--f); font-size:.8125rem; font-weight:600; padding:.5rem 1rem;
+  border:1px solid var(--line); background:var(--surface); color:var(--text-2); cursor:pointer; border-radius:99px;}
+.tabs button .n{font-family:var(--mono); font-size:.68rem; color:var(--ember); margin-inline-end:.4rem;}
+.tabs button[aria-selected="true"]{background:var(--ember); color:#fff; border-color:var(--ember);}
+.tabs button[aria-selected="true"] .n{color:#fff;}
+
+.panel{display:none; padding-top:2rem;}
+.panel.on{display:block;}
+
+/* shared bits */
+.eyebrow{font-family:var(--mono); font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ember); margin-bottom:.6rem;}
+.hero h1{font-size:clamp(1.6rem,4vw,2.4rem); font-weight:700; letter-spacing:-.02em; max-width:26ch;}
+.hero .lede{color:var(--text-2); max-width:44rem; font-size:1.02rem; margin-top:1rem; line-height:1.7;}
+.card{background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:1.2rem 1.3rem;}
+.card h2{font-size:.9375rem; font-weight:600; margin-bottom:.2rem;}
+.card .sub{font-size:.75rem; color:var(--text-3); margin-bottom:.8rem;}
+.grid2{display:grid; gap:.9rem; grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));}
+.kpis{display:grid; gap:.8rem; grid-template-columns:repeat(auto-fit,minmax(13rem,1fr)); margin:1.2rem 0;}
+.kpi{background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:1rem 1.15rem; display:flex; flex-direction:column; gap:.15rem;}
+.kpi .t{font-family:var(--mono); font-size:.625rem; letter-spacing:.12em; color:var(--text-3); text-transform:uppercase;}
+.kpi .v{font-family:var(--mono); font-size:1.75rem; font-weight:600; line-height:1.15;}
+.kpi .v.ember{color:var(--ember);}
+.kpi .l{font-size:.75rem; color:var(--text-2);}
+.rule{background:var(--well); border-inline-start:3px solid var(--ember); border-radius:0 6px 6px 0; padding:.8rem 1rem; margin-bottom:.6rem;}
+.rule b{display:block; font-size:.875rem;}
+.rule span{color:var(--text-2); font-size:.8rem;}
+.pills{display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.6rem;}
+.pill{padding:.2rem .8rem; border-radius:99px; font-size:.75rem; font-weight:600; color:#fff;}
+.pill.keep{background:var(--keep); color:#08110E;} .pill.monitor{background:var(--monitor); color:#171D1F;}
+.pill.plan{background:var(--plan);} .pill.retire{background:var(--retire);} .pill.nodata{background:var(--nodata); color:#0B1012;}
+.mod{border-bottom:1px solid var(--line-soft); padding:.9rem 0; display:grid; grid-template-columns:1.8rem 1fr; gap:.6rem;}
+.mod:last-child{border-bottom:0;}
+.mod .no{font-family:var(--mono); color:var(--ember); font-weight:700; font-size:.85rem;}
+.mod h3{font-size:.9rem; font-weight:600;}
+.mod .d{color:var(--text-2); font-size:.8125rem; margin-top:.2rem;}
+.standards{display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.8rem;}
+.std{font-family:var(--mono); font-size:.68rem; color:var(--text-2); background:var(--surface-2); border:1px solid var(--line); border-radius:5px; padding:.3rem .7rem;}
+.tw{overflow-x:auto;}
+table{width:100%; border-collapse:collapse; font-size:.8125rem;}
+th{font-family:var(--mono); font-size:.625rem; letter-spacing:.1em; color:var(--text-3); padding:.45rem .6rem; border-bottom:1px solid var(--line); white-space:nowrap; text-transform:uppercase;}
+.page[dir="rtl"] th,.page[dir="rtl"] td{text-align:right;} .page[dir="ltr"] th,.page[dir="ltr"] td{text-align:left;}
+td{padding:.55rem .6rem; border-bottom:1px solid var(--line-soft); color:var(--text-2); vertical-align:top;}
+tr:last-child td{border-bottom:0;}
+td.f{color:var(--text); font-weight:600;}
+td.num,th.num{font-family:var(--mono); white-space:nowrap;}
+.page[dir="rtl"] td.num,.page[dir="rtl"] th.num{text-align:left; direction:ltr;} .page[dir="ltr"] td.num,.page[dir="ltr"] th.num{text-align:right;}
+.formula{background:var(--well); border-inline-start:3px solid var(--ember); border-radius:0 6px 6px 0; padding:1rem 1.2rem; margin-top:.8rem;
+  font-family:var(--mono); font-size:.8125rem; line-height:2; color:var(--text-2); direction:ltr; text-align:left; overflow-x:auto;}
+.formula b{color:var(--ember);}
+.callout{background:rgba(240,105,47,.1); border:1px solid var(--ember); border-radius:8px; padding:1rem 1.2rem; margin-top:.8rem; font-size:.9375rem; color:var(--text-2);}
+.callout b{color:var(--ember);}
+.section-title{margin-top:2.2rem;}
+.section-title h2{font-size:1.25rem; font-weight:700;}
+.section-title .sub{color:var(--text-2); font-size:.85rem; margin-top:.3rem; max-width:50rem;}
+
+/* DataKit form (ported, dark theme) */
+.recipe{background:var(--well); border-inline-start:3px solid var(--ember); border-radius:0 4px 4px 0; padding:1.1rem 1.3rem; margin:1.2rem 0; font-size:.875rem; color:var(--text-2);}
+.recipe strong{color:var(--text);}
+.recipe ol{margin:.6rem 0 0; padding-inline-start:1.2rem; display:flex; flex-direction:column; gap:.35rem;}
+.setup{display:flex; gap:1rem; flex-wrap:wrap; align-items:flex-end; margin:1.2rem 0;}
+.fld{display:flex; flex-direction:column; gap:.25rem; min-width:13rem; flex:1;}
+.fld label{font-size:.75rem; font-weight:700; color:var(--ember);}
+input,select,textarea{font-family:var(--f); font-size:.875rem; padding:.45rem .6rem; border:1px solid var(--line);
+  border-radius:4px; background:var(--surface-2); color:var(--text); width:100%;}
+input:focus,select:focus{outline:2px solid var(--ember); outline-offset:-1px;}
+input.num{font-family:var(--mono); direction:ltr;}
+.page[dir="rtl"] input.num{text-align:right;}
+.btn{font-family:var(--f); font-weight:700; font-size:.875rem; padding:.55rem 1.3rem; border-radius:5px; cursor:pointer;
+  border:1px solid var(--ember); background:var(--ember); color:#fff;}
+.btn.ghost{background:var(--surface); color:var(--ember);}
+.btn:disabled{opacity:.4; cursor:not-allowed;}
+.asset{background:var(--surface); border:1px solid var(--line); border-radius:6px; margin-bottom:1rem; overflow:hidden;}
+.asset > summary{padding:.85rem 1.1rem; cursor:pointer; display:flex; gap:.75rem; align-items:center; flex-wrap:wrap; background:var(--surface-2); font-weight:700;}
+.asset > summary::-webkit-details-marker{display:none;}
+.asset .body{padding:1.1rem; display:flex; flex-direction:column; gap:1.3rem;}
+.grp h3{font-size:.9rem; color:var(--ember); margin-bottom:.15rem;}
+.grp .why{font-size:.72rem; color:var(--text-3); margin-bottom:.7rem;}
+.dk-grid{display:grid; gap:.9rem; grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));}
+.f{display:flex; flex-direction:column; gap:.2rem;}
+.f label{font-size:.8rem; font-weight:600;}
+.f .hint{font-size:.66rem; color:var(--text-3); line-height:1.5;}
+.f .unit{font-size:.66rem; color:var(--ember); font-weight:700;}
+.meter{display:flex; align-items:center; gap:.6rem; font-size:.8rem;}
+.meter .track{flex:1; height:.5rem; background:var(--well); border-radius:99px; overflow:hidden; min-width:5rem;}
+.meter .track i{display:block; height:100%; background:var(--keep); transition:width .2s;}
+.foot-bar{position:sticky; bottom:0; background:var(--surface); border-top:2px solid var(--ember); padding:.9rem 1.25rem;
+  display:flex; gap:1rem; align-items:center; flex-wrap:wrap; justify-content:space-between; margin-top:1.5rem; border-radius:8px 8px 0 0;}
+.tot{font-size:.8rem; color:var(--text-2);}
+.tot b{color:var(--text); font-family:var(--mono);}
+
+footer{margin-top:2.5rem; padding-top:.9rem; border-top:1px solid var(--line); color:var(--text-3); font-size:.75rem;
+  display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;}
+</style>
+
+<div class="page" id="doc" dir="rtl" data-doc-lang="ar">
+
+  <div class="top">
+    <div class="brand">
+      <svg width="30" height="30" viewBox="0 0 48 48" aria-label="eff"><rect width="48" height="48" rx="12" fill="#F0692F"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+      <span class="wm">eff</span>
+    </div>
+    <span class="crumb"><span class="ar-only">منصة العميل التفاعلية</span><span class="en-only">Interactive Client Platform</span></span>
+    <div class="langs">
+      <button type="button" id="btn-ar" aria-pressed="true">ع</button>
+      <button type="button" id="btn-en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button type="button" data-tab="overview" aria-selected="true"><span class="n">01</span><span class="ar-only">نظرة عامة</span><span class="en-only">Overview</span></button>
+    <button type="button" data-tab="criteria" aria-selected="false"><span class="n">02</span><span class="ar-only">معايير التقييم</span><span class="en-only">Criteria</span></button>
+    <button type="button" data-tab="datakit" aria-selected="false"><span class="n">03</span><span class="ar-only">جمع البيانات</span><span class="en-only">Data Collection</span></button>
+    <button type="button" data-tab="dashboard" aria-selected="false"><span class="n">04</span><span class="ar-only">نموذج التقرير</span><span class="en-only">Sample Report</span></button>
+    <button type="button" data-tab="savings" aria-selected="false"><span class="n">05</span><span class="ar-only">التوفير والأتعاب</span><span class="en-only">Savings &amp; Fees</span></button>
+  </div>
+
+  <!-- ============ 01 OVERVIEW ============ -->
+  <section class="panel on" id="panel-overview">
+    <div class="hero">
+      <div class="eyebrow ar-only">تقييم كفاءة المعدات</div>
+      <div class="eyebrow en-only">EQUIPMENT FITNESS FRAMEWORK</div>
+      <h1 class="ar-only">قرارات المعدات بالأرقام، لا بالحدس</h1>
+      <h1 class="en-only">Machine decisions, by the numbers — not gut feel</h1>
+      <p class="lede ar-only">تمتلك معظم الشركات الصناعية المصرية قائمة بملكية معداتها، لا طبقة أداء.
+        يبني eff هذه الطبقة الناقصة — ساعات التشغيل، الاستهلاك، ومؤشرات التآكل — ويحوّلها إلى
+        حكم واحد واضح لكل معدة، مع درجة ثقة معلَنة. المنصة دي بتاخدك من جمع البيانات لحد شكل
+        التقرير النهائي والأتعاب، في مكان واحد.</p>
+      <p class="lede en-only">Most Egyptian industrial operations have an ownership list, not a
+        performance layer. eff builds that missing layer — run hours, consumption, wear signals
+        — into one clear verdict per machine, with a stated confidence. This platform walks you
+        from data collection to the shape of the final report and the fee, in one place.</p>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi"><span class="t ar-only">مؤشرات موزونة</span><span class="t en-only">WEIGHTED INDICATORS</span><span class="v ember mono">8</span><span class="l ar-only">بلا تعلّم آلي</span><span class="l en-only">no machine learning</span></div>
+      <div class="kpi"><span class="t ar-only">يوم للتقرير</span><span class="t en-only">DAYS TO REPORT</span><span class="v mono">14</span><span class="l ar-only">في التقييم التجريبي</span><span class="l en-only">for the pilot assessment</span></div>
+      <div class="kpi"><span class="t ar-only">زيارات ميدانية</span><span class="t en-only">SITE VISITS</span><span class="v mono">0</span><span class="l ar-only">ذاتي الخدمة بالكامل</span><span class="l en-only">fully self-service</span></div>
+      <div class="kpi"><span class="t ar-only">فحص القيمة</span><span class="t en-only">VALUE CHECK</span><span class="v ember mono">1-3%</span><span class="l ar-only">من فاتورة الطاقة السنوية، لا أكثر</span><span class="l en-only">of annual energy bill, no more</span></div>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h2 class="ar-only">استخدم التابات فوق</h2><h2 class="en-only">Use the tabs above</h2>
+        <p class="sub ar-only">02 يشرح المعايير، 03 نموذج جمع البيانات الفعلي تقدر تجربه دلوقتي،
+          04 شكل التقرير، 05 التوفير والأتعاب.</p>
+        <p class="sub en-only">02 explains the criteria, 03 is the real data-collection form you
+          can try right now, 04 is the report's shape, 05 is savings and fees.</p>
+      </div>
+      <div class="card">
+        <h2 class="ar-only">ابدأ بتقييم تجريبي</h2><h2 class="en-only">Start with a pilot</h2>
+        <p class="sub ar-only">خمس معدات رئيسية، ساعتان من وقت فريقك، بدون التزام لتوسيع النطاق.</p>
+        <p class="sub en-only">Five core machines, two hours of your team's time, no obligation to widen scope.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 CRITERIA ============ -->
+  <section class="panel" id="panel-criteria">
+    <div class="section-title">
+      <h2 class="ar-only">ما يحسبه eff</h2><h2 class="en-only">What eff computes</h2>
+      <p class="sub ar-only">سبع طبقات تحليل، تلخَّص في رقم واحد يمكنك التصرف بناءً عليه.</p>
+      <p class="sub en-only">Seven layers of analysis, boiled down to one number you can act on.</p>
+    </div>
+    <div class="card" style="margin-top:1rem">
+      <div class="mod"><span class="no">01</span><div><h3 class="ar-only">درجة الجاهزية</h3><h3 class="en-only">The fitness score</h3>
+        <div class="d ar-only">العمر والاعتمادية والكفاءة والسعة وتكلفة الصيانة والحالة وتوفر قطع الغيار والسلامة، في رقم واحد من 100 — دون تعلّم آلي.</div>
+        <div class="d en-only">Age, reliability, efficiency, capacity, maintenance cost, condition, spare-parts availability, and safety in one score out of 100 — no machine learning.</div></div></div>
+      <div class="mod"><span class="no">02</span><div><h3 class="ar-only">هل يوفر الاستبدال المال فعلًا؟</h3><h3 class="en-only">Does replacing it save money?</h3>
+        <div class="d ar-only">مقارنة تكلفة الاحتفاظ بالمعدة بتكلفة استبدالها — الفرق الحقيقي فقط. أقصى توصية اقتصادية هي "التخطيط للإحلال"، لا "الإخراج من الخدمة".</div>
+        <div class="d en-only">Comparing the cost of keeping the machine against replacing it — the real difference only. The most this test can recommend is "plan for replacement", never "retire now".</div></div></div>
+      <div class="mod"><span class="no">03</span><div><h3 class="ar-only">دفتر حرق الطاقة اليومي</h3><h3 class="en-only">Daily energy-burn ledger</h3>
+        <div class="d ar-only">رقم يومي واحد بالجنيه، مقسَّم إلى نصيب الصيانة (التآكل) ونصيب التشغيل (سوء توزيع الحمل).</div>
+        <div class="d en-only">One daily EGP number, split into maintenance's share (wear) and operations' share (misallocated load).</div></div></div>
+      <div class="mod"><span class="no">04</span><div><h3 class="ar-only">مطابقة المعدة للمهمة</h3><h3 class="en-only">Matching the machine to the job</h3>
+        <div class="d ar-only">معدة سليمة على مهمة غير مناسبة هي مشكلة تشغيلية تُحل بإعادة التوزيع، لا سبب لاستبدالها.</div>
+        <div class="d en-only">A sound machine on the wrong job is an operations problem fixed by reassignment — never a reason to replace it.</div></div></div>
+      <div class="mod"><span class="no">05</span><div><h3 class="ar-only">الانبعاثات، من الأرقام نفسها</h3><h3 class="en-only">Emissions, from the same numbers</h3>
+        <div class="d ar-only">تُحسب بصمة الكربون من أرقام الحرق الزائد نفسها — لا من تقدير منفصل.</div>
+        <div class="d en-only">Carbon footprint calculated from the same excess-burn numbers — never a separate estimate.</div></div></div>
+      <div class="mod"><span class="no">06</span><div><h3 class="ar-only">بصمة كربون المنتج حسب المنطقة</h3><h3 class="en-only">Product carbon footprint, by region</h3>
+        <div class="d ar-only">كمية الكربون لكل طن منتج، ومدى بُعدها عن أفضل أداء ممكن في منطقتك.</div>
+        <div class="d en-only">Carbon per tonne of product, and how far from the best achievable in your region.</div></div></div>
+      <div class="mod"><span class="no">07</span><div><h3 class="ar-only">أتعاب تُحسب لك</h3><h3 class="en-only">A fee calculated for you</h3>
+        <div class="d ar-only">تُحدَّد الأتعاب بناءً على المجهود الفعلي المطلوب لأسطولك — لا تُنتقى من جدول.</div>
+        <div class="d en-only">The fee is set by the actual effort your fleet requires — never looked up in a table.</div></div></div>
+    </div>
+
+    <div class="section-title">
+      <h2 class="ar-only">تصميم الأمانة</h2><h2 class="en-only">Honesty by design</h2>
+    </div>
+    <div class="rule"><b class="ar-only">لا صفر لغياب القياس</b><b class="en-only">No zero for a missing measurement</b>
+      <span class="ar-only">يُستبعد المؤشر الناقص، ويُعاد توزيع وزنه على ما قِيس فعليًا.</span>
+      <span class="en-only">A missing indicator is excluded and its weight redistributes to what was measured.</span></div>
+    <div class="rule"><b class="ar-only">أقل من 60% ثقة، لا حكم</b><b class="en-only">Below 60% confidence, no verdict</b>
+      <span class="ar-only">يوضح التقرير عبارة "بيانات غير كافية" صراحةً.</span>
+      <span class="en-only">The report clearly states "insufficient data".</span></div>
+    <div class="rule"><b class="ar-only">الأرقام الإرشادية تُميَّز بعلامة "~"</b><b class="en-only">Benchmark figures carry "~"</b>
+      <span class="ar-only">أي رقم يستند إلى معيار قياسي بدلًا من قياس فعلي يُعلَّم كإرشادي.</span>
+      <span class="en-only">Any figure resting on a benchmark instead of a direct measurement is marked indicative.</span></div>
+
+    <div class="section-title">
+      <h2 class="ar-only">الأحكام</h2><h2 class="en-only">Verdicts</h2>
+    </div>
+    <div class="pills">
+      <span class="pill keep"><span class="ar-only">استمرار</span><span class="en-only">Keep</span></span>
+      <span class="pill monitor"><span class="ar-only">مراقبة</span><span class="en-only">Monitor</span></span>
+      <span class="pill plan"><span class="ar-only">تخطيط للإحلال</span><span class="en-only">Plan replacement</span></span>
+      <span class="pill retire"><span class="ar-only">إخراج من الخدمة</span><span class="en-only">Retire now</span></span>
+    </div>
+
+    <div class="section-title">
+      <h2 class="ar-only">المعايير المرجعية</h2><h2 class="en-only">Reference standards</h2>
+      <p class="sub ar-only">كل حكم بيرجع لمعيار هندسي دولي معترف به، لا لتقدير شخصي.</p>
+      <p class="sub en-only">Every verdict traces back to a recognized international engineering standard.</p>
+    </div>
+    <div class="standards">
+      <span class="std">ISO 20816</span><span class="std">IEEE 43</span><span class="std">ISO 50001</span>
+      <span class="std">ISO 55000</span><span class="std">ISO 14067</span><span class="std">GHG Protocol</span>
+      <span class="std">Mekonnen &amp; Hoekstra 2011</span>
+    </div>
+  </section>
+
+  <!-- ============ 03 DATA COLLECTION ============ -->
+  <section class="panel" id="panel-datakit">
+    <header>
+      <h1 style="font-size:1.5rem"><span class="ar-only">كراسة جمع بيانات المعدات</span>
+        <span class="en-only">Equipment Data Collection Sheet</span></h1>
+      <p class="lede" style="font-size:.9rem; margin-top:.5rem">
+        <span class="ar-only">املأ ما تعرفه فقط. الخانة الفارغة أفضل من الرقم المُخمَّن — البيانات
+          الناقصة تُستبعد بأمانة، أما الرقم الخاطئ فيُفسد النتيجة كلها.</span>
+        <span class="en-only">Fill in only what you know. A blank cell is better than a guessed
+          number — missing data is excluded honestly, but a wrong number corrupts the whole result.</span></p>
+    </header>
+
+    <div class="recipe">
+      <strong><span class="ar-only">طريقة الاستخدام — أربع خطوات</span><span class="en-only">How to use this — four steps</span></strong>
+      <ol>
+        <li><span class="ar-only">اختر القطاع، فتظهر لك قائمة المعدات المتوقعة في منشأتك.</span>
+          <span class="en-only">Pick your sector — the machinery typically found in your operation appears.</span></li>
+        <li><span class="ar-only">أضف معدة لكل آلة لديك، واملأ ما هو متاح من سجلاتك ولوحات التعريف.</span>
+          <span class="en-only">Add one entry per machine, filling what you have from records and nameplates.</span></li>
+        <li><span class="ar-only">راقب مؤشر الاكتمال بجوار كل معدة — يخبرك مباشرةً بجودة الحكم المتوقع.</span>
+          <span class="en-only">Watch the completeness meter beside each machine — it tells you live how sound the verdict will be.</span></li>
+        <li><span class="ar-only">اضغط «تصدير الملف» وأرسله. لا حاجة لزيارة موقعية.</span>
+          <span class="en-only">Press "Export file" and send it. No site visit required.</span></li>
+      </ol>
+    </div>
+
+    <div class="setup">
+      <div class="fld">
+        <label><span class="ar-only">القطاع</span><span class="en-only">Sector</span></label>
+        <select id="dk-sector"></select>
+      </div>
+      <div class="fld">
+        <label><span class="ar-only">اسم المنشأة</span><span class="en-only">Organisation</span></label>
+        <input type="text" id="dk-org" placeholder="—">
+      </div>
+      <div class="fld" style="flex:0 0 auto;min-width:auto">
+        <button class="btn" type="button" id="dk-add">
+          <span class="ar-only">+ إضافة معدة</span><span class="en-only">+ Add machine</span></button>
+      </div>
+    </div>
+
+    <div id="dk-assets"></div>
+
+    <div class="foot-bar">
+      <div class="tot">
+        <span class="ar-only">عدد المعدات:</span><span class="en-only">Machines:</span>
+        <b id="dk-count">0</b> ·
+        <span class="ar-only">متوسط الاكتمال:</span><span class="en-only">Average completeness:</span>
+        <b id="dk-avg">0%</b>
+      </div>
+      <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+        <button class="btn ghost" type="button" id="dk-demo">
+          <span class="ar-only">تعبئة مثال</span><span class="en-only">Load example</span></button>
+        <button class="btn" type="button" id="dk-export" disabled>
+          <span class="ar-only">تصدير الملف (CSV)</span><span class="en-only">Export file (CSV)</span></button>
+        <span id="dk-saveMsg" class="tot" role="status" aria-live="polite"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 04 SAMPLE REPORT ============ -->
+  <section class="panel" id="panel-dashboard">
+    <div class="section-title">
+      <h2 class="ar-only">شكل التقرير النهائي</h2><h2 class="en-only">What the final report looks like</h2>
+      <p class="sub ar-only">بيانات توضيحية بالكامل من محرك eff — مش بيانات أي عميل حقيقي. كده هيبقى شكل تقريرك بعد التقييم.</p>
+      <p class="sub en-only">Fully demonstration data from the eff engine — not any real client's data. This is the shape your own report will take.</p>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi"><span class="t ar-only">حرق الطاقة · يوميًا</span><span class="t en-only">ENERGY BURN · DAILY</span><span class="v ember mono">3,715</span><span class="l ar-only">جنيه/يوم فوق حاجة التشغيل</span><span class="l en-only">EGP/day above requirement</span></div>
+      <div class="kpi"><span class="t ar-only">سنويًا</span><span class="t en-only">ANNUALISED</span><span class="v mono">1,355,831</span><span class="l ar-only">جنيه/سنة — يُدفع تعطّلت المعدة أم لا</span><span class="l en-only">EGP/year — paid whether or not anything breaks</span></div>
+      <div class="kpi"><span class="t ar-only">وفر بلا رأس مال</span><span class="t en-only">NO-CAPITAL SAVING</span><span class="v mono">134,338</span><span class="l ar-only">جنيه/سنة بإعادة توزيع المهام فقط</span><span class="l en-only">EGP/year from reallocation alone</span></div>
+      <div class="kpi"><span class="t ar-only">حكم اقتصادي</span><span class="t en-only">REPLACEMENT CASE</span><span class="v mono">3,678,237</span><span class="l ar-only">جنيه/سنة من 5 إحلالات مسنودة</span><span class="l en-only">EGP/year from 5 justified replacements</span></div>
+    </div>
+
+    <div class="card">
+      <h2 class="ar-only">سجل الأسطول</h2><h2 class="en-only">Fleet register</h2>
+      <p class="sub ar-only">مرتب حسب الأولوية — الدرجة من 0 (كالجديد) إلى 100 (مستهلك)</p>
+      <p class="sub en-only">Sorted by priority — score runs 0 (as-new) to 100 (consumed)</p>
+      <div class="tw"><table>
+        <thead><tr>
+          <th><span class="ar-only">المعدة</span><span class="en-only">Asset</span></th>
+          <th class="num"><span class="ar-only">الدرجة</span><span class="en-only">Score</span></th>
+          <th><span class="ar-only">الحكم</span><span class="en-only">Verdict</span></th>
+          <th class="num"><span class="ar-only">الثقة</span><span class="en-only">Conf</span></th>
+          <th class="num"><span class="ar-only">حرق/يوم</span><span class="en-only">Burn/d</span></th>
+        </tr></thead>
+        <tbody>
+          <tr><td class="f">GEN-02</td><td class="num">62.3</td><td><span class="pill plan"><span class="ar-only">تخطيط</span><span class="en-only">Plan</span></span></td><td class="num">100%</td><td class="num">961</td></tr>
+          <tr><td class="f">BLR-01</td><td class="num">42.1</td><td><span class="pill plan"><span class="ar-only">تخطيط</span><span class="en-only">Plan</span></span></td><td class="num">100%</td><td class="num">835</td></tr>
+          <tr><td class="f">GEN-03</td><td class="num">15.4</td><td><span class="pill nodata"><span class="ar-only">بيانات غير كافية</span><span class="en-only">No data</span></span></td><td class="num">15%</td><td class="num">—</td></tr>
+          <tr><td class="f">CHL-01</td><td class="num">33.3</td><td><span class="pill monitor"><span class="ar-only">مراقبة</span><span class="en-only">Monitor</span></span></td><td class="num">100%</td><td class="num">898</td></tr>
+          <tr><td class="f">GEN-01</td><td class="num">7.5</td><td><span class="pill keep"><span class="ar-only">استمرار</span><span class="en-only">Keep</span></span></td><td class="num">100%</td><td class="num">320</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="rule" style="margin-top:1rem">
+      <b class="ar-only">TRC-01 — جرار 500 حصان على مهمة رش تحتاج 16% من قدرته</b>
+      <b class="en-only">TRC-01 — a 500 hp tractor on a spraying job needing 16% of its power</b>
+      <span class="ar-only">المعدة سليمة (درجة 12.8) لكن سوء التخصيص يهدر 86,746 ج/سنة. العلاج إعادة توزيع، لا إحلال.</span>
+      <span class="en-only">The machine is sound (score 12.8) but misallocation wastes EGP 86,746/yr. The remedy is reassignment, not replacement.</span>
+    </div>
+
+    <div class="card" style="margin-top:1rem; border-color:var(--line-soft);">
+      <p class="sub ar-only" style="margin-bottom:0">الداشبورد التفاعلي الكامل بكل التفاصيل متاح كملف منفصل — اسأل فريقنا لتجربته.</p>
+      <p class="sub en-only" style="margin-bottom:0">The full interactive dashboard with every detail is available as a separate file — ask our team to try it.</p>
+    </div>
+  </section>
+
+  <!-- ============ 05 SAVINGS & FEES ============ -->
+  <section class="panel" id="panel-savings">
+    <div class="section-title">
+      <h2 class="ar-only">مقابل التوفير المحتمل، الأتعاب تقريبًا لا شيء</h2>
+      <h2 class="en-only">Against the potential savings, the fee is almost nothing</h2>
+      <p class="sub ar-only">مش قايمة أسعار ثابتة — كل عرض سعر بيتحسب من عوامل معلنة.</p>
+      <p class="sub en-only">Not a fixed price list — every quote is computed from declared factors.</p>
+    </div>
+
+    <div class="callout">
+      <b class="ar-only">الأتعاب الدفاعية تقع بين 1% و3%</b><b class="en-only">A defensible fee lands between 1% and 3%</b>
+      <span class="ar-only"> فقط من فاتورة الطاقة السنوية للأسطول. لو الأتعاب طلعت أعلى من كده،
+        العرض بيتراجع عنه — ده فحص أمان لصالحك، مش قاعدة تسعير بتتغير لوحدها.</span>
+      <span class="en-only"> of the fleet's annual energy bill. If a quote lands above that, it
+        gets revised — this is a sanity check in your favor, not a pricing rule that moves on its own.</span>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi"><span class="t ar-only">برنامج العملاء المؤسِّسين</span><span class="t en-only">FOUNDING CLIENT PROGRAMME</span><span class="v ember mono">100%</span><span class="l ar-only">خصم على أول ثلاث منشآت</span><span class="l en-only">discount for the first three organisations</span></div>
+      <div class="kpi"><span class="t ar-only">التقييم التجريبي</span><span class="t en-only">THE PILOT</span><span class="v mono">5</span><span class="l ar-only">معدات فقط لتجربة المنهجية</span><span class="l en-only">machines only, to trial the methodology</span></div>
+      <div class="kpi"><span class="t ar-only">خصم تعدد المواقع</span><span class="t en-only">MULTI-SITE DISCOUNT</span><span class="v mono">10%</span><span class="l ar-only">3 مواقع فأكثر</span><span class="l en-only">3+ sites</span></div>
+      <div class="kpi"><span class="t ar-only">خصم الاشتراك</span><span class="t en-only">RETAINER DISCOUNT</span><span class="v mono">15%</span><span class="l ar-only">عند الالتزام بمراقبة مستمرة</span><span class="l en-only">when committing to continuous monitoring</span></div>
+    </div>
+
+    <div class="section-title">
+      <h2 class="ar-only">المعادلة</h2><h2 class="en-only">The formula</h2>
+    </div>
+    <div class="formula">
+      days&nbsp;&nbsp;= setup + (assets × per_asset) + (sites × per_site) + analysis + reporting<br>
+      days&nbsp;×= <b>data_readiness</b> × <b>urgency</b> × <b>diversity</b> × <b>language</b><br>
+      fee&nbsp;&nbsp;&nbsp;= days × day_rate − discounts
+    </div>
+
+    <div class="section-title">
+      <h2 class="ar-only">أمثلة محسوبة</h2><h2 class="en-only">Worked examples</h2>
+      <p class="sub ar-only">الأرقام ناتج تشغيل المعادلة، لا أسعار محفوظة.</p>
+      <p class="sub en-only">Figures are the formula's output, not memorised prices.</p>
+    </div>
+    <div class="card">
+      <div class="tw"><table>
+        <thead><tr>
+          <th><span class="ar-only">الحالة</span><span class="en-only">Case</span></th>
+          <th class="num"><span class="ar-only">الأتعاب</span><span class="en-only">Fee</span></th>
+          <th class="num"><span class="ar-only">الاشتراك/سنة</span><span class="en-only">Retainer/yr</span></th>
+        </tr></thead>
+        <tbody>
+          <tr><td class="f"><span class="ar-only">إثبات مفهوم — 5 معدات</span><span class="en-only">Proof of concept — 5 machines</span></td><td class="num">47,500</td><td class="num">42,000</td></tr>
+          <tr><td class="f"><span class="ar-only">25 أصلًا · موقع · بيانات جيدة</span><span class="en-only">25 assets · 1 site · good data</span></td><td class="num">52,000</td><td class="num">42,000</td></tr>
+          <tr><td class="f"><span class="ar-only">60 أصلًا · موقعان · بيانات جزئية</span><span class="en-only">60 assets · 2 sites · partial data</span></td><td class="num">87,000</td><td class="num">42,000</td></tr>
+        </tbody>
+      </table></div>
+      <p class="sub ar-only" style="margin-top:.8rem">صف إثبات المفهوم قبل تطبيق برنامج العملاء المؤسِّسين، اللي بيخلي المستحق صفرًا.</p>
+      <p class="sub en-only" style="margin-top:.8rem">The proof-of-concept row is before the Founding Client Programme, which brings the amount due to zero.</p>
+    </div>
+
+    <div class="section-title">
+      <h2 class="ar-only">جاهز تبدأ؟</h2><h2 class="en-only">Ready to start?</h2>
+      <p class="sub ar-only">راسلنا لبدء تقييم تجريبي — بدون التزام لتوسيع النطاق.</p>
+      <p class="sub en-only">Reach out to start a pilot — no obligation to widen scope.</p>
+    </div>
+    <a class="btn" href="mailto:info@eff-egypt.com" style="display:inline-block; margin-top:.5rem">
+      <span class="ar-only">اطلب تقييمًا تجريبيًا</span><span class="en-only">Request a pilot</span></a>
+  </section>
+
+  <footer>
+    <span class="ar-only">eff · تقييم كفاءة المعدات</span><span class="en-only">eff · Equipment Fitness Framework</span>
+    <span class="mono">info@eff-egypt.com</span>
+  </footer>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---- language + tabs ---- */
+var doc=document.getElementById('doc'),
+    ar=document.getElementById('btn-ar'), en=document.getElementById('btn-en');
+function setLang(l){doc.setAttribute('data-doc-lang',l); doc.setAttribute('dir',l==='ar'?'rtl':'ltr');
+  ar.setAttribute('aria-pressed',String(l==='ar')); en.setAttribute('aria-pressed',String(l==='en'));}
+ar.addEventListener('click',function(){setLang('ar');});
+en.addEventListener('click',function(){setLang('en');});
+
+document.querySelectorAll('.tabs button').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('.tabs button').forEach(function(b){b.setAttribute('aria-selected','false');});
+    btn.setAttribute('aria-selected','true');
+    document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on');});
+    document.getElementById('panel-'+btn.getAttribute('data-tab')).classList.add('on');
+  });
+});
+
+/* ---- DataKit (ported) ---- */
+var COLS = ["asset_id","name","asset_class","site","manufacturer","model","commissioned_year",
+"run_hours","design_life_hours","design_life_years","annual_run_hours","annual_downtime_hours",
+"unplanned_failures_12m","specific_consumption","baseline_specific_consumption","consumption_unit",
+"load_factor","rated_output","actual_output","output_unit","duty_task","duty_power_required",
+"energy_source","annual_maint_cost","cumulative_maint_cost","replacement_value","salvage_value",
+"currency","vibration_zone","oil_analysis","thermography","insulation","oem_support",
+"spare_lead_days","safety_findings","emissions_status","annual_output_total","energy_price",
+"downtime_cost_per_hour","new_unit_capital","new_unit_life_years","new_unit_specific_consumption",
+"notes"];
+
+var CLASSES = {
+ diesel_genset:["مولد ديزل","Diesel generator set","L/kWh","kW"],
+ gas_genset:["مولد غاز","Gas generator set","m3/kWh","kW"],
+ steam_boiler:["بويلر بخار","Steam boiler","m3/ton_steam","kg/h"],
+ hot_water_boiler:["بويلر مياه ساخنة","Hot water boiler","fuel/kWh_th","kW_th"],
+ incubator:["ماكينة تفريخ (حضّانة)","Incubator / hatcher","kWh/1000egg","egg"],
+ space_heater:["دفاية عنابر","Space heater / brooder","m3/kWh_th","kW_th"],
+ process_dryer:["مجفف (دراير)","Dryer","fuel/ton","t/h"],
+ oven_furnace:["فرن","Oven / furnace","fuel/ton","t/h"],
+ kiln:["فرن دوّار","Kiln","fuel/ton","t/h"],
+ chiller:["تشيلر","Chiller","kW/TR","TR"],
+ refrigeration_unit:["ثلاجة تخزين","Refrigeration unit","kWh/m3.day","m3"],
+ cooling_tower:["برج تبريد (كولنج تاور)","Cooling tower","kWh/TR","TR"],
+ ventilation_fan:["مروحة شفط (تهوية)","Ventilation fan","kWh/1000m3","m3/h"],
+ evaporative_cooler:["ألواح تبريد","Evaporative cooler","kWh/1000m3","m3/h"],
+ air_compressor:["ضاغط هواء","Air compressor","kWh/m3","m3/min"],
+ blower:["بلوَر (نافخ هواء)","Blower","kWh/1000m3","m3/h"],
+ vacuum_pump:["مضخة فاكيوم","Vacuum pump","kWh/h","h"],
+ thermal_incinerator:["محرقة","Incinerator","fuel/ton","t/h"],
+ pump:["مضخة","Pump","kWh/m3","m3/h"],
+ irrigation_pump:["مضخة ري","Irrigation pump","kWh/m3","m3/h"],
+ water_treatment:["محطة معالجة مياه","Water treatment unit","kWh/m3","m3/h"],
+ hammer_mill:["مطحنة مطارق","Hammer mill","kWh/ton","t/h"],
+ pellet_mill:["ماكينة بيليت","Pellet mill","kWh/ton","t/h"],
+ roller_mill:["مطحنة أسطوانية","Roller mill","kWh/ton","t/h"],
+ mixer:["خلاط","Mixer","kWh/ton","t/h"],
+ crusher:["كسارة","Crusher","kWh/ton","t/h"],
+ extruder:["إكسترودر","Extruder","kWh/ton","t/h"],
+ injection_moulder:["ماكينة حقن","Injection moulder","kWh/ton","t/h"],
+ separator_sieve:["غربال هزاز","Separator / sieve","kWh/ton","t/h"],
+ packing_machine:["ماكينة تعبئة","Packing machine","kWh/1000pcs","pcs/h"],
+ spinning_frame:["ماكينة غزل","Spinning frame","kWh/ton","t/h"],
+ loom:["نول نسيج","Loom","kWh/1000m","m/h"],
+ cnc_machine:["ماكينة CNC","CNC machine","kWh/h","h"],
+ press:["مكبس","Press","kWh/1000pcs","pcs/h"],
+ belt_conveyor:["سير ناقل","Belt conveyor","kWh/ton","t/h"],
+ bucket_elevator:["أسانسير","Bucket elevator","kWh/ton","t/h"],
+ screw_conveyor:["سكرو (ناقل حلزوني)","Screw conveyor","kWh/ton","t/h"],
+ crane_hoist:["ونش / رافعة","Crane / hoist","kWh/lift","kg"],
+ tractor:["جرار زراعي","Tractor","L/h","kW"],
+ harvester:["حصادة","Harvester","L/feddan","kW"],
+ loader:["لودر","Loader","L/h","kW"],
+ excavator:["حفار","Excavator","L/h","kW"],
+ forklift:["رافعة شوكية","Forklift","L/h","kg"],
+ truck:["شاحنة","Truck","L/100km","ton"],
+ transformer:["محول (ترانس)","Transformer","loss_kW","kVA"],
+ electric_motor:["موتور","Electric motor","kWh/kWh_out","kW"],
+ switchgear:["لوحة توزيع","Switchgear","","A"],
+ generic_machine:["معدة عامة","General equipment","",""]
+};
+
+var SECTORS = {
+ poultry:["الدواجن والثروة الحيوانية","Poultry & livestock",["incubator","space_heater","ventilation_fan","evaporative_cooler","diesel_genset","gas_genset","refrigeration_unit","pump","water_treatment","screw_conveyor","hammer_mill","air_compressor","electric_motor","transformer","truck","loader"]],
+ feed_milling:["مصانع الأعلاف","Feed milling",["hammer_mill","pellet_mill","roller_mill","mixer","separator_sieve","belt_conveyor","bucket_elevator","screw_conveyor","steam_boiler","process_dryer","air_compressor","diesel_genset","electric_motor","transformer","packing_machine","forklift"]],
+ agriculture:["الزراعة المحصولية","Field crop agriculture",["tractor","harvester","irrigation_pump","diesel_genset","truck","loader","water_treatment","space_heater"]],
+ food_processing:["التصنيع الغذائي","Food processing",["steam_boiler","chiller","refrigeration_unit","process_dryer","oven_furnace","air_compressor","pump","belt_conveyor","packing_machine","water_treatment","diesel_genset","cooling_tower","forklift"]],
+ cold_chain:["التخزين المبرد","Cold storage",["refrigeration_unit","chiller","cooling_tower","ventilation_fan","diesel_genset","transformer","forklift","truck","electric_motor"]],
+ textiles:["الغزل والنسيج","Textiles",["spinning_frame","loom","steam_boiler","chiller","air_compressor","blower","process_dryer","water_treatment","diesel_genset","transformer","electric_motor"]],
+ building_materials:["الأسمنت ومواد البناء","Cement & building materials",["kiln","crusher","roller_mill","belt_conveyor","bucket_elevator","air_compressor","blower","diesel_genset","transformer","loader","excavator","truck"]],
+ plastics:["البلاستيك","Plastics",["injection_moulder","extruder","chiller","cooling_tower","air_compressor","crusher","diesel_genset","transformer","packing_machine"]],
+ metal_fabrication:["تشكيل المعادن","Metal fabrication",["cnc_machine","press","oven_furnace","air_compressor","chiller","crane_hoist","diesel_genset","transformer","forklift"]],
+ water_utilities:["المياه والصرف","Water & wastewater",["pump","blower","water_treatment","diesel_genset","transformer","electric_motor","vacuum_pump","switchgear"]],
+ general_facilities:["المرافق العامة","General facilities",["diesel_genset","gas_genset","chiller","air_compressor","pump","hot_water_boiler","ventilation_fan","transformer","switchgear","electric_motor","forklift"]]
+};
+
+var GROUPS = [
+ ["essential","البيانات الأساسية","Essential data",
+  "من سجل الأصول ولوحة التعريف — لا تحتاج أي جهاز قياس.",
+  "From the asset register and nameplate — no instrument needed.",[
+  ["asset_id","رقم المعدة","Asset ID","أي رمز تستخدمه، مثل GEN-01","Any code you use, e.g. GEN-01","text",0],
+  ["name","اسم / وصف","Name","مثال: مولد المصنع الرئيسي","e.g. Main plant generator","text",0],
+  ["site","الموقع","Site","اسم الفرع أو المزرعة","Branch or farm name","text",0],
+  ["manufacturer","الصانع","Manufacturer","من لوحة التعريف","From the nameplate","text",0],
+  ["model","الموديل","Model","من لوحة التعريف","From the nameplate","text",0],
+  ["commissioned_year","سنة التشغيل","Year commissioned","سنة دخولها الخدمة","Year it entered service","num",6],
+  ["rated_output","القدرة المقننة","Rated output","من لوحة التعريف","From the nameplate","num",5],
+  ["run_hours","قراءة عداد الساعات","Hour meter reading","اتركها فارغة إن لم يوجد عداد","Leave blank if no meter fitted","num",6]
+ ]],
+ ["running","التشغيل والأعطال","Operation & breakdowns",
+  "من دفتر الأعطال وأوامر الشغل خلال آخر 12 شهرًا.",
+  "From the breakdown log and work orders for the last 12 months.",[
+  ["annual_run_hours","ساعات التشغيل السنوية","Annual run hours","تقريبية مقبولة","An approximation is fine","num",8],
+  ["annual_downtime_hours","ساعات التوقف المفاجئ","Unplanned downtime hours","الأعطال فقط — لا الصيانة المجدولة","Breakdowns only — not scheduled maintenance","num",10],
+  ["unplanned_failures_12m","عدد الأعطال","Number of breakdowns","كم مرة توقفت فجأة","How many times it stopped unexpectedly","num",10],
+  ["actual_output","الإنتاج الفعلي المستدام","Sustained actual output","ما تنتجه فعلًا، لا ما تقوله اللوحة","What it actually delivers, not the nameplate","num",7],
+  ["duty_task","المهمة المخصصة لها","Assigned task","مثال: رش مبيدات / تشغيل خط التعبئة","e.g. spraying / running the packing line","text",0],
+  ["duty_power_required","القدرة التي تحتاجها المهمة","Power the task needs","إن عُرفت — تكشف سوء التحجيم","If known — reveals oversizing","num",0]
+ ]],
+ ["cost","التكاليف","Costs",
+  "من سجلات المشتريات والصيانة. قيمة الإحلال = سعر شراء آلة جديدة مماثلة اليوم.",
+  "From purchasing and maintenance records. Replacement value = today's price of an equivalent new machine.",[
+  ["annual_maint_cost","تكلفة الصيانة السنوية","Annual maintenance cost","قطع غيار + عمالة","Parts + labour","num",8],
+  ["cumulative_maint_cost","إجمالي الصيانة منذ الشراء","Total maintenance since purchase","تقريبي مقبول","An approximation is fine","num",7],
+  ["replacement_value","قيمة الإحلال اليوم","Replacement value today","سعر آلة جديدة مماثلة — لا القيمة الدفترية","Price of an equivalent new machine — not book value","num",0],
+  ["salvage_value","قيمة البيع الحالية","Current resale value","لو بعتها اليوم","If you sold it today","num",0],
+  ["downtime_cost_per_hour","تكلفة ساعة التوقف","Cost of one hour stopped","الربح المفقود، لا الإيراد","Lost margin, not revenue","num",0]
+ ]],
+ ["energy","الطاقة والاستهلاك","Energy & consumption",
+  "هذا القسم هو الأثمن — وهو غالبًا غير مُقاس. املأ ما يتوفر فقط.",
+  "The most valuable section, and usually the least measured. Fill only what exists.",[
+  ["energy_source","مصدر الطاقة","Energy source","","","select_energy",0],
+  ["specific_consumption","الاستهلاك النوعي الحالي","Current specific consumption","الوقود أو الكهرباء لكل وحدة إنتاج","Fuel or power per unit of output","num",13],
+  ["baseline_specific_consumption","الاستهلاك المرجعي","Baseline consumption","من كتالوج الصانع أو أفضل قراءة مسجلة","From the OEM manual or your best recorded figure","num",0],
+  ["load_factor","معامل الحمل","Load factor","نسبة من القدرة المقننة، مثل 0.75 — ضرورية لصحة القراءة","Fraction of rated output, e.g. 0.75 — essential for a valid reading","num",0],
+  ["energy_price","سعر الوحدة","Unit price","جنيه لللتر أو للكيلوواط ساعة","EGP per litre or per kWh","num",0],
+  ["annual_output_total","إجمالي الإنتاج السنوي","Total annual output","بوحدة مقام الاستهلاك النوعي","In the denominator unit of specific consumption","num",0]
+ ]],
+ ["condition","الحالة الفنية","Physical condition",
+  "إن لم تُجرَ هذه الفحوص، اترك الخانات فارغة — ستظهر في التقرير كخطة قياس.",
+  "If these checks have not been done, leave them blank — they will appear in the report as a measurement plan.",[
+  ["vibration_zone","الاهتزاز","Vibration","تصنيف ISO إن قيس","ISO zone if measured","select_vib",4],
+  ["oil_analysis","تحليل الزيت","Oil analysis","","","select_cond",4],
+  ["thermography","التصوير الحراري","Thermography","","","select_cond",3],
+  ["insulation","اختبار العزل","Insulation test","للمولدات والموتورات","For generators and motors","select_ins",3],
+  ["oem_support","دعم الصانع","OEM support","هل قطع الغيار متاحة؟","Are spare parts still available?","select_oem",3],
+  ["spare_lead_days","مدة توريد قطع الغيار","Spare parts lead time","بالأيام، شاملة التخليص الجمركي","In days, including customs clearance","num",2],
+  ["safety_findings","ملاحظات سلامة مفتوحة","Open safety findings","عدد الملاحظات الحرجة غير المغلقة","Count of unresolved critical findings","num",3],
+  ["emissions_status","حالة الامتثال البيئي","Emissions status","","","select_emis",2],
+  ["notes","ملاحظات","Notes","أي ملاحظة تشغيلية مفيدة","Any useful operational note","text",0]
+ ]]
+];
+
+var OPTS = {
+ select_energy:[["","—"],["diesel","ديزل | Diesel"],["natural_gas","غاز طبيعي | Natural gas"],
+   ["lpg","غاز مسال | LPG"],["electricity","كهرباء | Electricity"],["biomass","كتلة حيوية | Biomass"],
+   ["solar","طاقة شمسية | Solar"]],
+ select_vib:[["","— لم يُقس | Not measured"],["a","A — ممتاز | Good as new"],
+   ["b","B — مقبول للتشغيل | Acceptable"],["c","C — غير مُرضٍ | Unsatisfactory"],
+   ["d","D — غير مقبول | Unacceptable"]],
+ select_cond:[["","— لم يُجرَ | Not done"],["normal","طبيعي | Normal"],["caution","تحذير | Caution"],
+   ["alert","إنذار | Alert"],["critical","حرج | Critical"]],
+ select_ins:[["","— لم يُجرَ | Not done"],["good","جيد | Good"],["caution","تحذير | Caution"],
+   ["poor","ضعيف | Poor"],["fail","راسب | Fail"]],
+ select_oem:[["","— غير معروف | Unknown"],["supported","مدعوم | Supported"],
+   ["limited","دعم محدود | Limited"],["discontinued","متوقف، القطع متاحة | Discontinued"],
+   ["unsupported","بلا دعم | Unsupported"]],
+ select_emis:[["","— غير معروف | Unknown"],["compliant","مطابق | Compliant"],
+   ["marginal","حدّي | Marginal"],["non_compliant","غير مطابق | Non-compliant"]]
+};
+
+var TOTAL_WEIGHT = 0;
+GROUPS.forEach(function(g){ g[5].forEach(function(f){ TOTAL_WEIGHT += f[6]; }); });
+
+var list=document.getElementById('dk-assets');
+var seq=0;
+
+function el(tag, cls, html){var e=document.createElement(tag); if(cls)e.className=cls;
+  if(html!=null)e.innerHTML=html; return e;}
+function bi(a,e){return '<span class="ar-only">'+a+'</span><span class="en-only">'+e+'</span>';}
+
+function classOptions(sector){
+  var keys = sector && SECTORS[sector] ? SECTORS[sector][2].slice() : Object.keys(CLASSES);
+  Object.keys(CLASSES).forEach(function(k){ if(keys.indexOf(k)<0) keys.push(k); });
+  return keys.map(function(k){
+    return '<option value="'+k+'">'+CLASSES[k][0]+' | '+CLASSES[k][1]+'</option>';}).join('');
+}
+
+function addAsset(prefill){
+  seq++;
+  var d=el('details','asset'); d.open = !prefill;
+  var s=el('summary');
+  s.innerHTML='<span class="aid mono">#'+seq+'</span>'+
+    '<span class="anm" style="flex:1;font-weight:400;color:var(--text-3)">'+
+    bi('معدة جديدة','New machine')+'</span>'+
+    '<span class="meter"><span class="track"><i style="width:0%"></i></span>'+
+    '<span class="pct mono" style="min-width:3rem">0%</span></span>';
+  d.appendChild(s);
+
+  var body=el('div','body');
+  var sel=el('div','f');
+  sel.innerHTML='<label>'+bi('نوع المعدة','Machine type')+'</label>'+
+    '<select data-k="asset_class">'+classOptions(document.getElementById('dk-sector').value)+'</select>'+
+    '<span class="hint">'+bi('اختر الأقرب — يحدد أوزان التقييم ووحدات القياس',
+      'Pick the closest — it sets the scoring weights and units')+'</span>';
+  body.appendChild(sel);
+
+  GROUPS.forEach(function(g){
+    var grp=el('div','grp');
+    grp.innerHTML='<h3>'+bi(g[1],g[2])+'</h3><div class="why">'+bi(g[3],g[4])+'</div>';
+    var grid=el('div','dk-grid');
+    g[5].forEach(function(f){
+      var w=el('div','f'), inp;
+      var lab='<label>'+bi(f[1],f[2])+'</label>';
+      if(f[5].indexOf('select_')===0){
+        inp='<select data-k="'+f[0]+'" data-w="'+f[6]+'">'+
+          OPTS[f[5]].map(function(o){return '<option value="'+o[0]+'">'+o[1]+'</option>';}).join('')+
+          '</select>';
+      } else {
+        inp='<input type="text" data-k="'+f[0]+'" data-w="'+f[6]+'"'+
+          (f[5]==='num'?' class="num" inputmode="decimal"':'')+' placeholder="—">';
+      }
+      var hint=(f[3]||f[4])?'<span class="hint">'+bi(f[3],f[4])+'</span>':'';
+      var unit='<span class="unit" data-unit="'+f[0]+'"></span>';
+      w.innerHTML=lab+inp+hint+unit;
+      grid.appendChild(w);
+    });
+    grp.appendChild(grid); body.appendChild(grp);
+  });
+
+  d.appendChild(body); list.appendChild(d);
+
+  d.addEventListener('input', function(){ refresh(d); });
+  d.addEventListener('change', function(){ refresh(d); });
+  d.querySelector('[data-k="asset_class"]').addEventListener('change',function(){units(d);});
+  units(d);
+  if(prefill){ Object.keys(prefill).forEach(function(k){
+      var i=d.querySelector('[data-k="'+k+'"]'); if(i) i.value=prefill[k]; }); units(d); }
+  refresh(d);
+  return d;
+}
+
+function units(d){
+  var k=d.querySelector('[data-k="asset_class"]').value, c=CLASSES[k]||["","","",""];
+  var map={specific_consumption:c[2], baseline_specific_consumption:c[2],
+    rated_output:c[3], actual_output:c[3], duty_power_required:c[3]};
+  d.querySelectorAll('[data-unit]').forEach(function(u){
+    var t=map[u.getAttribute('data-unit')];
+    u.textContent = t ? t : '';
+  });
+}
+
+function refresh(d){
+  var got=0;
+  d.querySelectorAll('[data-w]').forEach(function(i){
+    var w=parseFloat(i.getAttribute('data-w'))||0;
+    if(w>0 && String(i.value).trim()!=='') got+=w;
+  });
+  var pct=TOTAL_WEIGHT? Math.round(100*got/TOTAL_WEIGHT):0;
+  d.querySelector('.track i').style.width=pct+'%';
+  d.querySelector('.track i').style.background = pct>=85?'var(--keep)':(pct>=60?'var(--monitor)':'var(--retire)');
+  d.querySelector('.pct').textContent=pct+'%';
+  var nm=d.querySelector('[data-k="name"]').value || d.querySelector('[data-k="asset_id"]').value;
+  if(nm) d.querySelector('.anm').textContent=nm;
+  totals();
+}
+
+function totals(){
+  var ds=list.querySelectorAll('.asset');
+  var sum=0; ds.forEach(function(d){sum+=parseInt(d.querySelector('.pct').textContent)||0;});
+  document.getElementById('dk-count').textContent=ds.length;
+  document.getElementById('dk-avg').textContent=(ds.length?Math.round(sum/ds.length):0)+'%';
+  document.getElementById('dk-export').disabled = ds.length===0;
+}
+
+function csvCell(v){
+  v = v==null ? '' : String(v);
+  return /[",\n]/.test(v) ? '"'+v.replace(/"/g,'""')+'"' : v;
+}
+
+function buildCsv(){
+  var rows=[COLS.join(',')];
+  list.querySelectorAll('.asset').forEach(function(d){
+    var o={currency:'EGP'};
+    d.querySelectorAll('[data-k]').forEach(function(i){ o[i.getAttribute('data-k')]=i.value; });
+    var c=CLASSES[o.asset_class]||["","","",""];
+    if(!o.consumption_unit) o.consumption_unit=c[2];
+    if(!o.output_unit) o.output_unit=c[3];
+    rows.push(COLS.map(function(k){return csvCell(o[k]||'');}).join(','));
+  });
+  return "﻿"+rows.join('\n');
+}
+
+function say(a,e){
+  var s=document.getElementById('dk-saveMsg');
+  s.innerHTML=bi(a,e);
+}
+
+function blobSave(name,text){
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([text],{type:'text/csv;charset=utf-8;'}));
+  a.download=name;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+}
+
+async function getDownloads(){
+  try{
+    if(typeof claude==='undefined' || !claude.use) return null;
+    return await claude.use('downloads');
+  }catch(e){ return null; }
+}
+
+async function exportCsv(){
+  var text=buildCsv();
+  var org=(document.getElementById('dk-org').value||'assets').replace(/[^\w؀-ۿ -]/g,'').trim()||'assets';
+  var base=org+'-EFF-data';
+  say('جارٍ الحفظ…','Saving…');
+
+  var dl=await getDownloads();
+  if(dl){
+    try{
+      await dl.save({filename:base+'.csv', data:text});
+      say('تم الحفظ — أرسل الملف كما هو.','Saved — send the file as-is.');
+      return;
+    }catch(err){
+      var code=err&&err.code;
+      if(code==='extension_not_enabled'){
+        try{
+          await dl.save({filename:base+'.csv.txt', data:text});
+          say('تم الحفظ باسم .csv.txt — احذف .txt من آخر الاسم قبل الإرسال.',
+              'Saved as .csv.txt — remove the .txt before sending.');
+          return;
+        }catch(e2){ code=e2&&e2.code; }
+      }
+      if(code==='declined'){ say('أُلغي الحفظ.','Save cancelled.'); return; }
+      if(code==='rate_limited'){
+        say('انتظر لحظة ثم اضغط مرة أخرى.','Wait a moment, then press again.'); return; }
+    }
+  }
+  try{
+    blobSave(base+'.csv', text);
+    say('تم إنشاء الملف.','File created.');
+  }catch(e){
+    say('تعذّر الحفظ — افتح الصفحة من ملف على جهازك.',
+        'Could not save — open this page from a local file.');
+  }
+}
+
+var sectorSel=document.getElementById('dk-sector');
+sectorSel.innerHTML='<option value="">— اختر القطاع | Select sector —</option>'+
+  Object.keys(SECTORS).map(function(k){
+    return '<option value="'+k+'">'+SECTORS[k][0]+' | '+SECTORS[k][1]+'</option>';}).join('');
+sectorSel.addEventListener('change',function(){
+  list.querySelectorAll('.asset').forEach(function(d){
+    var s=d.querySelector('[data-k="asset_class"]'), cur=s.value;
+    s.innerHTML=classOptions(sectorSel.value); s.value=cur;
+  });
+});
+
+document.getElementById('dk-add').addEventListener('click',function(){addAsset();});
+document.getElementById('dk-export').addEventListener('click',exportCsv);
+document.getElementById('dk-demo').addEventListener('click',function(){
+  sectorSel.value='agriculture';
+  sectorSel.dispatchEvent(new Event('change'));
+  addAsset({asset_id:'TRC-01',name:'جرار الرش | Spraying tractor',asset_class:'tractor',
+    site:'Farm 3',manufacturer:'John Deere',model:'8R 370',commissioned_year:'2019',
+    run_hours:'4200',annual_run_hours:'520',annual_downtime_hours:'14',
+    unplanned_failures_12m:'1',rated_output:'373',actual_output:'370',
+    duty_task:'رش مبيدات | Pesticide spraying',duty_power_required:'60',
+    energy_source:'diesel',baseline_specific_consumption:'0.25',load_factor:'0.16',
+    energy_price:'15.5',annual_maint_cost:'180000',cumulative_maint_cost:'520000',
+    replacement_value:'6500000',salvage_value:'3900000',vibration_zone:'a',
+    oil_analysis:'normal',oem_support:'supported',spare_lead_days:'40',
+    safety_findings:'0',notes:'500 hp machine on a light spraying run.'});
+});
+
+addAsset();
+})();
+</script>
