@@ -33,7 +33,10 @@ a{color:inherit;}
 .brand{display:flex; align-items:center; gap:.6rem; text-decoration:none; color:inherit;}
 .brand .wm{font-weight:700; font-size:1.4rem; letter-spacing:-.045em;}
 .nav-links{display:flex; gap:1.5rem; align-items:center; flex:1; margin-inline-start:1rem;}
-@media (max-width:50rem){ .nav-links{display:none;} }
+@media (max-width:50rem){ 
+  .topbar .wrap{flex-wrap:wrap; gap:1rem;}
+  .nav-links{margin-inline-start:0; order:3; width:100%; gap:1.2rem; overflow-x:auto; padding-bottom:.25rem; white-space:nowrap;}
+}
 .nav-links a{color:var(--text-2); text-decoration:none; font-size:.9rem; font-weight:600;}
 .nav-links a:hover{color:var(--text);}
 .lang{display:flex; gap:.3rem;}
@@ -128,8 +131,6 @@ h2{font-size:clamp(1.5rem,3vw,2.1rem); font-weight:700; letter-spacing:-.02em; m
 .founder-card{background:var(--surface); border:1px solid var(--line); border-radius:10px;
   padding:1.6rem;}
 .founder-card .fn{font-weight:700; font-size:1.25rem;}
-.founder-card .role{color:var(--ember); font-size:.85rem; margin-top:.2rem;}
-.founder-card .d{color:var(--text-2); font-size:.9rem; margin-top:.8rem;}
 .founder-card .contact{font-family:var(--mono); font-size:.85rem; color:var(--text-2);
   margin-top:1rem; line-height:1.9;}
 footer{padding:2rem 1.5rem; color:var(--text-3); font-size:.8125rem;
@@ -362,10 +363,6 @@ footer{padding:2rem 1.5rem; color:var(--text-3); font-size:.8125rem;
       </div>
       <div class="founder-card">
         <div class="fn">Ahmed Elshennawi</div>
-        <div class="role ar">المؤسس — eff</div>
-        <div class="role en">Founder — eff</div>
-        <div class="d ar">مهندس ومستشار دراسات جدوى، ومؤسس eff.</div>
-        <div class="d en">Engineer and feasibility-studies consultant, founder of eff.</div>
         <div class="contact">
           a.elshennawi@eff-egypt.com<br>
           +20 10 3220 8322
