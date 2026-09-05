@@ -1,226 +1,421 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>eff</title>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#F0692F">
-    <link rel="icon" type="image/svg+xml" href="icon.svg">
-    <style>
-        :root {
-            --ink: #FAFAF8;
-            --surface: #FFFFFF;
-            --surface-2: #F1F2EF;
-            --line: #D8DCD6;
-            --ember: #D4551E;
-            --ember-hi: #F0692F;
-            --text: #171D1F;
-            --text-2: #4C595D;
-            --sans: "Rubik", "Segoe UI", "IBM Plex Sans", -apple-system, sans-serif;
-        }
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --ink: #0F1416;
-                --surface: #171E21;
-                --surface-2: #1D262A;
-                --line: #263135;
-                --ember: #F0692F;
-                --ember-hi: #FF8A4D;
-                --text: #E9EEEF;
-                --text-2: #9FB0B5;
-            }
-        }
-        * { box-sizing: border-box; }
-        body {
-            margin: 0;
-            font-family: var(--sans);
-            background: var(--ink);
-            color: var(--text);
-            -webkit-tap-highlight-color: transparent;
-        }
-        header {
-            background: var(--surface);
-            color: var(--text);
-            padding: 20px 24px;
-            text-align: center;
-            font-size: 26px;
-            font-weight: 700;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            border-bottom: 1px solid var(--line);
-            letter-spacing: -0.04em;
-        }
-        .container {
-            padding: 24px 20px 80px;
-            max-width: 800px;
-            margin: auto;
-        }
-        .category {
-            margin-top: 32px;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--ember);
-            font-weight: 700;
-            padding-bottom: 8px;
-            margin-bottom: 16px;
-        }
-        .file-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .file-card {
-            background: var(--surface);
-            border: 1px solid var(--line);
-            border-radius: 8px;
-            padding: 16px 20px;
-            text-decoration: none;
-            color: var(--text);
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            transition: all 0.2s ease;
-        }
-        .file-card:active {
-            background: var(--surface-2);
-        }
-        .file-card:hover {
-            border-color: var(--ember);
-        }
-        .icon {
-            font-size: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background: var(--surface-2);
-            border-radius: 8px;
-            flex-shrink: 0;
-        }
-        .pdf-icon { color: var(--ember); }
-        .html-icon { color: var(--text-2); }
-        
-        .card-content {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .file-title {
-            font-weight: 600;
-            font-size: 16px;
-        }
-        .file-ext {
-            font-size: 12px;
-            color: var(--text-2);
-            text-transform: uppercase;
-        }
-    </style>
-</head>
-<body>
-    <header>eff workspace</header>
-    <div class="container">
-        
-        <div class="category">Brand</div>
-        <div class="file-list">
-            <a href="brand/EFF-Brand-Guide.html" class="file-card">
-                <div class="icon html-icon">🌐</div>
-                <div class="card-content">
-                    <span class="file-title">EFF Brand Guide</span>
-                    <span class="file-ext">HTML</span>
-                </div>
-            </a>
-        </div>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>eff — Equipment Fitness Framework</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#F0692F">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<style>
+:root{
+  --ink:#0F1416; --surface:#171E21; --surface-2:#1D262A; --well:#0B1012;
+  --line:#263135; --line-soft:#1F292D;
+  --text:#E9EEEF; --text-2:#9FB0B5; --text-3:#5F7076;
+  --ember:#F0692F; --ember-hi:#FF8A4D; --ember-ink:#FFFFFF;
+  --keep:#2FA98C; --monitor:#D9A441; --plan:#C4574D; --retire:#8C2F22;
+  --f:"Rubik","Segoe UI","Noto Sans Arabic",Tahoma,sans-serif;
+  --mono:"IBM Plex Mono","Consolas",ui-monospace,monospace;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0; background:var(--ink); color:var(--text); font-family:var(--f);
+  font-size:16px; line-height:1.7; -webkit-font-smoothing:antialiased;}
+[dir="rtl"]{text-align:right;} [dir="ltr"]{text-align:left;}
+[data-lang="ar"] .en{display:none;} [data-lang="en"] .ar{display:none;}
+.num{font-family:var(--mono); font-variant-numeric:tabular-nums; direction:ltr; unicode-bidi:isolate;}
+h1,h2,h3{margin:0; line-height:1.2; text-wrap:balance;}
+p{margin:0;}
+a{color:inherit;}
+.wrap{max-width:62rem; margin:0 auto; padding:0 1.5rem;}
 
-        <div class="category">Demo</div>
-        <div class="file-list">
-            <a href="demo/EFF-Dashboard.html" class="file-card">
-                <div class="icon html-icon">🌐</div>
-                <div class="card-content">
-                    <span class="file-title">EFF Dashboard</span>
-                    <span class="file-ext">HTML</span>
-                </div>
-            </a>
-            <a href="demo/EFF-Deck.html" class="file-card">
-                <div class="icon html-icon">🌐</div>
-                <div class="card-content">
-                    <span class="file-title">EFF Deck</span>
-                    <span class="file-ext">HTML</span>
-                </div>
-            </a>
-        </div>
+/* nav */
+.topbar{position:sticky; top:0; z-index:10; background:rgba(15,20,22,.9);
+  backdrop-filter:blur(8px); border-bottom:1px solid var(--line);}
+.topbar .wrap{display:flex; align-items:center; justify-content:space-between; padding:1rem 1.5rem; gap:1.5rem;}
+.brand{display:flex; align-items:center; gap:.6rem; text-decoration:none; color:inherit;}
+.brand .wm{font-weight:700; font-size:1.4rem; letter-spacing:-.045em;}
+.nav-links{display:flex; gap:1.5rem; align-items:center; flex:1; margin-inline-start:1rem;}
+@media (max-width:50rem){ .nav-links{display:none;} }
+.nav-links a{color:var(--text-2); text-decoration:none; font-size:.9rem; font-weight:600;}
+.nav-links a:hover{color:var(--text);}
+.lang{display:flex; gap:.3rem;}
+.lang button{font-family:var(--f); font-size:.8rem; font-weight:600; padding:.35rem .9rem;
+  border:1px solid var(--line); background:var(--surface); color:var(--text-2);
+  cursor:pointer; border-radius:5px;}
+.lang button[aria-pressed="true"]{background:var(--ember); color:#fff; border-color:var(--ember);}
+button:focus-visible{outline:2px solid var(--ember-hi); outline-offset:2px;}
 
-        <div class="category">Docs</div>
-        <div class="file-list">
-            <a href="docs/DATA-COLLECTION.html" class="file-card">
-                <div class="icon html-icon">🌐</div>
-                <div class="card-content">
-                    <span class="file-title">Data Collection Guide</span>
-                    <span class="file-ext">HTML</span>
-                </div>
-            </a>
-            <a href="docs/MARKET-RESEARCH-BRIEF.html" class="file-card">
-                <div class="icon html-icon">🌐</div>
-                <div class="card-content">
-                    <span class="file-title">Market Research Brief</span>
-                    <span class="file-ext">HTML</span>
-                </div>
-            </a>
-        </div>
+/* hero */
+.hero{padding:5rem 0 4rem; border-bottom:1px solid var(--line);}
+.eyebrow{font-family:var(--mono); font-size:.75rem; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--ember); margin-bottom:1rem;}
+.hero h1{font-size:clamp(2.2rem,5.5vw,3.6rem); font-weight:700; letter-spacing:-.03em; max-width:26ch;}
+.hero .lede{color:var(--text-2); max-width:38rem; font-size:1.15rem; margin-top:1.2rem;}
+.cta-row{display:flex; gap:.8rem; flex-wrap:wrap; margin-top:2rem;}
+.btn{font-family:var(--f); font-weight:600; font-size:.9375rem; padding:.75rem 1.5rem;
+  border-radius:7px; border:1px solid transparent; cursor:pointer; display:inline-block;
+  text-decoration:none;}
+.btn.primary{background:var(--ember); color:#fff;}
+.btn.primary:hover{background:var(--ember-hi);}
+.btn.ghost{background:transparent; color:var(--text); border-color:var(--line);}
+.btn.ghost:hover{border-color:var(--ember);}
 
-        <div class="category">Marketing</div>
-        <div class="file-list">
-            <a href="marketing/EFF-Booklet-AR.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Booklet AR</span><span class="file-ext">HTML</span></div></a>
-            <a href="marketing/EFF-Booklet-EN.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Booklet EN</span><span class="file-ext">HTML</span></div></a>
-            <a href="marketing/EFF-Brochure-Print.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Brochure Print</span><span class="file-ext">HTML</span></div></a>
-            <a href="marketing/EFF-Brochure.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Brochure</span><span class="file-ext">HTML</span></div></a>
-            <a href="marketing/EFF-BusinessCard.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Business Card</span><span class="file-ext">HTML</span></div></a>
-            <a href="marketing/EFF-DataKit-Print.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF DataKit Print</span><span class="file-ext">HTML</span></div></a>
-            <a href="marketing/EFF-EmailSignature.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Email Signature</span><span class="file-ext">HTML</span></div></a>
-            <a href="marketing/EFF-Landing.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Landing</span><span class="file-ext">HTML</span></div></a>
-            <a href="marketing/EFF-Pilot-Overview.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Pilot Overview</span><span class="file-ext">HTML</span></div></a>
-            <a href="marketing/EFF-Portfolio-Print.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Portfolio Print</span><span class="file-ext">HTML</span></div></a>
-            <a href="marketing/EFF-Portfolio.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Portfolio</span><span class="file-ext">HTML</span></div></a>
-            <a href="marketing/EFF-Poster-Print.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Poster Print</span><span class="file-ext">HTML</span></div></a>
-            <a href="marketing/EFF-Poster.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Poster</span><span class="file-ext">HTML</span></div></a>
-            <a href="marketing/EFF-Social-Posts.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Social Posts</span><span class="file-ext">HTML</span></div></a>
-        </div>
+/* sections */
+section{padding:4rem 0; border-bottom:1px solid var(--line);}
+section:last-of-type{border-bottom:0;}
+.kicker{font-family:var(--mono); font-size:.75rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--ember); margin-bottom:.6rem;}
+h2{font-size:clamp(1.5rem,3vw,2.1rem); font-weight:700; letter-spacing:-.02em; max-width:24ch;}
+.sub{color:var(--text-2); max-width:42rem; margin-top:.9rem; font-size:1.0625rem;}
 
-        <div class="category">Offer</div>
-        <div class="file-list">
-            <a href="offer/EFF-Brief-Dakahlia.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Brief Dakahlia</span><span class="file-ext">HTML</span></div></a>
-            <a href="offer/EFF-DataKit.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF DataKit</span><span class="file-ext">HTML</span></div></a>
-            <a href="offer/EFF-Offer-AR.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Offer AR</span><span class="file-ext">HTML</span></div></a>
-            <a href="offer/EFF-Pricing.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Pricing</span><span class="file-ext">HTML</span></div></a>
-            <a href="offer/EFF-Proposal-Dakahlia.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Proposal Dakahlia</span><span class="file-ext">HTML</span></div></a>
-            <a href="offer/EFFDashboard.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Dashboard</span><span class="file-ext">HTML</span></div></a>
-            <a href="offer/EFFDataKit.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF DataKit</span><span class="file-ext">HTML</span></div></a>
-            <a href="offer/EFFDeck.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">EFF Deck</span><span class="file-ext">HTML</span></div></a>
-        </div>
+/* problem */
+.problem-grid{display:grid; gap:1rem; grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));
+  margin-top:2.2rem;}
+.problem-grid .card{background:var(--surface); border:1px solid var(--line); border-radius:10px;
+  padding:1.5rem;}
+.problem-grid .card .t{font-weight:600; margin-bottom:.5rem; font-size:1.0625rem;}
+.problem-grid .card .d{color:var(--text-2); font-size:.9375rem;}
+.problem-grid .card.hit{border-color:var(--ember);}
+.problem-grid .card.hit .t{color:var(--ember);}
 
-        <div class="category">Out</div>
-        <div class="file-list">
-            <a href="out/assessment.html" class="file-card"><div class="icon html-icon">🌐</div><div class="card-content"><span class="file-title">Assessment Report</span><span class="file-ext">HTML</span></div></a>
-            <a href="out/EFF-Submission-Dakahlia.pdf" class="file-card"><div class="icon pdf-icon">📄</div><div class="card-content"><span class="file-title">EFF Submission Dakahlia</span><span class="file-ext">PDF</span></div></a>
-        </div>
+/* how it works */
+.steps{display:grid; gap:1.4rem; grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));
+  margin-top:2.4rem; counter-reset:step;}
+.step{position:relative; padding-inline-start:2.6rem;}
+.step::before{counter-increment:step; content:counter(step);
+  position:absolute; inset-inline-start:0; top:0; width:1.9rem; height:1.9rem;
+  border-radius:99px; background:var(--surface); border:1px solid var(--ember);
+  color:var(--ember); font-family:var(--mono); font-weight:600; font-size:.85rem;
+  display:flex; align-items:center; justify-content:center;}
+.step .t{font-weight:600; margin-bottom:.35rem;}
+.step .d{color:var(--text-2); font-size:.9rem;}
 
+/* indicators */
+.ind-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));
+  gap:.5rem 2rem; margin-top:2rem; max-width:56rem;}
+.ind-grid div{display:flex; gap:.6rem; align-items:baseline; font-size:.9375rem;
+  color:var(--text-2); border-bottom:1px solid var(--line-soft); padding-bottom:.5rem;}
+.ind-grid span{font-family:var(--mono); font-size:.75em; color:var(--ember); flex:none;}
+
+/* honesty rules */
+.rules{display:flex; flex-direction:column; gap:1rem; margin-top:2rem; max-width:44rem;}
+.rule{background:var(--well); border-inline-start:3px solid var(--ember);
+  border-radius:0 8px 8px 0; padding:1.1rem 1.3rem;}
+.rule .t{font-weight:600; margin-bottom:.3rem;}
+.rule .d{color:var(--text-2); font-size:.9rem;}
+
+/* verdicts */
+.verdicts{display:flex; gap:.6rem; flex-wrap:wrap; margin-top:1.6rem;}
+.pill{padding:.35rem 1rem; border-radius:99px; font-size:.85rem; font-weight:600; color:#fff;}
+
+/* pricing teaser */
+.price-grid{display:grid; gap:1rem; grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));
+  margin-top:2rem;}
+.price-card{background:var(--surface); border:1px solid var(--line); border-radius:10px;
+  padding:1.4rem;}
+.price-card .v{font-family:var(--mono); font-size:1.6rem; font-weight:600; color:var(--ember);}
+.price-card .l{color:var(--text-2); font-size:.85rem; margin-top:.3rem;}
+
+/* cta footer */
+.cta-final{text-align:center; padding:5rem 0;}
+.cta-final h2{max-width:none; margin:0 auto;}
+.cta-final .sub{margin:1rem auto 0;}
+
+/* about / founder */
+.about-row{display:grid; gap:2rem; grid-template-columns:1.3fr 1fr; margin-top:2.2rem; align-items:start;}
+@media (max-width:44rem){.about-row{grid-template-columns:1fr;}}
+.name-note{background:var(--well); border-inline-start:3px solid var(--ember);
+  border-radius:0 8px 8px 0; padding:1.1rem 1.3rem; margin-top:1.4rem; max-width:40rem;}
+.name-note .d{color:var(--text-2); font-size:.9rem;}
+.founder-card{background:var(--surface); border:1px solid var(--line); border-radius:10px;
+  padding:1.6rem;}
+.founder-card .fn{font-weight:700; font-size:1.25rem;}
+.founder-card .role{color:var(--ember); font-size:.85rem; margin-top:.2rem;}
+.founder-card .d{color:var(--text-2); font-size:.9rem; margin-top:.8rem;}
+.founder-card .contact{font-family:var(--mono); font-size:.85rem; color:var(--text-2);
+  margin-top:1rem; line-height:1.9;}
+footer{padding:2rem 1.5rem; color:var(--text-3); font-size:.8125rem;
+  display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem; max-width:62rem; margin:0 auto;}
+</style>
+
+<div class="topbar">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <svg width="30" height="30" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#F0692F"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+      <span class="wm">eff</span>
+    </a>
+    <nav class="nav-links">
+      <a href="booklet-ar.html" class="ar">الكُتيب</a>
+      <a href="booklet-en.html" class="en">Booklet</a>
+      <a href="dashboard.html"><span class="ar">المنصة</span><span class="en">Platform</span></a>
+      <a href="pricing.html"><span class="ar">التسعير</span><span class="en">Pricing</span></a>
+      <a href="datakit.html"><span class="ar">جمع البيانات</span><span class="en">DataKit</span></a>
+    </nav>
+    <div class="lang">
+      <button type="button" data-lang-btn="ar" aria-pressed="true">AR</button>
+      <button type="button" data-lang-btn="en" aria-pressed="false">EN</button>
     </div>
+  </div>
+</div>
 
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
-                    .then(registration => {
-                        console.log('ServiceWorker registration successful');
-                    })
-                    .catch(err => {
-                        console.log('ServiceWorker registration failed: ', err);
-                    });
-            });
-        }
-    </script>
-</body>
-</html>
+<main id="page" dir="rtl" data-lang="ar">
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow ar">تقييم كفاءة المعدات</div>
+    <div class="eyebrow en">EQUIPMENT FITNESS FRAMEWORK</div>
+    <h1 class="ar">قرارات المعدات بالأرقام، لا بالحدس</h1>
+    <h1 class="en">Machine decisions, by the numbers — not by gut feel</h1>
+    <p class="lede ar">تمتلك معظم المصانع والمزارع المصرية سجلًا بملكية معداتها، لكنها تفتقر إلى
+      طبقة أداء فعلية: ساعات التشغيل، الاستهلاك، ومؤشرات التآكل. يبني eff هذه الطبقة الناقصة،
+      ويجيب بثقة محسوبة: هل تبقى المعدة في الخدمة، أم تُراقب، أم تُدرَج في ميزانية الاستبدال،
+      أم تخرج من الخدمة الآن.</p>
+    <p class="lede en">Most Egyptian operations track who owns what — not run hours, consumption
+      trends, or wear indicators. eff builds that missing performance layer, scores eight
+      weighted indicators, and answers with a stated confidence: keep, monitor, budget, or
+      retire.</p>
+    <div class="cta-row">
+      <a class="btn primary ar" href="#kit">اطلب تقييمًا تجريبيًا</a>
+      <a class="btn primary en" href="#kit">Request a pilot</a>
+      <a class="btn ghost ar" href="#how">آلية العمل</a>
+      <a class="btn ghost en" href="#how">How it works</a>
+    </div>
+  </div>
+</section>
+
+<section id="problem">
+  <div class="wrap">
+    <div class="kicker ar">المشكلة</div>
+    <div class="kicker en">THE PROBLEM</div>
+    <h2 class="ar">قائمة الملكية ليست خطة صيانة</h2>
+    <h2 class="en">An ownership list is not a maintenance plan</h2>
+    <p class="sub ar">يُتخذ القرار عادة بناءً على عمر المعدة أو "الشعور تجاهها" — دون رقم يسنده.
+      وهذا يؤدي إلى أحد أمرين: استبدال مبكر لمعدة ما زالت تعمل بكفاءة، أو استمرار تشغيل معدة
+      تستنزف الأموال يوميًا دون أن يلاحظ أحد.</p>
+    <p class="sub en">The call gets made on age or gut feel — no number behind it. That produces
+      one of two failures: retiring a machine early that still runs fine, or running one that
+      quietly burns money every day, unnoticed.</p>
+    <div class="problem-grid">
+      <div class="card">
+        <div class="t ar">قائمة الملكية</div>
+        <div class="t en">Ownership list</div>
+        <div class="d ar">"لدينا 40 معدة" — وهذا كل ما نعرفه</div>
+        <div class="d en">"We have 40 machines" — and that's it</div>
+      </div>
+      <div class="card hit">
+        <div class="t ar">الطبقة الناقصة</div>
+        <div class="t en">The missing layer</div>
+        <div class="d ar">ساعات التشغيل، الاستهلاك، ومؤشرات التآكل — مقارنةً بخط الأساس الذي يحدده المصنّع</div>
+        <div class="d en">Run hours, consumption, wear signals — against manufacturer baselines</div>
+      </div>
+      <div class="card">
+        <div class="t ar">النتيجة</div>
+        <div class="t en">The result</div>
+        <div class="d ar">قرار محسوب بدرجة ثقة معلَنة، لا تخمين</div>
+        <div class="d en">A scored decision with a stated confidence — not a guess</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="kicker ar">آلية العمل</div>
+    <div class="kicker en">HOW IT WORKS</div>
+    <h2 class="ar">خدمة ذاتية — دون زيارات ميدانية</h2>
+    <h2 class="en">Self-service — no site visits</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="t ar">تجميع البيانات</div>
+        <div class="t en">Data collection</div>
+        <div class="d ar">يقوم فريقك بتعبئة نموذج بسيط لكل معدة — بخطوات واضحة كالوصفة، دون الحاجة إلى خبرة مسبقة</div>
+        <div class="d en">Your team fills a simple data-collection kit per machine — recipe-grade, no prior expertise</div>
+      </div>
+      <div class="step">
+        <div class="t ar">محرك التقييم</div>
+        <div class="t en">The scoring engine</div>
+        <div class="d ar">ثمانية مؤشرات موزونة، منحنيات هندسية معتمدة، وتصحيح وفق معدل التحميل الفعلي</div>
+        <div class="d en">8 weighted indicators, engineering curves, corrected for actual load factor</div>
+      </div>
+      <div class="step">
+        <div class="t ar">تقرير العميل</div>
+        <div class="t en">Client report</div>
+        <div class="d ar">حكم واضح لكل معدة، مع درجة ثقة، ودفتر يومي لحرق الطاقة بالجنيه المصري</div>
+        <div class="d en">A verdict per machine + confidence score + a daily energy-burn ledger in EGP</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="indicators">
+  <div class="wrap">
+    <div class="kicker ar">المؤشرات</div>
+    <div class="kicker en">INDICATORS</div>
+    <h2 class="ar">ثمانية مؤشرات موزونة</h2>
+    <h2 class="en">Eight weighted indicators</h2>
+    <div class="ind-grid">
+      <div><span>01</span><span class="ar">العمر</span><span class="en">Age</span></div>
+      <div><span>02</span><span class="ar">الاعتمادية</span><span class="en">Reliability</span></div>
+      <div><span>03</span><span class="ar">تدهور الكفاءة</span><span class="en">Efficiency</span></div>
+      <div><span>04</span><span class="ar">انخفاض السعة</span><span class="en">Capacity derating</span></div>
+      <div><span>05</span><span class="ar">عبء تكلفة الصيانة</span><span class="en">Maintenance cost</span></div>
+      <div><span>06</span><span class="ar">الحالة الفيزيائية</span><span class="en">Condition</span></div>
+      <div><span>07</span><span class="ar">توفر قطع الغيار</span><span class="en">Supportability</span></div>
+      <div><span>08</span><span class="ar">السلامة</span><span class="en">Safety</span></div>
+    </div>
+    <div class="verdicts">
+      <span class="pill" style="background:var(--keep)"><span class="ar">استمرار</span><span class="en">Keep</span></span>
+      <span class="pill" style="background:var(--monitor)"><span class="ar">مراقبة</span><span class="en">Monitor</span></span>
+      <span class="pill" style="background:var(--plan)"><span class="ar">تخطيط للإحلال</span><span class="en">Plan replacement</span></span>
+      <span class="pill" style="background:var(--retire)"><span class="ar">إخراج من الخدمة</span><span class="en">Retire now</span></span>
+    </div>
+  </div>
+</section>
+
+<section id="honesty">
+  <div class="wrap">
+    <div class="kicker ar">قواعد لا تُنتهك</div>
+    <div class="kicker en">NON-NEGOTIABLE RULES</div>
+    <h2 class="ar">هذه القواعد هي جوهر المنتج</h2>
+    <h2 class="en">These rules ARE the product</h2>
+    <div class="rules">
+      <div class="rule">
+        <div class="t ar">الخانة الفارغة ليست صفرًا</div>
+        <div class="t en">A blank cell is never scored as zero</div>
+        <div class="d ar">تُستبعد البيانات الناقصة بأمانة، ويُعاد توزيع وزنها على المؤشرات التي قِيست فعليًا</div>
+        <div class="d en">Missing data is excluded honestly and its weight redistributes to what was actually measured</div>
+      </div>
+      <div class="rule">
+        <div class="t ar">أقل من 60% ثقة، لا حكم</div>
+        <div class="t en">Below 60% confidence, no verdict</div>
+        <div class="d ar">يظهر التقرير عبارة "بيانات غير كافية" بدلًا من إصدار حكم مبني على التخمين</div>
+        <div class="d en">The report says "insufficient data" instead of issuing a verdict built on guesses</div>
+      </div>
+      <div class="rule">
+        <div class="t ar">التحليل الاقتصادي يوصي، ولا يقرر الإخراج من الخدمة</div>
+        <div class="t en">Economics can recommend, never retire</div>
+        <div class="d ar">عند فشل الاختبار الاقتصادي، يصل الحكم إلى "التخطيط للإحلال" كحد أقصى — أما "الإخراج من الخدمة" فيتطلب دليلًا ماديًا أو متعلقًا بالسلامة</div>
+        <div class="d en">A failing economic test escalates to "plan replacement" at most — "retire now" needs physical or safety evidence</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="kit">
+  <div class="wrap">
+    <div class="kicker ar">ابدأ</div>
+    <div class="kicker en">GET STARTED</div>
+    <h2 class="ar">تقييم تجريبي على خمس معدات</h2>
+    <h2 class="en">A pilot assessment on five machines</h2>
+    <p class="sub ar">نحو ساعتين من وقت فريقك الميداني، وتقرير كامل خلال 14 يومًا، يوضح تمامًا
+      ما ستحصل عليه في التقييم الكامل.</p>
+    <p class="sub en">About two hours of your team's time, a full report within 14 days — showing
+      exactly what a full assessment delivers.</p>
+    <div class="price-grid">
+      <div class="price-card">
+        <div class="v num">5</div>
+        <div class="l ar">معدات رئيسية</div>
+        <div class="l en">core machines</div>
+      </div>
+      <div class="price-card">
+        <div class="v num">14</div>
+        <div class="l ar">يومًا للتقرير</div>
+        <div class="l en">days to report</div>
+      </div>
+      <div class="price-card">
+        <div class="v num">0</div>
+        <div class="l ar">زيارات ميدانية منا</div>
+        <div class="l en">site visits from us</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="kicker ar">من نحن</div>
+    <div class="kicker en">ABOUT</div>
+    <h2 class="ar">eff — Equipment Fitness Framework، لا أكثر</h2>
+    <h2 class="en">eff — Equipment Fitness Framework, nothing more</h2>
+    <p class="sub ar">الاسم ليس شعارًا تسويقيًا، بل هو الاختصار الحرفي لاسم الإطار:
+      Equipment Fitness Framework. يُكتب دائمًا بحروف صغيرة (eff وليس EFF) ليُقرأ كمنتج، لا كلجنة.</p>
+    <p class="sub en">The name isn't a marketing flourish — it's the literal initials of
+      "Equipment Fitness Framework." It's always lowercase (eff, not EFF) so it reads as a
+      product, not a committee.</p>
+
+    <div class="about-row">
+      <div>
+        <p class="sub ar" style="margin-top:0">تأسس eff بعد ملاحظة متكررة في السوق المصري:
+          تمتلك معظم الشركات الصناعية سجلًا بملكية معداتها، لكنها تفتقر إلى طبقة أداء فعلية —
+          ساعات التشغيل، الاستهلاك، ومؤشرات التآكل. يبني eff هذه الطبقة بمحرك حتمي (دون تعلّم
+          آلي)، وبقواعد أمانة صارمة: لا صفر مكان البيانات الناقصة، ولا حكم بثقة أقل من 60%.</p>
+        <p class="sub en" style="margin-top:0">eff was built after a recurring pattern in the
+          Egyptian market: industrial operations track who owns what, but not run hours,
+          consumption trends, or wear indicators. eff builds that layer with a deterministic
+          engine (no machine learning) and strict honesty rules — no zero-filling missing data,
+          no verdict below 60% confidence.</p>
+        <div class="name-note">
+          <div class="d ar">يتكون الشعار من ثلاثة أشرطة متدرجة النزول — الهيكل المشترك بين
+            حرفي E وF، وفي الوقت نفسه قراءة لمقياس متناقص: الاستهلاك، الجاهزية، حرق الطاقة.</div>
+          <div class="d en">The mark is three descending bars — the shared skeleton of the
+            letters E and F, and simultaneously a falling-meter reading: consumption, fitness,
+            burn.</div>
+        </div>
+      </div>
+      <div class="founder-card">
+        <div class="fn">Ahmed Elshennawi</div>
+        <div class="role ar">المؤسس — eff</div>
+        <div class="role en">Founder — eff</div>
+        <div class="d ar">مهندس ومستشار دراسات جدوى، ومؤسس eff.</div>
+        <div class="d en">Engineer and feasibility-studies consultant, founder of eff.</div>
+        <div class="contact">
+          a.elshennawi@eff-egypt.com<br>
+          +20 10 3220 8322
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-final">
+  <div class="wrap">
+    <h2 class="ar">هل أنت مستعد لرؤية طبقة الأداء الناقصة لديك؟</h2>
+    <h2 class="en">Ready to see your missing performance layer?</h2>
+    <p class="sub ar">تواصل معنا لبدء تقييم تجريبي — دون أي التزام بتوسيع النطاق.</p>
+    <p class="sub en">Reach out to start a pilot — no obligation to widen scope.</p>
+    <div class="cta-row" style="justify-content:center">
+      <a class="btn primary ar" href="mailto:info@eff-egypt.com">اطلب تقييمًا تجريبيًا</a>
+      <a class="btn primary en" href="mailto:info@eff-egypt.com">Request a pilot</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer dir="rtl" data-lang="ar">
+  <span class="ar">eff · تقييم كفاءة المعدات</span>
+  <span class="en">eff · Equipment Fitness Framework</span>
+  <span class="mono">v1.0 · 2026</span>
+</footer>
+
+<script>
+document.querySelectorAll('[data-lang-btn]').forEach(function(b){
+  b.addEventListener('click', function(){
+    var lang = b.getAttribute('data-lang-btn');
+    [document.getElementById('page'), document.querySelector('footer')].forEach(function(el){
+      if(!el) return;
+      el.setAttribute('data-lang', lang);
+      el.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    });
+    document.querySelectorAll('[data-lang-btn]').forEach(function(x){
+      x.setAttribute('aria-pressed', x.getAttribute('data-lang-btn') === lang ? 'true' : 'false');
+    });
+  });
+});
+</script>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    });
+  }
+</script>

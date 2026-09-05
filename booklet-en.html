@@ -1,0 +1,497 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>eff — Equipment Fitness Framework</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#F0692F">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<style>
+:root{
+  --paper:#FAFAF8; --surface:#FFFFFF; --surface-2:#F1F2EF; --well:#ECEDE9;
+  --line:#D8DCD6; --line-soft:#E5E7E2;
+  --text:#171D1F; --text-2:#4C595D; --text-3:#7C898D;
+  --ember:#D4551E; --ember-hi:#F0692F;
+  --keep:#177E66; --monitor:#9A741B; --plan:#A83E35; --retire:#7C2418;
+  --f:"Rubik","Segoe UI",Tahoma,Arial,sans-serif;
+  --mono:"IBM Plex Mono","Consolas",ui-monospace,monospace;
+}
+*{box-sizing:border-box;}
+body{margin:0; background:#DADFDB; font-family:var(--f); padding:2rem 0;}
+.num{font-family:var(--mono); font-variant-numeric:tabular-nums;}
+h1,h2,h3{margin:0; line-height:1.25; text-wrap:balance;} p{margin:0;}
+
+.note{max-width:40rem; margin:0 auto 1.2rem; text-align:center; color:#4C595D; font-size:.85rem;}
+
+.page{width:210mm; min-height:297mm; margin:0 auto 8mm; background:var(--paper); color:var(--text);
+  box-shadow:0 6px 30px rgba(0,0,0,.18); padding:20mm 18mm; position:relative;}
+.page.cover{background:var(--text); color:#fff;}
+
+.brand{display:flex; align-items:center; gap:.65rem; text-decoration:none; color:inherit;}
+.brand .wm{font-weight:700; font-size:1.6rem; letter-spacing:-.05em;}
+.docref{font-family:var(--mono); font-size:.7rem; color:var(--text-3); text-align:right; line-height:1.8;}
+.pagenum{position:absolute; bottom:14mm; right:18mm; font-family:var(--mono); font-size:.7rem; color:var(--text-3);}
+.chapter{font-family:var(--mono); font-size:.68rem; color:var(--ember); letter-spacing:.1em; text-transform:uppercase; margin-top:8mm;}
+.head{display:flex; justify-content:space-between; align-items:flex-start; gap:1.5rem; padding:1rem 0; border-bottom:1px solid var(--line); margin-bottom:2rem;}
+
+.eyebrow{font-family:var(--mono); font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ember); margin-bottom:3mm;}
+h1{font-size:1.9rem; font-weight:700; letter-spacing:-.02em; max-width:24ch;}
+.lede{color:var(--text-2); margin-top:4mm; font-size:1rem; max-width:60ch; line-height:1.65;}
+
+h2{font-size:1.1rem; font-weight:700; margin:8mm 0 3mm; color:var(--ember); display:flex; align-items:center; gap:.5rem;}
+h2 .no{font-family:var(--mono); font-size:.85rem;}
+.sub{color:var(--text-2); font-size:.9rem; margin-bottom:2mm; max-width:56ch;}
+
+.facts{display:grid; grid-template-columns:repeat(3,1fr); gap:4mm; margin-top:6mm;}
+.fact{background:var(--surface); border:1px solid var(--line); border-radius:4mm; padding:4mm; text-align:center;}
+.fact .v{font-family:var(--mono); font-weight:700; color:var(--ember); font-size:1.8rem;}
+.fact .l{color:var(--text-2); font-size:.8rem; margin-top:1mm;}
+
+.mod{border-bottom:1px solid var(--line-soft); padding:3.5mm 0; display:grid; grid-template-columns:10mm 1fr; gap:3mm;}
+.mod .no2{font-family:var(--mono); color:var(--ember); font-weight:700; font-size:.95rem;}
+.mod h3{font-size:1rem; font-weight:700;}
+.mod .d{color:var(--text-2); font-size:.85rem; margin-top:1mm; line-height:1.55;}
+
+.rule{background:var(--well); border-inline-start:3px solid var(--ember); border-radius:0 5px 5px 0; padding:3mm 4mm; margin-bottom:2.5mm;}
+.rule b{display:block; font-size:.9rem;}
+.rule span{color:var(--text-2); font-size:.8rem;}
+
+.tw{border:1px solid var(--line); border-radius:6px; overflow:hidden; margin-top:3mm;}
+table{width:100%; border-collapse:collapse; font-size:.8rem;}
+th{background:var(--surface-2); padding:2.2mm 3.5mm; font-weight:700; border-bottom:1px solid var(--line); font-size:.75rem; text-align:left;}
+td{padding:2mm 3.5mm; border-bottom:1px solid var(--line-soft); color:var(--text-2); vertical-align:top;}
+tr:last-child td{border-bottom:0;}
+td.f{color:var(--text); font-weight:600;}
+td.n,th.n{font-family:var(--mono); text-align:right; white-space:nowrap;}
+
+.formula{background:var(--well); border-inline-start:3px solid var(--ember); border-radius:0 5px 5px 0;
+  padding:3mm 4mm; margin-top:3mm; font-family:var(--mono); font-size:.8rem; line-height:2; color:var(--text-2);}
+.formula b{color:var(--ember);}
+.callout{background:#FBEDE6; border:1px solid var(--ember); border-radius:6px; padding:3mm 4mm; margin-top:3mm; font-size:.88rem; color:var(--text-2);}
+.callout b{color:var(--ember);}
+
+.standards{display:flex; flex-wrap:wrap; gap:2mm; margin-top:3mm;}
+.std{font-family:var(--mono); font-size:.72rem; color:var(--text-2); background:var(--surface); border:1px solid var(--line); border-radius:4px; padding:1.5mm 3mm;}
+
+.pills{display:flex; gap:1.5mm; flex-wrap:wrap; margin-top:2mm;}
+.pill{padding:1mm 3mm; border-radius:99px; font-size:.75rem; font-weight:600; color:#fff;}
+
+ul.chk{list-style:none; margin:2mm 0 0; padding:0; display:flex; flex-direction:column; gap:1.5mm;}
+ul.chk li{padding-inline-start:4mm; position:relative; font-size:.85rem; color:var(--text-2);}
+ul.chk li::before{content:"—"; position:absolute; left:0; color:var(--ember);}
+
+.uiframe{border:1px solid var(--line); border-radius:6px; overflow:hidden; margin-top:3mm; background:#fff;}
+.uiframe .chrome{background:var(--surface-2); padding:1.5mm 3mm; display:flex; gap:1.5mm; align-items:center; border-bottom:1px solid var(--line);}
+.uiframe .chrome i{width:2mm; height:2mm; border-radius:50%; background:var(--line);}
+.uiframe .chrome span{font-family:var(--mono); font-size:.68rem; color:var(--text-3); margin-inline-start:1.5mm;}
+.uiframe .body{padding:3.5mm;}
+.clirow{display:grid; grid-template-columns:2fr .8fr 1.2fr .7fr; gap:2mm; font-family:var(--mono); font-size:.72rem; padding:1mm 0; border-bottom:1px dashed var(--line-soft); color:var(--text-2);}
+.clirow.hd{color:var(--text-3); border-bottom:1px solid var(--line); font-weight:700;}
+.clirow .ph{color:var(--ember); opacity:.55;}
+.kpis{display:grid; grid-template-columns:repeat(3,1fr); gap:2mm; margin-top:3mm;}
+.kpi{background:var(--surface-2); border:1px solid var(--line); border-radius:5px; padding:3mm; text-align:center;}
+.kpi .v{font-family:var(--mono); font-weight:700; color:var(--ember); opacity:.55; font-size:1.2rem;}
+.kpi .l{color:var(--text-3); font-size:.68rem; margin-top:1mm;}
+.uinote{margin-top:2mm; font-size:.72rem; color:var(--text-3); font-style:italic;}
+
+.formrow{display:flex; align-items:baseline; gap:2mm; padding:1.2mm 0; border-bottom:1px dotted var(--line-soft);}
+.formrow .lbl{font-size:.8rem; color:var(--text-2); flex:0 0 auto; max-width:48%;}
+.formrow .lbl small{display:block; color:var(--text-3); font-size:.65rem;}
+.formrow .ln{flex:1; border-bottom:1px solid var(--text-3); align-self:flex-end; height:4mm;}
+
+.toc{display:flex; flex-direction:column; gap:2mm; margin-top:6mm;}
+.toc a{display:flex; justify-content:space-between; text-decoration:none; color:var(--text); font-size:.95rem; padding:2mm 0; border-bottom:1px dotted var(--line-soft);}
+.toc a .n{font-family:var(--mono); color:var(--ember);}
+
+.foot{position:absolute; left:18mm; right:18mm; bottom:14mm; padding-top:2mm; border-top:1px solid var(--line);
+  font-size:.72rem; color:var(--text-3); display:flex; justify-content:space-between;}
+.foot b{color:var(--ember);}
+
+.cover .bigwm{display:flex; align-items:center; gap:4mm; margin-top:55mm;}
+.cover .wm{font-size:4rem; font-weight:700; letter-spacing:-.05em; color:#fff;}
+.cover h1{color:#fff; font-size:2.2rem; margin-top:10mm; max-width:18ch;}
+.cover .lede{color:#C7CDCB; font-size:1rem; margin-top:4mm; max-width:40ch;}
+.cover .foot{border-color:#3a4144; color:#9aa19f;}
+.cover .foot b{color:var(--ember-hi);}
+.cover .docref{color:#9aa19f;}
+
+@media print{
+  body{background:#fff; padding:0;}
+  .note{display:none;}
+  .page{box-shadow:none; margin:0; -webkit-print-color-adjust:exact; print-color-adjust:exact;
+    break-after:page; page-break-after:always;}
+  .page:last-of-type{break-after:auto; page-break-after:auto;}
+  @page{ size:A4; margin:0; }
+}
+</style>
+
+<div class="note">English edition — A4 portrait, print-ready. Also available: EFF-Booklet-AR.html (Arabic edition).</div>
+
+<!-- COVER -->
+<div class="page cover">
+  <div class="bigwm">
+    <svg width="60" height="60" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#F0692F"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+    <span class="wm">eff</span>
+  </div>
+  <div class="eyebrow" style="margin-top:10mm">EQUIPMENT FITNESS FRAMEWORK</div>
+  <h1>Complete Client Booklet</h1>
+  <p class="lede">Your complete guide: from methodology to your first report.</p>
+  <div class="foot"><span><b>eff</b> · Equipment Fitness Framework</span><span class="mono">info@eff-egypt.com</span></div>
+  <div class="pagenum">00</div>
+</div>
+
+<!-- TOC -->
+<div class="page">
+  <div class="head"><a href="index.html" class="brand"><svg width="26" height="26" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg><span class="wm">eff</span></a>
+    <div class="docref"><b style="color:var(--ember)">COMPLETE BOOKLET</b>v1.0 · eff-egypt.com</div></div>
+  <h1 style="margin-top:8mm; font-size:1.5rem">Table of contents</h1>
+  <div class="toc">
+    <a href="#c1"><span>01 — Overview: the missing performance layer</span><span class="n">03</span></a>
+    <a href="#c2"><span>02 — Capabilities: what eff computes</span><span class="n">04</span></a>
+    <a href="#c3"><span>03 — Honesty by design, report anatomy &amp; standards</span><span class="n">06</span></a>
+    <a href="#c4"><span>04 — The pilot program</span><span class="n">07</span></a>
+    <a href="#c5"><span>05 — Pricing criteria</span><span class="n">09</span></a>
+    <a href="#c6"><span>06 — Appendix: data collection worksheet</span><span class="n">12</span></a>
+  </div>
+  <div class="foot"><span><b>eff</b> · Equipment Fitness Framework</span><span class="mono">info@eff-egypt.com</span></div>
+  <div class="pagenum">01</div>
+</div>
+
+<!-- p: overview -->
+<div class="page" id="c1">
+  <div class="head"><a href="index.html" class="brand"><svg width="26" height="26" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg><span class="wm">eff</span></a>
+    <div class="docref"><b style="color:var(--ember)">COMPLETE BOOKLET</b>v1.0 · eff-egypt.com</div></div>
+  <div class="chapter">01 · OVERVIEW</div>
+  <div class="eyebrow">EQUIPMENT FITNESS FRAMEWORK</div>
+  <h1>Machine decisions, by the numbers — not gut feel</h1>
+  <p class="lede">Most Egyptian industrial operations have an ownership list, not a performance
+    layer. eff builds that missing layer — run hours, consumption, wear signals — and turns it
+    into one clear verdict per machine, with a stated confidence.</p>
+
+  <div class="facts">
+    <div class="fact"><div class="v num">8</div><div class="l">weighted indicators</div></div>
+    <div class="fact"><div class="v num">14</div><div class="l">days to full report</div></div>
+    <div class="fact"><div class="v num">0</div><div class="l">site visits from us</div></div>
+  </div>
+
+  <h2>Core engine</h2>
+  <p class="sub">Deterministic — no machine learning. 8 weighted indicators, corrected for the
+    machine's actual load factor. Every verdict traces back to a recognized international
+    engineering standard.</p>
+
+  <h2>Non-negotiable rules</h2>
+  <div class="rule"><b>A blank cell is never zero</b><span>Missing data is excluded honestly, never guessed.</span></div>
+  <div class="rule"><b>Below 60% confidence, no verdict</b><span>The report clearly states "insufficient data".</span></div>
+  <div class="rule"><b>Economics recommends, never decides</b><span>"Retire now" needs physical or safety evidence.</span></div>
+
+  <h2>Verdicts</h2>
+  <div class="pills">
+    <span class="pill" style="background:var(--keep)">Keep</span>
+    <span class="pill" style="background:var(--monitor)">Monitor</span>
+    <span class="pill" style="background:var(--plan)">Plan</span>
+    <span class="pill" style="background:var(--retire)">Retire</span>
+  </div>
+
+  <div class="foot"><span><b>eff</b> · Equipment Fitness Framework</span><span class="mono">info@eff-egypt.com</span></div>
+  <div class="pagenum">03</div>
+</div>
+
+<!-- p: capabilities -->
+<div class="page" id="c2">
+  <div class="head"><a href="index.html" class="brand"><svg width="26" height="26" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg><span class="wm">eff</span></a>
+    <div class="docref"><b style="color:var(--ember)">COMPLETE BOOKLET</b>v1.0 · eff-egypt.com</div></div>
+  <div class="chapter">02 · CAPABILITIES</div>
+  <h1 style="font-size:1.6rem">What eff computes</h1>
+  <p class="lede" style="font-size:.9rem">Seven layers of analysis, boiled down to one number you can act on.</p>
+
+  <div class="mod"><div class="no2">01</div><div><h3>The fitness score</h3>
+    <div class="d">Age, reliability, efficiency, capacity, maintenance cost, condition, spare-parts availability, and safety combine into one score out of 100 — no machine learning.</div></div></div>
+  <div class="mod"><div class="no2">02</div><div><h3>Does replacing it save money?</h3>
+    <div class="d">Comparing the cost of keeping the machine against replacing it — the real difference only. The most this test can recommend is "plan for replacement", never "retire now".</div></div></div>
+  <div class="mod"><div class="no2">03</div><div><h3>Daily energy-burn ledger</h3>
+    <div class="d">One daily EGP number, split into maintenance's share (wear) and operations' share (misallocated load).</div></div></div>
+  <div class="mod"><div class="no2">04</div><div><h3>Matching the machine to the job</h3>
+    <div class="d">A sound machine on the wrong job is an operations problem to fix by reassignment — never a reason to replace it.</div></div></div>
+  <div class="mod"><div class="no2">05</div><div><h3>Emissions, from the same numbers</h3>
+    <div class="d">Carbon footprint calculated from the same excess-burn numbers in the energy ledger — never a separate estimate.</div></div></div>
+  <div class="mod"><div class="no2">06</div><div><h3>Product carbon footprint, by region</h3>
+    <div class="d">Carbon per tonne of product, and how far from the best achievable in your region — water depth and irrigation distance vary by location.</div></div></div>
+  <div class="mod"><div class="no2">07</div><div><h3>A fee calculated for you</h3>
+    <div class="d">The fee is set by the actual effort your fleet requires — assets, sites, data readiness.</div></div></div>
+
+  <div class="foot"><span><b>eff</b> · Equipment Fitness Framework</span><span class="mono">info@eff-egypt.com</span></div>
+  <div class="pagenum">04</div>
+</div>
+
+<!-- p: honesty + anatomy + standards -->
+<div class="page" id="c3">
+  <div class="head"><a href="index.html" class="brand"><svg width="26" height="26" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg><span class="wm">eff</span></a>
+    <div class="docref"><b style="color:var(--ember)">COMPLETE BOOKLET</b>v1.0 · eff-egypt.com</div></div>
+  <div class="chapter">03 · HONESTY BY DESIGN</div>
+  <h1 style="font-size:1.6rem">The rules that govern every module</h1>
+
+  <div class="rule"><b>No zero for a missing measurement</b><span>A missing indicator is excluded and its weight redistributes to what was measured</span></div>
+  <div class="rule"><b>Benchmark figures carry "~"</b><span>Any figure resting on a benchmark instead of a direct measurement is marked indicative</span></div>
+  <div class="rule"><b>Every reference value carries a source</b><span>A source field states whether it's from published research or an eff estimate awaiting sourcing</span></div>
+
+  <h2>The report's shape</h2>
+  <p class="sub">The report's real line items, with empty values — real numbers come only from your own data.</p>
+  <div class="tw"><table>
+    <tr><th>Item</th><th>Value</th></tr>
+    <tr><td>Daily energy burn</td><td>— EGP/day</td></tr>
+    <tr><td>Fitness score</td><td>— out of 100</td></tr>
+    <tr><td>Verdict</td><td>Keep / Monitor / Plan / Retire</td></tr>
+    <tr><td>Confidence</td><td>— %</td></tr>
+    <tr><td>Driving indicator</td><td>e.g. age / reliability / efficiency</td></tr>
+    <tr><td>Economic test</td><td>— EGP/year</td></tr>
+  </table></div>
+
+  <h2>Reference standards</h2>
+  <div class="standards">
+    <span class="std">ISO 20816</span><span class="std">IEEE 43</span><span class="std">ISO 50001</span>
+    <span class="std">ISO 55000</span><span class="std">ISO 14067</span><span class="std">GHG Protocol</span>
+    <span class="std">Mekonnen &amp; Hoekstra 2011</span>
+  </div>
+
+  <div class="foot"><span><b>eff</b> · Equipment Fitness Framework</span><span class="mono">info@eff-egypt.com</span></div>
+  <div class="pagenum">06</div>
+</div>
+
+<!-- p: pilot overview -->
+<div class="page" id="c4">
+  <div class="head"><a href="index.html" class="brand"><svg width="26" height="26" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg><span class="wm">eff</span></a>
+    <div class="docref"><b style="color:var(--ember)">COMPLETE BOOKLET</b>v1.0 · eff-egypt.com</div></div>
+  <div class="chapter">04 · THE PILOT PROGRAM</div>
+  <div class="eyebrow">FOUNDING CLIENT PROGRAMME</div>
+  <h1>The Pilot Assessment Program: how it works</h1>
+  <p class="lede">Before committing to a full-fleet assessment, the pilot lets you see the
+    methodology run on five core machines from your own facility — with minimal effort from
+    your team, and full transparency about exactly what you'll receive.</p>
+
+  <div class="facts">
+    <div class="fact"><div class="v num">5</div><div class="l">core machines</div></div>
+    <div class="fact"><div class="v num">2</div><div class="l">approx. hours of your team</div></div>
+    <div class="fact"><div class="v num">14</div><div class="l">days to full report</div></div>
+  </div>
+
+  <h2>Timeline</h2>
+  <div class="tw"><table>
+    <tr><th>Stage</th><th>What happens</th></tr>
+    <tr><td class="f mono">D+0</td><td>Kickoff: your team receives the DataKit for the five selected machines, with clear step-by-step instructions.</td></tr>
+    <tr><td class="f mono">D+7</td><td>Mid-point check: we verify the submitted data's completeness and flag any fields needing clarification.</td></tr>
+    <tr><td class="f mono">D+14</td><td>Full report delivery: a verdict per machine, a confidence score, and the daily energy-burn ledger — printable.</td></tr>
+  </table></div>
+
+  <div class="foot"><span><b>eff</b> · Equipment Fitness Framework</span><span class="mono">info@eff-egypt.com</span></div>
+  <div class="pagenum">07</div>
+</div>
+
+<!-- p: pilot deliverables + UI mockup -->
+<div class="page">
+  <div class="head"><a href="index.html" class="brand"><svg width="26" height="26" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg><span class="wm">eff</span></a>
+    <div class="docref"><b style="color:var(--ember)">COMPLETE BOOKLET</b>v1.0 · eff-egypt.com</div></div>
+  <div class="chapter">04 · THE PILOT PROGRAM (CONT'D)</div>
+
+  <h2 style="margin-top:2mm">Required from you</h2>
+  <ul class="chk">
+    <li>Selecting five core, easy-to-survey machines</li>
+    <li>Filling the DataKit — no prior engineering expertise needed</li>
+    <li>One point of contact for questions during review</li>
+  </ul>
+  <h2>You receive</h2>
+  <ul class="chk">
+    <li>A full eff-branded report, ready to print or present internally</li>
+    <li>A stated confidence score for every verdict — no guessing</li>
+    <li>No obligation to widen scope to the rest of the fleet</li>
+  </ul>
+
+  <h2>The user interface</h2>
+  <p class="sub">An illustrative mockup of the summary and report you'll see — with empty values instead of real numbers.</p>
+  <div class="uiframe">
+    <div class="chrome"><i></i><i></i><i></i><span>eff --detail</span></div>
+    <div class="body">
+      <div class="clirow hd"><span>Asset</span><span>Score</span><span>Verdict</span><span>Conf.</span></div>
+      <div class="clirow"><span class="ph">— · —</span><span class="ph">—.—</span><span class="ph">—</span><span class="ph">—%</span></div>
+      <div class="clirow"><span class="ph">— · —</span><span class="ph">—.—</span><span class="ph">—</span><span class="ph">—%</span></div>
+      <div class="clirow"><span class="ph">— · —</span><span class="ph">—.—</span><span class="ph">—</span><span class="ph">—%</span></div>
+    </div>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><div class="v num">—</div><div class="l">Daily burn (EGP)</div></div>
+    <div class="kpi"><div class="v num">—/100</div><div class="l">Fitness score</div></div>
+    <div class="kpi"><div class="v num">—%</div><div class="l">Confidence</div></div>
+  </div>
+  <div class="uinote">Matches the real assessment engine's output exactly — only names and scores are withheld here.</div>
+
+  <div class="foot"><span><b>eff</b> · Equipment Fitness Framework</span><span class="mono">info@eff-egypt.com</span></div>
+  <div class="pagenum">08</div>
+</div>
+
+<!-- p: pricing formula + effort -->
+<div class="page" id="c5">
+  <div class="head"><a href="index.html" class="brand"><svg width="26" height="26" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg><span class="wm">eff</span></a>
+    <div class="docref"><b style="color:var(--ember)">COMPLETE BOOKLET</b>v1.0 · eff-egypt.com</div></div>
+  <div class="chapter">05 · PRICING CRITERIA</div>
+  <h1>How fees are calculated</h1>
+  <p class="lede">There is no fixed price list. Every quote is <b>computed</b> from declared
+    factors, so any two clients with the same profile receive the same number.</p>
+
+  <h2>The formula</h2>
+  <div class="formula">
+    days &nbsp;= setup + (assets × per_asset) + (sites × per_site) + analysis + reporting<br>
+    days ×= <b>data_readiness</b> × <b>urgency</b> × <b>diversity</b> × <b>language</b><br>
+    fee &nbsp;&nbsp;= days × day_rate − discounts
+  </div>
+
+  <h2>Effort factors</h2>
+  <div class="tw"><table>
+    <tr><th>Component</th><th class="n">Days</th><th>What it covers</th></tr>
+    <tr><td class="f">Setup</td><td class="n">0.50</td><td>Scoping call and configuring the data sheet for the sector</td></tr>
+    <tr><td class="f">Per asset</td><td class="n">0.03</td><td>Reviewing the machine's data, chasing gaps, interpreting its result</td></tr>
+    <tr><td class="f">Per site</td><td class="n">0.25</td><td>Coordination with and follow-up of the site coordinator</td></tr>
+    <tr><td class="f">Analysis</td><td class="n">0.50</td><td>Running the methodology and reviewing outliers</td></tr>
+    <tr><td class="f">Reporting</td><td class="n">1.50</td><td>Producing the full report and measurement plan</td></tr>
+    <tr><td class="f">Presentation</td><td class="n">0.50</td><td>Presenting and discussing the findings</td></tr>
+  </table></div>
+
+  <div class="foot"><span><b>eff</b> · EGP, exclusive of taxes</span><span class="mono">info@eff-egypt.com</span></div>
+  <div class="pagenum">09</div>
+</div>
+
+<!-- p: modifiers + value check -->
+<div class="page">
+  <div class="head"><a href="index.html" class="brand"><svg width="26" height="26" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg><span class="wm">eff</span></a>
+    <div class="docref"><b style="color:var(--ember)">COMPLETE BOOKLET</b>v1.0 · eff-egypt.com</div></div>
+  <div class="chapter">05 · PRICING CRITERIA (CONT'D)</div>
+
+  <h2 style="margin-top:2mm">Modifiers</h2>
+  <p class="sub">Each modifier names a real cost driver, not a negotiating tactic.</p>
+  <div class="tw"><table>
+    <tr><th>Modifier</th><th class="n">Value</th><th>Why</th></tr>
+    <tr><td class="f">Data readiness — good</td><td class="n">×1.00</td><td>Organised, available records</td></tr>
+    <tr><td class="f">Data readiness — partial</td><td class="n">×1.15</td><td>Scattered records needing collation</td></tr>
+    <tr><td class="f">Data readiness — poor</td><td class="n">×1.35</td><td>No organised records; substantially more chasing</td></tr>
+    <tr><td class="f">Expedited</td><td class="n">×1.30</td><td>Compresses the timeline</td></tr>
+    <tr><td class="f">Equipment diversity (&gt;8 classes)</td><td class="n">×1.10</td><td>More baselines and units to handle</td></tr>
+    <tr><td class="f">Third language</td><td class="n">×1.12</td><td>Arabic and English are standard at no premium</td></tr>
+  </table></div>
+
+  <h2>The value check</h2>
+  <div class="callout"><b>A defensible fee lands between 1% and 3%</b> of the fleet's annual
+    energy bill. Outside that band the quote is reviewed. This is a sanity check, not a pricing
+    rule — it flags, it never silently changes the number.</div>
+
+  <div class="foot"><span><b>eff</b> · EGP, exclusive of taxes</span><span class="mono">info@eff-egypt.com</span></div>
+  <div class="pagenum">10</div>
+</div>
+
+<!-- p: worked examples + retainer + discounts -->
+<div class="page">
+  <div class="head"><a href="index.html" class="brand"><svg width="26" height="26" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg><span class="wm">eff</span></a>
+    <div class="docref"><b style="color:var(--ember)">COMPLETE BOOKLET</b>v1.0 · eff-egypt.com</div></div>
+  <div class="chapter">05 · PRICING CRITERIA (CONT'D)</div>
+
+  <h2 style="margin-top:2mm">Worked examples</h2>
+  <div class="tw"><table>
+    <tr><th>Case</th><th class="n">Days</th><th class="n">Fee</th><th class="n">Retainer/yr</th></tr>
+    <tr><td class="f">Proof of concept — 5 machines</td><td class="n">3.65</td><td class="n">47,500</td><td class="n">42,000</td></tr>
+    <tr><td class="f">25 assets · 1 site · good data</td><td class="n">4.00</td><td class="n">52,000</td><td class="n">42,000</td></tr>
+    <tr><td class="f">60 assets · 2 sites · partial · 9 classes</td><td class="n">6.70</td><td class="n">87,000</td><td class="n">42,000</td></tr>
+    <tr><td class="f">120 assets · 4 sites · poor data</td><td class="n">10.26</td><td class="n">120,000</td><td class="n">53,500</td></tr>
+  </table></div>
+  <p class="sub" style="margin-top:2mm; font-size:.78rem">Figures are EGP, the formula's output —
+    not memorised prices. The proof-of-concept row shows the value before the Founding Client
+    Programme brings the amount due to zero.</p>
+
+  <h2>Retainer &amp; add-ons</h2>
+  <div class="tw"><table>
+    <tr><td class="f">Continuous monitoring</td><td>40% of assessment value/yr, min EGP 42,000</td></tr>
+    <tr><td class="f">Guided fill-in session</td><td class="n">6,500</td></tr>
+    <tr><td class="f">Data entry on client's behalf</td><td class="n">350 / asset</td></tr>
+    <tr><td class="f">On-site verification visit</td><td class="n">18,000 / day</td></tr>
+  </table></div>
+
+  <h2>Discounts</h2>
+  <div class="tw"><table>
+    <tr><td class="f">Founding Client Programme</td><td class="n">100%</td><td>First three organisations</td></tr>
+    <tr><td class="f">Multi-site (3+)</td><td class="n">10%</td><td>Real saving in repeated setup</td></tr>
+    <tr><td class="f">Retainer committed</td><td class="n">15%</td><td>Offset by assured recurring income</td></tr>
+  </table></div>
+
+  <div class="foot"><span><b>eff</b> · EGP, exclusive of taxes</span><span class="mono">info@eff-egypt.com</span></div>
+  <div class="pagenum">11</div>
+</div>
+
+<!-- p: datakit appendix 1 -->
+<div class="page" id="c6">
+  <div class="head"><a href="index.html" class="brand"><svg width="26" height="26" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg><span class="wm">eff</span></a>
+    <div class="docref"><b style="color:var(--ember)">COMPLETE BOOKLET — APPENDIX</b>v1.0 · eff-egypt.com</div></div>
+  <div class="chapter">06 · DATA COLLECTION WORKSHEET</div>
+  <h1 style="font-size:1.4rem">Equipment Data Collection Sheet</h1>
+  <p class="lede" style="font-size:.85rem">Fill in only what you know. A blank cell is better
+    than a guessed number. Print one copy per machine.</p>
+
+  <div style="display:flex; gap:4mm; margin-top:5mm;">
+    <div style="flex:1"><div style="font-size:.7rem;color:var(--ember);font-weight:700">ASSET ID</div><div style="border-bottom:1px solid var(--text-3);height:5mm"></div></div>
+    <div style="flex:1"><div style="font-size:.7rem;color:var(--ember);font-weight:700">MACHINE TYPE</div><div style="border-bottom:1px solid var(--text-3);height:5mm"></div></div>
+    <div style="flex:1"><div style="font-size:.7rem;color:var(--ember);font-weight:700">SITE</div><div style="border-bottom:1px solid var(--text-3);height:5mm"></div></div>
+  </div>
+
+  <h2>Essential data</h2>
+  <div class="formrow"><span class="lbl">Name / description</span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">Manufacturer</span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">Model</span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">Year commissioned</span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">Rated output</span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">Hour meter reading</span><span class="ln"></span></div>
+
+  <h2>Operation &amp; breakdowns</h2>
+  <div class="formrow"><span class="lbl">Annual run hours</span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">Unplanned downtime hours</span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">Number of breakdowns</span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">Sustained actual output</span><span class="ln"></span></div>
+
+  <h2>Costs</h2>
+  <div class="formrow"><span class="lbl">Annual maintenance cost</span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">Replacement value today</span><span class="ln"></span></div>
+
+  <div class="foot"><span><b>eff</b> · Equipment Fitness Framework</span><span class="mono">info@eff-egypt.com</span></div>
+  <div class="pagenum">12</div>
+</div>
+
+<!-- p: datakit appendix 2 -->
+<div class="page">
+  <div class="head"><a href="index.html" class="brand"><svg width="26" height="26" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg><span class="wm">eff</span></a>
+    <div class="docref"><b style="color:var(--ember)">COMPLETE BOOKLET — APPENDIX, p.2</b>v1.0 · eff-egypt.com</div></div>
+  <div class="chapter">06 · DATA COLLECTION WORKSHEET (CONT'D)</div>
+
+  <h2 style="margin-top:3mm">Energy &amp; consumption</h2>
+  <div class="formrow"><span class="lbl">Energy source <small>diesel / gas / LPG / electricity / biomass / solar</small></span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">Current specific consumption</span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">Baseline consumption</span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">Load factor <small>fraction of rated output, e.g. 0.75</small></span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">Unit price</span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">Total annual output</span><span class="ln"></span></div>
+
+  <h2>Physical condition</h2>
+  <div class="formrow"><span class="lbl">Vibration <small>ISO A/B/C/D, if measured</small></span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">Oil analysis <small>normal / caution / alert / critical</small></span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">Insulation test <small>good / caution / poor / fail</small></span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">OEM support <small>supported / limited / discontinued</small></span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">Open safety findings</span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">Notes</span><span class="ln"></span></div>
+
+  <div class="foot"><span><b>eff</b> · Equipment Fitness Framework</span><span class="mono">info@eff-egypt.com</span></div>
+  <div class="pagenum">13</div>
+</div>
+
+<!-- back cover -->
+<div class="page cover" style="display:flex; flex-direction:column; justify-content:center;">
+  <div class="bigwm" style="margin-top:0">
+    <svg width="44" height="44" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#F0692F"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+    <span class="wm" style="font-size:2.4rem">eff</span>
+  </div>
+  <h1 style="margin-top:8mm; font-size:1.6rem">Ready to see your missing performance layer?</h1>
+  <p class="lede">Start with a pilot on five machines — no examples, no guessing, no obligation.</p>
+  <div class="foot" style="position:static; margin-top:12mm; border-top:1px solid #3a4144; padding-top:3mm;">
+    <span><b>eff</b> · Equipment Fitness Framework</span><span class="mono">info@eff-egypt.com</span>
+  </div>
+</div>

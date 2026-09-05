@@ -1,0 +1,497 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>eff — إطار الكفاءة</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#F0692F">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<style>
+:root{
+  --paper:#FAFAF8; --surface:#FFFFFF; --surface-2:#F1F2EF; --well:#ECEDE9;
+  --line:#D8DCD6; --line-soft:#E5E7E2;
+  --text:#171D1F; --text-2:#4C595D; --text-3:#7C898D;
+  --ember:#D4551E; --ember-hi:#F0692F;
+  --keep:#177E66; --monitor:#9A741B; --plan:#A83E35; --retire:#7C2418;
+  --f:"Rubik","Segoe UI","Noto Sans Arabic",Tahoma,Arial,sans-serif;
+  --mono:"IBM Plex Mono","Consolas",ui-monospace,monospace;
+}
+*{box-sizing:border-box;}
+body{margin:0; background:#DADFDB; font-family:var(--f); padding:2rem 0; direction:rtl;}
+.num{font-family:var(--mono); font-variant-numeric:tabular-nums; direction:ltr; unicode-bidi:isolate;}
+h1,h2,h3{margin:0; line-height:1.3; text-wrap:balance;} p{margin:0;}
+
+.note{max-width:40rem; margin:0 auto 1.2rem; text-align:center; color:#4C595D; font-size:.85rem;}
+
+.page{width:210mm; min-height:297mm; margin:0 auto 8mm; background:var(--paper); color:var(--text);
+  box-shadow:0 6px 30px rgba(0,0,0,.18); padding:20mm 18mm; position:relative; text-align:right;}
+.page.cover{background:var(--text); color:#fff;}
+
+.brand{display:flex; align-items:center; gap:.65rem; text-decoration:none; color:inherit; direction:ltr;}
+.brand .wm{font-weight:700; font-size:1.6rem; letter-spacing:-.05em;}
+.docref{font-family:var(--mono); font-size:.7rem; color:var(--text-3); text-align:left; line-height:1.8; direction:ltr;}
+.pagenum{position:absolute; bottom:14mm; left:18mm; font-family:var(--mono); font-size:.7rem; color:var(--text-3);}
+.chapter{font-family:var(--mono); font-size:.68rem; color:var(--ember); letter-spacing:.06em; margin-top:8mm; direction:ltr; text-align:right;}
+.head{display:flex; justify-content:space-between; align-items:flex-start; gap:1.5rem; padding:1rem 0; border-bottom:1px solid var(--line); margin-bottom:2rem; flex-direction:row-reverse;}
+
+.eyebrow{font-family:var(--mono); font-size:.72rem; letter-spacing:.1em; color:var(--ember); margin-bottom:3mm;}
+h1{font-size:1.9rem; font-weight:700; letter-spacing:-.01em; max-width:24ch;}
+.lede{color:var(--text-2); margin-top:4mm; font-size:1rem; max-width:60ch; line-height:1.7;}
+
+h2{font-size:1.1rem; font-weight:700; margin:8mm 0 3mm; color:var(--ember); display:flex; align-items:center; gap:.5rem;}
+h2 .no{font-family:var(--mono); font-size:.85rem;}
+.sub{color:var(--text-2); font-size:.9rem; margin-bottom:2mm; max-width:56ch;}
+
+.facts{display:grid; grid-template-columns:repeat(3,1fr); gap:4mm; margin-top:6mm;}
+.fact{background:var(--surface); border:1px solid var(--line); border-radius:4mm; padding:4mm; text-align:center;}
+.fact .v{font-family:var(--mono); font-weight:700; color:var(--ember); font-size:1.8rem;}
+.fact .l{color:var(--text-2); font-size:.8rem; margin-top:1mm;}
+
+.mod{border-bottom:1px solid var(--line-soft); padding:3.5mm 0; display:grid; grid-template-columns:10mm 1fr; gap:3mm;}
+.mod .no2{font-family:var(--mono); color:var(--ember); font-weight:700; font-size:.95rem;}
+.mod h3{font-size:1rem; font-weight:700;}
+.mod .d{color:var(--text-2); font-size:.85rem; margin-top:1mm; line-height:1.6;}
+
+.rule{background:var(--well); border-inline-start:3px solid var(--ember); border-radius:5px 0 0 5px; padding:3mm 4mm; margin-bottom:2.5mm;}
+.rule b{display:block; font-size:.9rem;}
+.rule span{color:var(--text-2); font-size:.8rem;}
+
+.tw{border:1px solid var(--line); border-radius:6px; overflow:hidden; margin-top:3mm;}
+table{width:100%; border-collapse:collapse; font-size:.8rem;}
+th{background:var(--surface-2); padding:2.2mm 3.5mm; font-weight:700; border-bottom:1px solid var(--line); font-size:.75rem; text-align:right;}
+td{padding:2mm 3.5mm; border-bottom:1px solid var(--line-soft); color:var(--text-2); vertical-align:top; text-align:right;}
+tr:last-child td{border-bottom:0;}
+td.f{color:var(--text); font-weight:600;}
+td.n,th.n{font-family:var(--mono); text-align:left; direction:ltr; white-space:nowrap;}
+
+.formula{background:var(--well); border-inline-start:3px solid var(--ember); border-radius:5px 0 0 5px;
+  padding:3mm 4mm; margin-top:3mm; font-family:var(--mono); font-size:.8rem; line-height:2; color:var(--text-2);
+  direction:ltr; text-align:left;}
+.formula b{color:var(--ember);}
+.callout{background:#FBEDE6; border:1px solid var(--ember); border-radius:6px; padding:3mm 4mm; margin-top:3mm; font-size:.88rem; color:var(--text-2);}
+.callout b{color:var(--ember);}
+
+.standards{display:flex; flex-wrap:wrap; gap:2mm; margin-top:3mm;}
+.std{font-family:var(--mono); font-size:.72rem; color:var(--text-2); background:var(--surface); border:1px solid var(--line); border-radius:4px; padding:1.5mm 3mm;}
+
+.pills{display:flex; gap:1.5mm; flex-wrap:wrap; margin-top:2mm;}
+.pill{padding:1mm 3mm; border-radius:99px; font-size:.75rem; font-weight:600; color:#fff;}
+
+ul.chk{list-style:none; margin:2mm 0 0; padding:0; display:flex; flex-direction:column; gap:1.5mm;}
+ul.chk li{padding-inline-start:4mm; position:relative; font-size:.85rem; color:var(--text-2);}
+ul.chk li::before{content:"—"; position:absolute; right:0; color:var(--ember);}
+
+.uiframe{border:1px solid var(--line); border-radius:6px; overflow:hidden; margin-top:3mm; background:#fff;}
+.uiframe .chrome{background:var(--surface-2); padding:1.5mm 3mm; display:flex; gap:1.5mm; align-items:center; border-bottom:1px solid var(--line);}
+.uiframe .chrome i{width:2mm; height:2mm; border-radius:50%; background:var(--line);}
+.uiframe .chrome span{font-family:var(--mono); font-size:.68rem; color:var(--text-3); margin-inline-start:1.5mm;}
+.uiframe .body{padding:3.5mm;}
+.clirow{display:grid; grid-template-columns:2fr .8fr 1.2fr .7fr; gap:2mm; font-family:var(--mono); font-size:.72rem; padding:1mm 0; border-bottom:1px dashed var(--line-soft); color:var(--text-2);}
+.clirow.hd{color:var(--text-3); border-bottom:1px solid var(--line); font-weight:700;}
+.clirow .ph{color:var(--ember); opacity:.55;}
+.kpis{display:grid; grid-template-columns:repeat(3,1fr); gap:2mm; margin-top:3mm;}
+.kpi{background:var(--surface-2); border:1px solid var(--line); border-radius:5px; padding:3mm; text-align:center;}
+.kpi .v{font-family:var(--mono); font-weight:700; color:var(--ember); opacity:.55; font-size:1.2rem;}
+.kpi .l{color:var(--text-3); font-size:.68rem; margin-top:1mm;}
+.uinote{margin-top:2mm; font-size:.72rem; color:var(--text-3); font-style:italic;}
+
+.formrow{display:flex; align-items:baseline; gap:2mm; padding:1.2mm 0; border-bottom:1px dotted var(--line-soft);}
+.formrow .lbl{font-size:.8rem; color:var(--text-2); flex:0 0 auto; max-width:48%;}
+.formrow .lbl small{display:block; color:var(--text-3); font-size:.65rem;}
+.formrow .ln{flex:1; border-bottom:1px solid var(--text-3); align-self:flex-end; height:4mm;}
+
+.toc{display:flex; flex-direction:column; gap:2mm; margin-top:6mm;}
+.toc a{display:flex; justify-content:space-between; text-decoration:none; color:var(--text); font-size:.95rem; padding:2mm 0; border-bottom:1px dotted var(--line-soft);}
+.toc a .n{font-family:var(--mono); color:var(--ember);}
+
+.foot{position:absolute; left:18mm; right:18mm; bottom:14mm; padding-top:2mm; border-top:1px solid var(--line);
+  font-size:.72rem; color:var(--text-3); display:flex; justify-content:space-between;}
+.foot b{color:var(--ember);}
+
+.cover .bigwm{display:flex; align-items:center; gap:4mm; margin-top:55mm;}
+.cover .wm{font-size:4rem; font-weight:700; letter-spacing:-.05em; color:#fff;}
+.cover h1{color:#fff; font-size:2.1rem; margin-top:10mm; max-width:18ch;}
+.cover .lede{color:#C7CDCB; font-size:1rem; margin-top:4mm; max-width:40ch;}
+.cover .foot{border-color:#3a4144; color:#9aa19f;}
+.cover .foot b{color:var(--ember-hi);}
+.cover .docref{color:#9aa19f;}
+
+@media print{
+  body{background:#fff; padding:0;}
+  .note{display:none;}
+  .page{box-shadow:none; margin:0; -webkit-print-color-adjust:exact; print-color-adjust:exact;
+    break-after:page; page-break-after:always;}
+  .page:last-of-type{break-after:auto; page-break-after:auto;}
+  @page{ size:A4; margin:0; }
+}
+</style>
+
+<div class="note">النسخة العربية — A4 عمودي، جاهزة للطباعة. متاحة أيضًا: EFF-Booklet-EN.html (النسخة الإنجليزية).</div>
+
+<!-- الغلاف -->
+<div class="page cover">
+  <div class="bigwm">
+    <svg width="60" height="60" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#F0692F"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+    <span class="wm">eff</span>
+  </div>
+  <div class="eyebrow" style="margin-top:10mm">تقييم كفاءة المعدات</div>
+  <h1>الكراسة الشاملة للعميل</h1>
+  <p class="lede">دليلك الكامل: من المنهجية إلى أول تقرير.</p>
+  <div class="foot"><span class="mono">info@eff-egypt.com</span><span><b>eff</b> · تقييم كفاءة المعدات</span></div>
+  <div class="pagenum">00</div>
+</div>
+
+<!-- جدول المحتويات -->
+<div class="page">
+  <div class="head"><div class="docref"><b style="color:var(--ember)">الكراسة الشاملة</b>v1.0 · eff-egypt.com</div>
+    <a href="index.html" class="brand"><span class="wm">eff</span><svg width="26" height="26" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg></a></div>
+  <h1 style="margin-top:8mm; font-size:1.5rem">جدول المحتويات</h1>
+  <div class="toc">
+    <a href="#c1"><span>01 — نظرة عامة: طبقة الأداء الناقصة</span><span class="n">03</span></a>
+    <a href="#c2"><span>02 — القدرات: ما يحسبه eff</span><span class="n">04</span></a>
+    <a href="#c3"><span>03 — تصميم الأمانة، بنية التقرير والمعايير</span><span class="n">06</span></a>
+    <a href="#c4"><span>04 — برنامج التقييم التجريبي</span><span class="n">07</span></a>
+    <a href="#c5"><span>05 — معايير التسعير</span><span class="n">09</span></a>
+    <a href="#c6"><span>06 — ملحق: كراسة جمع البيانات</span><span class="n">12</span></a>
+  </div>
+  <div class="foot"><span class="mono">info@eff-egypt.com</span><span><b>eff</b> · تقييم كفاءة المعدات</span></div>
+  <div class="pagenum">01</div>
+</div>
+
+<!-- نظرة عامة -->
+<div class="page" id="c1">
+  <div class="head"><div class="docref"><b style="color:var(--ember)">الكراسة الشاملة</b>v1.0 · eff-egypt.com</div>
+    <a href="index.html" class="brand"><span class="wm">eff</span><svg width="26" height="26" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg></a></div>
+  <div class="chapter">01 · نظرة عامة</div>
+  <div class="eyebrow">تقييم كفاءة المعدات</div>
+  <h1>قرارات المعدات بالأرقام، لا بالحدس</h1>
+  <p class="lede">تمتلك معظم الشركات الصناعية المصرية قائمة بملكية معداتها، لا طبقة أداء.
+    يبني eff هذه الطبقة الناقصة — ساعات التشغيل، الاستهلاك، ومؤشرات التآكل — ويحوّلها إلى
+    حكم واحد واضح لكل معدة، مع درجة ثقة معلَنة.</p>
+
+  <div class="facts">
+    <div class="fact"><div class="v num">8</div><div class="l">مؤشرات موزونة</div></div>
+    <div class="fact"><div class="v num">14</div><div class="l">يومًا للتقرير الكامل</div></div>
+    <div class="fact"><div class="v num">0</div><div class="l">زيارات ميدانية منا</div></div>
+  </div>
+
+  <h2>محرك حتمي</h2>
+  <p class="sub">دون تعلّم آلي. ثمانية مؤشرات موزونة، مصححة وفق معدل التحميل الفعلي للمعدة.
+    يستند كل حكم إلى معيار هندسي دولي معتمد.</p>
+
+  <h2>قواعد لا تُنتهك</h2>
+  <div class="rule"><b>الخانة الفارغة ليست صفرًا</b><span>البيانات الناقصة تُستبعَد بأمانة، لا تُخمَّن.</span></div>
+  <div class="rule"><b>أقل من 60% ثقة، لا حكم</b><span>يوضح التقرير عبارة "بيانات غير كافية" صراحةً.</span></div>
+  <div class="rule"><b>الاقتصاد يوصي، لا يقرر</b><span>"الإخراج من الخدمة" يتطلب دليلًا ماديًا أو متعلقًا بالسلامة.</span></div>
+
+  <h2>الأحكام</h2>
+  <div class="pills">
+    <span class="pill" style="background:var(--keep)">استمرار</span>
+    <span class="pill" style="background:var(--monitor)">مراقبة</span>
+    <span class="pill" style="background:var(--plan)">تخطيط</span>
+    <span class="pill" style="background:var(--retire)">إخراج</span>
+  </div>
+
+  <div class="foot"><span class="mono">info@eff-egypt.com</span><span><b>eff</b> · تقييم كفاءة المعدات</span></div>
+  <div class="pagenum">03</div>
+</div>
+
+<!-- القدرات -->
+<div class="page" id="c2">
+  <div class="head"><div class="docref"><b style="color:var(--ember)">الكراسة الشاملة</b>v1.0 · eff-egypt.com</div>
+    <a href="index.html" class="brand"><span class="wm">eff</span><svg width="26" height="26" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg></a></div>
+  <div class="chapter">02 · القدرات</div>
+  <h1 style="font-size:1.6rem">ما يحسبه eff</h1>
+  <p class="lede" style="font-size:.9rem">سبع طبقات تحليل، تلخَّص في رقم واحد يمكنك التصرف بناءً عليه.</p>
+
+  <div class="mod"><div class="no2">01</div><div><h3>درجة الجاهزية</h3>
+    <div class="d">العمر والاعتمادية والكفاءة والسعة وتكلفة الصيانة والحالة وتوفر قطع الغيار والسلامة، مجموعة في رقم واحد من 100 — دون تعلّم آلي.</div></div></div>
+  <div class="mod"><div class="no2">02</div><div><h3>هل يوفر الاستبدال المال فعلًا؟</h3>
+    <div class="d">مقارنة تكلفة الاحتفاظ بالمعدة بتكلفة استبدالها — استنادًا إلى الفرق الحقيقي فقط. أقصى توصية اقتصادية هي "التخطيط للإحلال"، لا "الإخراج من الخدمة".</div></div></div>
+  <div class="mod"><div class="no2">03</div><div><h3>دفتر حرق الطاقة اليومي</h3>
+    <div class="d">رقم يومي واحد بالجنيه، مقسَّم إلى نصيب الصيانة (التآكل) ونصيب التشغيل (سوء توزيع الحمل).</div></div></div>
+  <div class="mod"><div class="no2">04</div><div><h3>مطابقة المعدة للمهمة</h3>
+    <div class="d">معدة سليمة على مهمة غير مناسبة هي مشكلة تشغيلية تُحل بإعادة التوزيع، لا سبب لاستبدالها.</div></div></div>
+  <div class="mod"><div class="no2">05</div><div><h3>الانبعاثات، من الأرقام نفسها</h3>
+    <div class="d">تُحسب بصمة الكربون من أرقام الحرق الزائد نفسها الظاهرة في دفتر الطاقة — لا من تقدير منفصل.</div></div></div>
+  <div class="mod"><div class="no2">06</div><div><h3>بصمة كربون المنتج حسب المنطقة</h3>
+    <div class="d">كمية الكربون لكل طن منتج، ومدى بُعدها عن أفضل أداء ممكن في منطقتك — عمق المياه ومسافة الري يختلفان جغرافيًا.</div></div></div>
+  <div class="mod"><div class="no2">07</div><div><h3>أتعاب تُحسب لك، لا تُنتقى من جدول</h3>
+    <div class="d">تُحدَّد الأتعاب بناءً على المجهود الفعلي المطلوب لأسطولك — عدد الأصول والمواقع وجاهزية بياناتك.</div></div></div>
+
+  <div class="foot"><span class="mono">info@eff-egypt.com</span><span><b>eff</b> · تقييم كفاءة المعدات</span></div>
+  <div class="pagenum">04</div>
+</div>
+
+<!-- الأمانة + بنية التقرير + المعايير -->
+<div class="page" id="c3">
+  <div class="head"><div class="docref"><b style="color:var(--ember)">الكراسة الشاملة</b>v1.0 · eff-egypt.com</div>
+    <a href="index.html" class="brand"><span class="wm">eff</span><svg width="26" height="26" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg></a></div>
+  <div class="chapter">03 · تصميم الأمانة</div>
+  <h1 style="font-size:1.6rem">القواعد التي تحكم كل وحدة</h1>
+
+  <div class="rule"><b>لا صفر لغياب القياس</b><span>يُستبعد المؤشر الناقص، ويُعاد توزيع وزنه على ما قِيس فعليًا</span></div>
+  <div class="rule"><b>الأرقام الإرشادية تُميَّز بعلامة "~"</b><span>أي رقم يستند إلى معيار قياسي بدلًا من قياس فعلي يُعلَّم كإرشادي</span></div>
+  <div class="rule"><b>لكل قيمة مرجعية مصدرها</b><span>حقل المصدر يوضح إن كانت القيمة من بحث منشور أو تقدير من eff لم يُوثَّق بعد</span></div>
+
+  <h2>شكل التقرير</h2>
+  <p class="sub">بنود التقرير الحقيقية، بقيم فارغة — الأرقام الحقيقية تأتي من بياناتك وحدها.</p>
+  <div class="tw"><table>
+    <tr><th>البند</th><th>القيمة</th></tr>
+    <tr><td>حرق الطاقة اليومي</td><td>— جنيه/يوم</td></tr>
+    <tr><td>درجة الجاهزية</td><td>— من 100</td></tr>
+    <tr><td>الحكم</td><td>استمرار / مراقبة / تخطيط / إخراج</td></tr>
+    <tr><td>درجة الثقة</td><td>— %</td></tr>
+    <tr><td>المؤشر القائد</td><td>مثلًا: العمر / الاعتمادية / الكفاءة</td></tr>
+    <tr><td>الاختبار الاقتصادي</td><td>— جنيه/سنة</td></tr>
+  </table></div>
+
+  <h2>المعايير المرجعية</h2>
+  <div class="standards">
+    <span class="std">ISO 20816</span><span class="std">IEEE 43</span><span class="std">ISO 50001</span>
+    <span class="std">ISO 55000</span><span class="std">ISO 14067</span><span class="std">GHG Protocol</span>
+    <span class="std">Mekonnen &amp; Hoekstra 2011</span>
+  </div>
+
+  <div class="foot"><span class="mono">info@eff-egypt.com</span><span><b>eff</b> · تقييم كفاءة المعدات</span></div>
+  <div class="pagenum">06</div>
+</div>
+
+<!-- التقييم التجريبي: نظرة عامة -->
+<div class="page" id="c4">
+  <div class="head"><div class="docref"><b style="color:var(--ember)">الكراسة الشاملة</b>v1.0 · eff-egypt.com</div>
+    <a href="index.html" class="brand"><span class="wm">eff</span><svg width="26" height="26" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg></a></div>
+  <div class="chapter">04 · برنامج التقييم التجريبي</div>
+  <div class="eyebrow">برنامج العميل المؤسِّس</div>
+  <h1>برنامج التقييم التجريبي: كيف يعمل</h1>
+  <p class="lede">قبل الالتزام بتقييم الأسطول الكامل، يتيح لك البرنامج التجريبي رؤية
+    المنهجية تعمل فعليًا على خمس معدات رئيسية من منشأتك — بأقل مجهود من فريقك، وبأكبر قدر
+    من الشفافية حول ما ستحصل عليه بالضبط.</p>
+
+  <div class="facts">
+    <div class="fact"><div class="v num">5</div><div class="l">معدات رئيسية</div></div>
+    <div class="fact"><div class="v num">2</div><div class="l">ساعتان تقريبًا من فريقك</div></div>
+    <div class="fact"><div class="v num">14</div><div class="l">يومًا حتى التقرير الكامل</div></div>
+  </div>
+
+  <h2>الجدول الزمني</h2>
+  <div class="tw"><table>
+    <tr><th>المرحلة</th><th>ما يحدث</th></tr>
+    <tr><td class="f mono">D+0</td><td>بدء التقييم: يستلم فريقك نموذج DataKit لخمس المعدات المختارة، مع تعليمات واضحة خطوة بخطوة.</td></tr>
+    <tr><td class="f mono">D+7</td><td>مراجعة منتصف المدة: نتحقق من اكتمال البيانات المُدخلة، ونوضح أي حقول ناقصة.</td></tr>
+    <tr><td class="f mono">D+14</td><td>تسليم التقرير الكامل: حكم لكل معدة، درجة ثقة، ودفتر حرق الطاقة اليومي — قابل للطباعة.</td></tr>
+  </table></div>
+
+  <div class="foot"><span class="mono">info@eff-egypt.com</span><span><b>eff</b> · تقييم كفاءة المعدات</span></div>
+  <div class="pagenum">07</div>
+</div>
+
+<!-- التقييم التجريبي: المخرجات + واجهة الاستخدام -->
+<div class="page">
+  <div class="head"><div class="docref"><b style="color:var(--ember)">الكراسة الشاملة</b>v1.0 · eff-egypt.com</div>
+    <a href="index.html" class="brand"><span class="wm">eff</span><svg width="26" height="26" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg></a></div>
+  <div class="chapter">04 · برنامج التقييم التجريبي (تابع)</div>
+
+  <h2 style="margin-top:2mm">مطلوب منك</h2>
+  <ul class="chk">
+    <li>اختيار خمس معدات رئيسية يسهل قياسها</li>
+    <li>تعبئة نموذج DataKit — بلا خبرة هندسية مسبقة</li>
+    <li>توفر شخص تواصل واحد للأسئلة أثناء المراجعة</li>
+  </ul>
+  <h2>تحصل عليه</h2>
+  <ul class="chk">
+    <li>تقرير كامل بهوية eff، جاهز للطباعة أو العرض الداخلي</li>
+    <li>درجة ثقة معلَنة لكل حكم — لا تخمين</li>
+    <li>دون التزام بتوسيع النطاق لبقية الأسطول</li>
+  </ul>
+
+  <h2>واجهة الاستخدام</h2>
+  <p class="sub">مخطط توضيحي لشكل الملخص والتقرير اللذين ستراهما — بقيم فارغة بدلًا من أرقام حقيقية.</p>
+  <div class="uiframe">
+    <div class="chrome"><i></i><i></i><i></i><span>eff --detail</span></div>
+    <div class="body">
+      <div class="clirow hd"><span>المعدة</span><span>الدرجة</span><span>الحكم</span><span>الثقة</span></div>
+      <div class="clirow"><span class="ph">— · —</span><span class="ph">—.—</span><span class="ph">—</span><span class="ph">—%</span></div>
+      <div class="clirow"><span class="ph">— · —</span><span class="ph">—.—</span><span class="ph">—</span><span class="ph">—%</span></div>
+      <div class="clirow"><span class="ph">— · —</span><span class="ph">—.—</span><span class="ph">—</span><span class="ph">—%</span></div>
+    </div>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><div class="v num">—</div><div class="l">الحرق اليومي (جنيه)</div></div>
+    <div class="kpi"><div class="v num">—/100</div><div class="l">درجة الجاهزية</div></div>
+    <div class="kpi"><div class="v num">—%</div><div class="l">درجة الثقة</div></div>
+  </div>
+  <div class="uinote">مطابق تمامًا لمخرجات محرك التقييم الفعلي — الأسماء والدرجات هنا فقط غير معروضة.</div>
+
+  <div class="foot"><span class="mono">info@eff-egypt.com</span><span><b>eff</b> · تقييم كفاءة المعدات</span></div>
+  <div class="pagenum">08</div>
+</div>
+
+<!-- التسعير: المعادلة + عوامل الجهد -->
+<div class="page" id="c5">
+  <div class="head"><div class="docref"><b style="color:var(--ember)">الكراسة الشاملة</b>v1.0 · eff-egypt.com</div>
+    <a href="index.html" class="brand"><span class="wm">eff</span><svg width="26" height="26" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg></a></div>
+  <div class="chapter">05 · معايير التسعير</div>
+  <h1>كيف تُحتسب الأتعاب</h1>
+  <p class="lede">لا يوجد لدينا جدول أسعار ثابت. كل عرض سعر <b>يُحسب</b> من عوامل معلنة، فيحصل
+    أي عميلين لهما نفس الظروف على نفس الرقم.</p>
+
+  <h2>المعادلة</h2>
+  <div class="formula">
+    days &nbsp;= setup + (assets × per_asset) + (sites × per_site) + analysis + reporting<br>
+    days ×= <b>data_readiness</b> × <b>urgency</b> × <b>diversity</b> × <b>language</b><br>
+    fee &nbsp;&nbsp;= days × day_rate − discounts
+  </div>
+
+  <h2>عوامل الجهد</h2>
+  <div class="tw"><table>
+    <tr><th>البند</th><th class="n">أيام</th><th>ما يغطيه</th></tr>
+    <tr><td class="f">التهيئة</td><td class="n">0.50</td><td>مكالمة تحديد النطاق وتهيئة كراسة البيانات للقطاع</td></tr>
+    <tr><td class="f">لكل أصل</td><td class="n">0.03</td><td>مراجعة بيانات المعدة، استيفاء النواقص، تفسير نتيجتها</td></tr>
+    <tr><td class="f">لكل موقع</td><td class="n">0.25</td><td>التنسيق مع منسق الموقع ومتابعته</td></tr>
+    <tr><td class="f">التحليل</td><td class="n">0.50</td><td>تشغيل المنهجية ومراجعة النتائج الشاذة</td></tr>
+    <tr><td class="f">التقرير</td><td class="n">1.50</td><td>إعداد التقرير الكامل وخطة القياس</td></tr>
+    <tr><td class="f">العرض على الإدارة</td><td class="n">0.50</td><td>عرض النتائج ومناقشتها</td></tr>
+  </table></div>
+
+  <div class="foot"><span class="mono">info@eff-egypt.com</span><span><b>eff</b> · بالجنيه المصري، غير شامل الضرائب</span></div>
+  <div class="pagenum">09</div>
+</div>
+
+<!-- التسعير: المعاملات + فحص القيمة -->
+<div class="page">
+  <div class="head"><div class="docref"><b style="color:var(--ember)">الكراسة الشاملة</b>v1.0 · eff-egypt.com</div>
+    <a href="index.html" class="brand"><span class="wm">eff</span><svg width="26" height="26" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg></a></div>
+  <div class="chapter">05 · معايير التسعير (تابع)</div>
+
+  <h2 style="margin-top:2mm">معاملات التعديل</h2>
+  <p class="sub">كل معامل يمثل سبب تكلفة حقيقيًا، لا وسيلة تفاوض.</p>
+  <div class="tw"><table>
+    <tr><th>المعامل</th><th class="n">القيمة</th><th>السبب</th></tr>
+    <tr><td class="f">جاهزية البيانات — جيدة</td><td class="n">×1.00</td><td>سجلات منظمة ومتاحة</td></tr>
+    <tr><td class="f">جاهزية البيانات — جزئية</td><td class="n">×1.15</td><td>سجلات متفرقة تحتاج تجميعًا</td></tr>
+    <tr><td class="f">جاهزية البيانات — ضعيفة</td><td class="n">×1.35</td><td>لا سجلات منظمة؛ جهد مضاعف</td></tr>
+    <tr><td class="f">استعجال</td><td class="n">×1.30</td><td>ضغط الجدول الزمني</td></tr>
+    <tr><td class="f">تنوّع المعدات (أكثر من 8 فئات)</td><td class="n">×1.10</td><td>خطوط أساس ووحدات قياس أكثر</td></tr>
+    <tr><td class="f">لغة ثالثة</td><td class="n">×1.12</td><td>العربية والإنجليزية قياسيتان بلا مقابل</td></tr>
+  </table></div>
+
+  <h2>فحص القيمة</h2>
+  <div class="callout"><b>الأتعاب الدفاعية تقع بين 1٪ و3٪</b> من فاتورة الطاقة السنوية للأسطول.
+    خارج هذا النطاق يُراجَع العرض. هذا فحص للسلامة لا قاعدة تسعير — لا يغيّر الرقم تلقائيًا،
+    بل ينبّه إليه.</div>
+
+  <div class="foot"><span class="mono">info@eff-egypt.com</span><span><b>eff</b> · بالجنيه المصري، غير شامل الضرائب</span></div>
+  <div class="pagenum">10</div>
+</div>
+
+<!-- التسعير: أمثلة محسوبة + الاشتراك + الخصومات -->
+<div class="page">
+  <div class="head"><div class="docref"><b style="color:var(--ember)">الكراسة الشاملة</b>v1.0 · eff-egypt.com</div>
+    <a href="index.html" class="brand"><span class="wm">eff</span><svg width="26" height="26" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg></a></div>
+  <div class="chapter">05 · معايير التسعير (تابع)</div>
+
+  <h2 style="margin-top:2mm">أمثلة محسوبة</h2>
+  <div class="tw"><table>
+    <tr><th>الحالة</th><th class="n">أيام</th><th class="n">الأتعاب</th><th class="n">الاشتراك/سنة</th></tr>
+    <tr><td class="f">إثبات مفهوم — 5 معدات</td><td class="n">3.65</td><td class="n">47,500</td><td class="n">42,000</td></tr>
+    <tr><td class="f">25 أصلًا · موقع · بيانات جيدة</td><td class="n">4.00</td><td class="n">52,000</td><td class="n">42,000</td></tr>
+    <tr><td class="f">60 أصلًا · موقعان · جزئية · 9 فئات</td><td class="n">6.70</td><td class="n">87,000</td><td class="n">42,000</td></tr>
+    <tr><td class="f">120 أصلًا · 4 مواقع · بيانات ضعيفة</td><td class="n">10.26</td><td class="n">120,000</td><td class="n">53,500</td></tr>
+  </table></div>
+  <p class="sub" style="margin-top:2mm; font-size:.78rem">الأرقام بالجنيه، ناتج تشغيل المعادلة
+    لا أسعار محفوظة — وصف إثبات المفهوم يوضح القيمة قبل تطبيق برنامج العملاء المؤسِّسين
+    الذي يجعل المستحق صفرًا.</p>
+
+  <h2>الاشتراك والخدمات الإضافية</h2>
+  <div class="tw"><table>
+    <tr><td class="f">المراقبة المستمرة</td><td>40٪ من قيمة التقييم سنويًا، بحد أدنى 42,000 جنيه</td></tr>
+    <tr><td class="f">جلسة تعبئة موجهة</td><td class="n">6,500</td></tr>
+    <tr><td class="f">إدخال البيانات نيابةً عن العميل</td><td class="n">350 / أصل</td></tr>
+    <tr><td class="f">زيارة تحقق ميدانية</td><td class="n">18,000 / يوم</td></tr>
+  </table></div>
+
+  <h2>الخصومات</h2>
+  <div class="tw"><table>
+    <tr><td class="f">برنامج العملاء المؤسِّسين</td><td class="n">100٪</td><td>أول ثلاث منشآت</td></tr>
+    <tr><td class="f">تعدد المواقع (3 فأكثر)</td><td class="n">10٪</td><td>وفر حقيقي في التهيئة المتكررة</td></tr>
+    <tr><td class="f">الالتزام بالاشتراك</td><td class="n">15٪</td><td>يقابله دخل متكرر مؤكد</td></tr>
+  </table></div>
+
+  <div class="foot"><span class="mono">info@eff-egypt.com</span><span><b>eff</b> · بالجنيه المصري، غير شامل الضرائب</span></div>
+  <div class="pagenum">11</div>
+</div>
+
+<!-- ملحق كراسة البيانات ١ -->
+<div class="page" id="c6">
+  <div class="head"><div class="docref"><b style="color:var(--ember)">الكراسة الشاملة — ملحق</b>v1.0 · eff-egypt.com</div>
+    <a href="index.html" class="brand"><span class="wm">eff</span><svg width="26" height="26" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg></a></div>
+  <div class="chapter">06 · كراسة جمع البيانات</div>
+  <h1 style="font-size:1.4rem">كراسة جمع بيانات المعدات</h1>
+  <p class="lede" style="font-size:.85rem">املأ ما تعرفه فقط. الخانة الفارغة أفضل من الرقم
+    المُخمَّن. اطبع نسخة لكل معدة.</p>
+
+  <div style="display:flex; gap:4mm; margin-top:5mm;">
+    <div style="flex:1"><div style="font-size:.7rem;color:var(--ember);font-weight:700">رقم المعدة</div><div style="border-bottom:1px solid var(--text-3);height:5mm"></div></div>
+    <div style="flex:1"><div style="font-size:.7rem;color:var(--ember);font-weight:700">نوع المعدة</div><div style="border-bottom:1px solid var(--text-3);height:5mm"></div></div>
+    <div style="flex:1"><div style="font-size:.7rem;color:var(--ember);font-weight:700">الموقع</div><div style="border-bottom:1px solid var(--text-3);height:5mm"></div></div>
+  </div>
+
+  <h2>البيانات الأساسية</h2>
+  <div class="formrow"><span class="lbl">اسم / وصف</span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">الصانع</span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">الموديل</span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">سنة التشغيل</span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">القدرة المقننة</span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">قراءة عداد الساعات</span><span class="ln"></span></div>
+
+  <h2>التشغيل والأعطال</h2>
+  <div class="formrow"><span class="lbl">ساعات التشغيل السنوية</span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">ساعات التوقف المفاجئ</span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">عدد الأعطال</span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">الإنتاج الفعلي المستدام</span><span class="ln"></span></div>
+
+  <h2>التكاليف</h2>
+  <div class="formrow"><span class="lbl">تكلفة الصيانة السنوية</span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">قيمة الإحلال اليوم</span><span class="ln"></span></div>
+
+  <div class="foot"><span class="mono">info@eff-egypt.com</span><span><b>eff</b> · تقييم كفاءة المعدات</span></div>
+  <div class="pagenum">12</div>
+</div>
+
+<!-- ملحق كراسة البيانات ٢ -->
+<div class="page">
+  <div class="head"><div class="docref"><b style="color:var(--ember)">الكراسة الشاملة — ملحق، ص2</b>v1.0 · eff-egypt.com</div>
+    <div class="brand"><span class="wm">eff</span><svg width="26" height="26" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#D4551E"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg></div></div>
+  <div class="chapter">06 · كراسة جمع البيانات (تابع)</div>
+
+  <h2 style="margin-top:3mm">الطاقة والاستهلاك</h2>
+  <div class="formrow"><span class="lbl">مصدر الطاقة <small>ديزل / غاز طبيعي / غاز مسال / كهرباء / كتلة حيوية / شمسية</small></span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">الاستهلاك النوعي الحالي</span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">الاستهلاك المرجعي</span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">معامل الحمل <small>نسبة من القدرة المقننة، مثل 0.75</small></span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">سعر الوحدة</span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">إجمالي الإنتاج السنوي</span><span class="ln"></span></div>
+
+  <h2>الحالة الفنية</h2>
+  <div class="formrow"><span class="lbl">الاهتزاز <small>تصنيف ISO A/B/C/D إن قيس</small></span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">تحليل الزيت <small>طبيعي / تحذير / إنذار / حرج</small></span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">اختبار العزل <small>جيد / تحذير / ضعيف / راسب</small></span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">دعم الصانع <small>مدعوم / محدود / متوقف</small></span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">ملاحظات سلامة مفتوحة</span><span class="ln"></span></div>
+  <div class="formrow"><span class="lbl">ملاحظات</span><span class="ln"></span></div>
+
+  <div class="foot"><span class="mono">info@eff-egypt.com</span><span><b>eff</b> · تقييم كفاءة المعدات</span></div>
+  <div class="pagenum">13</div>
+</div>
+
+<!-- الغلاف الخلفي -->
+<div class="page cover" style="display:flex; flex-direction:column; justify-content:center;">
+  <div class="bigwm" style="margin-top:0">
+    <svg width="44" height="44" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#F0692F"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+    <span class="wm" style="font-size:2.4rem">eff</span>
+  </div>
+  <h1 style="margin-top:8mm; font-size:1.5rem">هل أنت مستعد لرؤية طبقة الأداء الناقصة لديك؟</h1>
+  <p class="lede">ابدأ بتقييم تجريبي على خمس معدات — دون أمثلة، دون تخمين، دون التزام.</p>
+  <div class="foot" style="position:static; margin-top:12mm; border-top:1px solid #3a4144; padding-top:3mm;">
+    <span class="mono">info@eff-egypt.com</span><span><b>eff</b> · تقييم كفاءة المعدات</span>
+  </div>
+</div>
