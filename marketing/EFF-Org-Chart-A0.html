@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>EFF — الهيكل التنظيمي (نسخة طباعة A0) | Org Chart A0</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #FAFAF8; 
+  --surface: #FFFFFF; 
+  --surface-2: #F1F2EF; 
+  --well: #ECEDE9;
+  --line: #D8DCD6; 
+  --line-soft: #E5E7E2;
+  --text: #171D1F; 
+  --text-2: #4C595D; 
+  --text-3: #7C898D;
+  --ember: #D4551E; 
+  --ember-hi: #F0692F;
+  --keep: #177E66; 
+  --monitor: #9A741B; 
+  --plan: #A83E35; 
+  --retire: #7C2418;
+  --f: "Cairo", sans-serif;
+  --mono: "IBM Plex Mono", monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@page {
+  size: A0 landscape;
+  margin: 0;
+}
+
+body {
+  width: 1189mm;
+  height: 841mm;
+  margin: 0;
+  padding: 60mm 40mm;
+  background: var(--paper);
+  background-image: radial-gradient(var(--line-soft) 2px, transparent 2px);
+  background-size: 40px 40px;
+  font-family: var(--f);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Header Styling */
+.header {
+  text-align: center;
+  margin-bottom: 70mm;
+  position: relative;
+  z-index: 10;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.brand .wm {
+  font-weight: 800;
+  font-size: 150px;
+  letter-spacing: -0.05em;
+  color: var(--text);
+  font-family: var(--f);
+}
+
+.brand .wm span {
+  color: var(--ember);
+}
+
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 40px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-top: 10px;
+}
+
+.header p {
+  font-size: 55px;
+  font-weight: 600;
+  color: var(--text-2);
+  margin-top: 25px;
+}
+
+/* CSS Org Chart Tree */
+.tree-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  transform: scale(1.3); /* Scaled up to fill A0 nicely */
+  transform-origin: top center;
+}
+
+.tree {
+  direction: ltr; /* Keeping tree math standard LTR */
+}
+
+.tree ul {
+  padding-top: 80px; 
+  position: relative;
+  transition: all 0.5s;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding-inline-start: 0;
+}
+
+.tree li {
+  float: left; 
+  text-align: center;
+  list-style-type: none;
+  position: relative;
+  padding: 80px 20px 0 20px;
+  transition: all 0.5s;
+}
+
+/* Horizontal connectors */
+.tree li::before, .tree li::after {
+  content: '';
+  position: absolute; top: 0; right: 50%;
+  border-top: 8px solid var(--line);
+  width: 50%; height: 80px;
+}
+.tree li::after {
+  right: auto; left: 50%;
+  border-left: 8px solid var(--line);
+}
+
+/* Hide connectors for single children */
+.tree li:only-child::after, .tree li:only-child::before {
+  display: none;
+}
+
+/* Remove space from the top of single children */
+.tree li:only-child { padding-top: 0; }
+
+/* Remove left connector from first child and right connector from last child */
+.tree li:first-child::before, .tree li:last-child::after {
+  border: 0 none;
+}
+
+/* Add vertical connectors to the last nodes */
+.tree li:last-child::before {
+  border-right: 8px solid var(--line);
+  border-radius: 0 30px 0 0;
+}
+.tree li:first-child::after {
+  border-radius: 30px 0 0 0;
+}
+
+/* Downward vertical connectors from parents */
+.tree ul ul::before {
+  content: '';
+  position: absolute; top: 0; left: 50%;
+  border-left: 8px solid var(--line);
+  width: 0; height: 80px;
+  margin-left: -4px; /* Center the 8px border */
+}
+
+/* The Box (Node) */
+.tree li a {
+  direction: rtl; /* Text inside nodes RTL */
+  text-decoration: none;
+  background: var(--surface);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+  border: 4px solid var(--line-soft);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.06);
+  padding: 40px 50px;
+  min-width: 450px;
+  position: relative;
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+
+.tree li a:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 40px 80px rgba(0,0,0,0.1);
+  border-color: var(--line);
+}
+
+.node-title {
+  font-size: 45px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 15px;
+}
+
+.node-desc {
+  font-size: 32px;
+  font-weight: 600;
+  font-family: var(--mono);
+  color: var(--text-2);
+}
+
+/* Department Colors */
+.node-c-exec { border-top: 25px solid var(--text) !important; }
+.node-c-legal { border-top: 25px solid var(--retire) !important; }
+.node-c-data { border-top: 25px solid var(--keep) !important; }
+.node-c-marketing { border-top: 25px solid var(--ember) !important; }
+.node-c-support { border-top: 25px solid var(--monitor) !important; }
+
+/* Sub-nodes get slightly thinner top borders */
+.sub-node .node-title { font-size: 38px; }
+.sub-node .node-desc { font-size: 26px; }
+
+</style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="brand">
+      <div class="wm"><span>EFF</span> Agency</div>
+    </div>
+    <div class="eyebrow">Autonomous Software Engineering Platform</div>
+    <p>الهيكل التنظيمي المُقترح | Proposed Organizational Chart</p>
+  </div>
+
+  <div class="tree-container">
+    <div class="tree">
+      <ul>
+        <li>
+          <a href="#" class="node-c-exec">
+            <div class="node-title">الإدارة التنفيذية للذكاء الاصطناعي</div>
+            <div class="node-desc">AI Executive Officer</div>
+          </a>
+          <ul>
+            <li>
+              <a href="#" class="node-c-legal">
+                <div class="node-title">الشؤون القانونية والامتثال</div>
+                <div class="node-desc">Legal & Compliance Crew</div>
+              </a>
+              <ul>
+                <li>
+                  <a href="#" class="sub-node">
+                    <div class="node-title">خصوصية البيانات</div>
+                    <div class="node-desc">Data Privacy</div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="sub-node">
+                    <div class="node-title">العقود و (NDAs)</div>
+                    <div class="node-desc">Contracts & NDAs</div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#" class="node-c-data">
+                <div class="node-title">عمليات البيانات</div>
+                <div class="node-desc">Data Ops Crew</div>
+              </a>
+              <ul>
+                <li>
+                  <a href="#" class="sub-node">
+                    <div class="node-title">هندسة البيانات</div>
+                    <div class="node-desc">Data Engineering</div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="sub-node">
+                    <div class="node-title">تحليل البيانات</div>
+                    <div class="node-desc">Data Analytics</div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#" class="node-c-marketing">
+                <div class="node-title">التسويق والتواصل</div>
+                <div class="node-desc">Marketing Crew</div>
+              </a>
+              <ul>
+                <li>
+                  <a href="#" class="sub-node">
+                    <div class="node-title">صناعة المحتوى</div>
+                    <div class="node-desc">Content Creation</div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="sub-node">
+                    <div class="node-title">الحملات الإعلانية</div>
+                    <div class="node-desc">Ad Campaigns</div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#" class="node-c-support">
+                <div class="node-title">دعم العملاء</div>
+                <div class="node-desc">Support Crew</div>
+              </a>
+              <ul>
+                <li>
+                  <a href="#" class="sub-node">
+                    <div class="node-title">الدعم الفني</div>
+                    <div class="node-desc">Tech Support</div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="sub-node">
+                    <div class="node-title">نجاح العملاء</div>
+                    <div class="node-desc">Client Success</div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</body>
+</html>
