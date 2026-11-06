@@ -1,142 +1,501 @@
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>eff — Data Collection Sheet</title>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#F0692F">
-<link rel="icon" type="image/svg+xml" href="icon.svg">
-<style>
-:root{
-  --ground:#FAFBFA; --surface:#FFFFFF; --surface-2:#EFF3F1; --sunk:#E4EBE8;
-  --line:#D3DEDA; --line-soft:#E3EAE7;
-  --ink:#1B2124; --ink-2:#4A5A5C; --ink-3:#728285;
-  --teal-deep:#0E6E66; --teal:#14958A; --brass:#B8934A;
-  --ok:#14958A; --warn:#C08A2E; --bad:#BF6551;
-  --f:"Segoe UI","Dubai","Geeza Pro","Noto Sans Arabic",Tahoma,Arial,sans-serif;
-  --f-mono:"Consolas","SF Mono",ui-monospace,monospace;
-}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --ground:#12191A; --surface:#182122; --surface-2:#1E2829; --sunk:#141D1E;
-  --line:#2C3B3C; --line-soft:#243132; --ink:#E7EFEC; --ink-2:#A6BAB6; --ink-3:#7C9290;
-  --teal-deep:#5CCBBB; --teal:#3FB5A6; --brass:#D4B173;
-  --ok:#3FB5A6; --warn:#D9A441; --bad:#D9836C;}}
-:root[data-theme="dark"]{
-  --ground:#12191A; --surface:#182122; --surface-2:#1E2829; --sunk:#141D1E;
-  --line:#2C3B3C; --line-soft:#243132; --ink:#E7EFEC; --ink-2:#A6BAB6; --ink-3:#7C9290;
-  --teal-deep:#5CCBBB; --teal:#3FB5A6; --brass:#D4B173;
-  --ok:#3FB5A6; --warn:#D9A441; --bad:#D9836C;}
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>eff — كراسة جمع بيانات المعدات | Equipment Data Collection Sheet</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#F0692F">
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <style>
+  :root {
+    --ink: #FAFAF8;
+    --surface: #FFFFFF;
+    --surface-2: #F1F2EF;
+    --well: #ECEDE9;
+    --line: #D8DCD6;
+    --line-soft: #E5E7E2;
+    --text: #171D1F;
+    --text-2: #4C595D;
+    --text-3: #7C898D;
+    --ember: #F0692F;
+    --ember-hi: #FF8A4D;
+    --ember-soft: #FBEDE6;
+    --ok: #2FA98C;
+    --warn: #D9A441;
+    --bad: #C4574D;
+    --f: "Rubik", "Segoe UI", "Noto Sans Arabic", Tahoma, sans-serif;
+    --mono: "IBM Plex Mono", "Consolas", ui-monospace, monospace;
+  }
 
-*{box-sizing:border-box;}
-body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--f);
-  font-size:15px;line-height:1.7;}
-.page{max-width:70rem;margin:0 auto;padding:0 1.25rem 5rem;}
-.page[dir="rtl"]{text-align:right;} .page[dir="ltr"]{text-align:left;}
-.page[data-doc-lang="ar"] .en-only{display:none;}
-.page[data-doc-lang="en"] .ar-only{display:none;}
-h1,h2,h3{margin:0;line-height:1.3;text-wrap:balance;}
-p{margin:0;}
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--ink);
+    color: var(--text);
+    font-family: var(--f);
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
 
-.bar{display:flex;justify-content:space-between;align-items:center;gap:1rem;
-  padding:1rem 0;flex-wrap:wrap;}
-.bar button{font-family:var(--f);font-size:.8125rem;font-weight:700;padding:.35rem 1rem;
-  border:1px solid var(--line);background:var(--surface);color:var(--ink-2);
-  cursor:pointer;border-radius:3px;}
-.bar button[aria-pressed="true"]{background:var(--teal-deep);color:#fff;border-color:var(--teal-deep);}
-button:focus-visible{outline:2px solid var(--brass);outline-offset:2px;}
+  /* Navigation Bar */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(250, 250, 248, 0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .topbar .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 1.5rem;
+    gap: 1.5rem;
+    max-width: 72rem;
+    margin: 0 auto;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    text-decoration: none;
+    color: inherit;
+  }
+  .brand .wm {
+    font-weight: 700;
+    font-size: 1.45rem;
+    letter-spacing: -0.045em;
+    color: var(--text);
+  }
+  .nav-links {
+    display: flex;
+    gap: 1.4rem;
+    align-items: center;
+    flex: 1;
+    margin-inline-start: 1rem;
+  }
+  @media (max-width: 52rem) {
+    .topbar .wrap { flex-wrap: wrap; gap: 0.85rem; }
+    .nav-links {
+      margin-inline-start: 0;
+      order: 3;
+      width: 100%;
+      gap: 1.1rem;
+      overflow-x: auto;
+      padding-bottom: 0.3rem;
+      white-space: nowrap;
+    }
+  }
+  .nav-links a {
+    color: var(--text-2);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a.active { color: var(--ember); font-weight: 700; }
 
-header.mast{border-bottom:2px solid var(--teal-deep);padding-bottom:1.25rem;
-  display:flex;flex-direction:column;gap:.7rem;}
-h1{font-size:1.9rem;font-weight:700;letter-spacing:-.015em;}
-.lede{color:var(--ink-2);max-width:46rem;}
+  .lang { display: flex; gap: 0.3rem; }
+  .lang button {
+    font-family: var(--f);
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.3rem 0.85rem;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--text-2);
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.15s;
+  }
+  .lang button[aria-pressed="true"] {
+    background: var(--ember);
+    color: #fff;
+    border-color: var(--ember);
+  }
+  button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
+    outline: 2px solid var(--ember-hi);
+    outline-offset: 2px;
+  }
 
-.recipe{background:var(--sunk);border-inline-start:3px solid var(--brass);
-  border-radius:0 4px 4px 0;padding:1.1rem 1.3rem;margin:1.5rem 0;font-size:.875rem;
-  color:var(--ink-2);}
-.recipe strong{color:var(--ink);}
-.recipe ol{margin:.6rem 0 0;padding-inline-start:1.2rem;display:flex;
-  flex-direction:column;gap:.35rem;}
+  /* Page Container */
+  .page {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 6rem;
+  }
+  .page[dir="rtl"] { text-align: right; }
+  .page[dir="ltr"] { text-align: left; }
+  .page[data-doc-lang="ar"] .en-only { display: none !important; }
+  .page[data-doc-lang="en"] .ar-only { display: none !important; }
 
-.setup{display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-end;margin:1.5rem 0;}
-.fld{display:flex;flex-direction:column;gap:.25rem;min-width:13rem;flex:1;}
-.fld label{font-size:.75rem;font-weight:700;color:var(--teal-deep);}
-input,select,textarea{font-family:var(--f);font-size:.875rem;padding:.45rem .6rem;
-  border:1px solid var(--line);border-radius:3px;background:var(--surface);
-  color:var(--ink);width:100%;}
-input:focus,select:focus{outline:2px solid var(--teal);outline-offset:-1px;}
-input.num{font-family:var(--f-mono);direction:ltr;}
-.page[dir="rtl"] input.num{text-align:right;}
+  h1, h2, h3 { margin: 0; line-height: 1.3; text-wrap: balance; }
+  p { margin: 0; }
 
-.btn{font-family:var(--f);font-weight:700;font-size:.875rem;padding:.55rem 1.3rem;
-  border-radius:3px;cursor:pointer;border:1px solid var(--teal-deep);
-  background:var(--teal-deep);color:#fff;}
-.btn.ghost{background:var(--surface);color:var(--teal-deep);}
-.btn:disabled{opacity:.45;cursor:not-allowed;}
+  /* Masthead */
+  header.mast {
+    padding-bottom: 1.75rem;
+    border-bottom: 2px solid var(--ember);
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ember);
+  }
+  h1 {
+    font-size: clamp(1.75rem, 4vw, 2.35rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: var(--text);
+  }
+  .lede {
+    color: var(--text-2);
+    max-width: 50rem;
+    font-size: 1.05rem;
+    line-height: 1.65;
+  }
 
-.asset{background:var(--surface);border:1px solid var(--line);border-radius:5px;
-  margin-bottom:1rem;overflow:hidden;}
-.asset > summary{padding:.85rem 1.1rem;cursor:pointer;display:flex;gap:.75rem;
-  align-items:center;flex-wrap:wrap;background:var(--surface-2);font-weight:700;}
-.asset > summary::-webkit-details-marker{display:none;}
-.asset .body{padding:1.1rem;display:flex;flex-direction:column;gap:1.4rem;}
-.grp h3{font-size:.9375rem;color:var(--teal-deep);margin-bottom:.15rem;}
-.grp .why{font-size:.75rem;color:var(--ink-3);margin-bottom:.7rem;}
-.grid{display:grid;gap:.9rem;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));}
-.f{display:flex;flex-direction:column;gap:.2rem;}
-.f label{font-size:.8125rem;font-weight:600;}
-.f .hint{font-size:.6875rem;color:var(--ink-3);line-height:1.5;}
-.f .unit{font-size:.6875rem;color:var(--brass);font-weight:700;}
+  /* Recipe / 4-step Box */
+  .recipe {
+    background: var(--well);
+    border-inline-start: 4px solid var(--ember);
+    border-radius: 0 8px 8px 0;
+    padding: 1.25rem 1.5rem;
+    margin: 2rem 0;
+    font-size: 0.9rem;
+    color: var(--text-2);
+  }
+  .recipe strong { color: var(--text); font-size: 0.95rem; }
+  .recipe ol {
+    margin: 0.75rem 0 0;
+    padding-inline-start: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .recipe li { line-height: 1.6; }
 
-.meter{display:flex;align-items:center;gap:.6rem;font-size:.8125rem;}
-.meter .track{flex:1;height:.5rem;background:var(--line-soft);border-radius:99px;
-  overflow:hidden;min-width:5rem;}
-.meter .track i{display:block;height:100%;background:var(--ok);transition:width .2s;}
-.pill{padding:.1rem .6rem;border-radius:99px;font-size:.6875rem;font-weight:700;color:#fff;}
+  /* Setup Toolbar */
+  .setup {
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    margin: 2rem 0 1.5rem;
+    background: var(--surface);
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+  }
+  .fld {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 14rem;
+    flex: 1;
+  }
+  .fld label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  input, select, textarea {
+    font-family: var(--f);
+    font-size: 0.9rem;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--text);
+    width: 100%;
+    transition: border-color 0.15s;
+  }
+  input:focus, select:focus {
+    border-color: var(--ember);
+    outline: none;
+  }
+  input.num {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    direction: ltr;
+  }
+  .page[dir="rtl"] input.num { text-align: right; }
 
-.foot{position:sticky;bottom:0;background:var(--surface);border-top:2px solid var(--teal-deep);
-  padding:.9rem 1.25rem;display:flex;gap:1rem;align-items:center;flex-wrap:wrap;
-  justify-content:space-between;margin-top:2rem;}
-.tot{font-size:.8125rem;color:var(--ink-2);}
-.tot b{color:var(--ink);font-family:var(--f-mono);}
-@media print{.bar,.foot,.btn{display:none;} .asset{break-inside:avoid;} body{background:#fff;}}
-</style>
+  /* Buttons */
+  .btn {
+    font-family: var(--f);
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding: 0.6rem 1.4rem;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 1px solid var(--ember);
+    background: var(--ember);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.15s ease;
+  }
+  .btn:hover:not(:disabled) {
+    background: var(--ember-hi);
+    border-color: var(--ember-hi);
+    transform: translateY(-1px);
+  }
+  .btn.ghost {
+    background: var(--surface);
+    color: var(--text);
+    border-color: var(--line);
+  }
+  .btn.ghost:hover:not(:disabled) {
+    background: var(--surface-2);
+    border-color: var(--line);
+    color: var(--text);
+  }
+  .btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    transform: none;
+  }
 
-<div class="page" id="doc" dir="rtl" data-doc-lang="ar">
+  /* Asset Cards */
+  .asset {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    margin-bottom: 1.25rem;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .asset[open] {
+    border-color: var(--line-soft);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  .asset > summary {
+    padding: 0.9rem 1.25rem;
+    cursor: pointer;
+    display: flex;
+    gap: 0.85rem;
+    align-items: center;
+    flex-wrap: wrap;
+    background: var(--surface-2);
+    font-weight: 600;
+    user-select: none;
+    border-bottom: 1px solid transparent;
+  }
+  .asset[open] > summary {
+    border-bottom-color: var(--line);
+  }
+  .asset > summary::-webkit-details-marker { display: none; }
+  
+  .aid {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 0.8125rem;
+    color: var(--ember);
+    background: var(--ember-soft);
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+  }
+  .anm {
+    flex: 1;
+    font-weight: 600;
+    color: var(--text);
+    font-size: 0.95rem;
+  }
+  .meter {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-size: 0.8125rem;
+  }
+  .meter .track {
+    flex: 1;
+    height: 0.5rem;
+    background: var(--well);
+    border-radius: 99px;
+    overflow: hidden;
+    min-width: 6rem;
+    border: 1px solid var(--line-soft);
+  }
+  .meter .track i {
+    display: block;
+    height: 100%;
+    background: var(--ok);
+    transition: width 0.25s ease, background-color 0.25s ease;
+  }
+  .pct {
+    font-family: var(--mono);
+    font-weight: 600;
+    color: var(--text-2);
+    min-width: 3.2rem;
+    text-align: right;
+  }
+  .page[dir="rtl"] .pct { text-align: left; }
 
-  <div class="bar">
-    <a href="index.html" class="btn" style="margin-inline-end:auto; text-decoration:none; display:inline-flex; align-items:center;">
-      <span class="ar-only">الرئيسية</span><span class="en-only">Home</span>
+  .asset .body {
+    padding: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+  }
+  .grp h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .grp .why {
+    font-size: 0.78rem;
+    color: var(--text-3);
+    margin-bottom: 0.9rem;
+  }
+  .grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(14.5rem, 1fr));
+  }
+  .f {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .f label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .f .hint {
+    font-size: 0.7rem;
+    color: var(--text-3);
+    line-height: 1.45;
+  }
+  .f .unit {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--ember);
+    font-weight: 600;
+    margin-top: 0.15rem;
+  }
+
+  /* Sticky Footer Toolbar */
+  .foot {
+    position: sticky;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--line);
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.05);
+    padding: 1rem 1.5rem;
+    display: flex;
+    gap: 1.25rem;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 3rem;
+    z-index: 90;
+  }
+  .tot {
+    font-size: 0.875rem;
+    color: var(--text-2);
+  }
+  .tot b {
+    color: var(--ember);
+    font-family: var(--mono);
+    font-size: 1.05rem;
+    margin: 0 0.2rem;
+  }
+
+  @media print {
+    .topbar, .foot, .btn, .recipe, .setup .fld:last-child { display: none !important; }
+    .asset { break-inside: avoid; border: 1px solid #ccc; box-shadow: none; margin-bottom: 1.5rem; }
+    body { background: #fff; color: #000; }
+  }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <svg width="28" height="28" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#F0692F"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+      <span class="wm">eff</span>
     </a>
-    <div class="tot">
-      <span class="ar-only">كراسة جمع البيانات — الإصدار 2.0</span>
-      <span class="en-only">Data collection sheet — v2.0</span>
-    </div>
-    <div style="display:flex;gap:.35rem">
+    <nav class="nav-links">
+      <a href="booklet-ar.html" class="ar-only">الكُتيب</a>
+      <a href="booklet-en.html" class="en-only">Booklet</a>
+      <a href="dashboard.html"><span class="ar-only">المنصة</span><span class="en-only">Platform</span></a>
+      <a href="pricing.html"><span class="ar-only">التسعير</span><span class="en-only">Pricing</span></a>
+      <a href="datakit.html" class="active"><span class="ar-only">جمع البيانات</span><span class="en-only">DataKit</span></a>
+      <a href="guide.html"><span class="ar-only">دليل القياس</span><span class="en-only">Guide</span></a>
+      <a href="feedback.html"><span class="ar-only">التقييم</span><span class="en-only">Feedback</span></a>
+    </nav>
+    <div class="lang">
       <button type="button" id="btn-ar" aria-pressed="true">العربية</button>
       <button type="button" id="btn-en" aria-pressed="false">English</button>
     </div>
   </div>
+</div>
+
+<div class="page" id="doc" dir="rtl" data-doc-lang="ar">
 
   <header class="mast">
-    <h1><span class="ar-only">كراسة جمع بيانات المعدات</span>
-      <span class="en-only">Equipment Data Collection Sheet</span></h1>
+    <div class="eyebrow">
+      <span class="ar-only">كراسة جمع البيانات — الإصدار 2.0</span>
+      <span class="en-only">DATA COLLECTION SHEET — V2.0</span>
+    </div>
+    <h1>
+      <span class="ar-only">كراسة جمع بيانات المعدات</span>
+      <span class="en-only">Equipment Data Collection Sheet</span>
+    </h1>
     <p class="lede">
       <span class="ar-only">املأ ما تعرفه فقط. الخانة الفارغة أفضل من الرقم المُخمَّن — البيانات
         الناقصة تُستبعد بأمانة، أما الرقم الخاطئ فيُفسد النتيجة كلها.</span>
       <span class="en-only">Fill in only what you know. A blank cell is better than a guessed
-        number — missing data is excluded honestly, but a wrong number corrupts the whole result.</span></p>
+        number — missing data is excluded honestly, but a wrong number corrupts the whole result.</span>
+    </p>
   </header>
 
   <div class="recipe">
-    <strong><span class="ar-only">طريقة الاستخدام — أربع خطوات</span>
-      <span class="en-only">How to use this — four steps</span></strong>
+    <strong>
+      <span class="ar-only">طريقة الاستخدام — أربع خطوات</span>
+      <span class="en-only">How to use this — four steps</span>
+    </strong>
     <ol>
-      <li><span class="ar-only">اختر القطاع، فتظهر لك قائمة المعدات المتوقعة في منشأتك.</span>
-        <span class="en-only">Pick your sector — the machinery typically found in your operation appears.</span></li>
-      <li><span class="ar-only">أضف معدة لكل آلة لديك، واملأ ما هو متاح من سجلاتك ولوحات التعريف.</span>
-        <span class="en-only">Add one entry per machine, filling what you have from records and nameplates.</span></li>
-      <li><span class="ar-only">راقب مؤشر الاكتمال بجوار كل معدة — يخبرك مباشرةً بجودة الحكم المتوقع.</span>
-        <span class="en-only">Watch the completeness meter beside each machine — it tells you live how sound the verdict will be.</span></li>
-      <li><span class="ar-only">اضغط «تصدير الملف» وأرسله. لا حاجة لزيارة موقعية.</span>
-        <span class="en-only">Press "Export file" and send it. No site visit required.</span></li>
+      <li>
+        <span class="ar-only">اختر القطاع، فتظهر لك قائمة المعدات المتوقعة في منشأتك.</span>
+        <span class="en-only">Pick your sector — the machinery typically found in your operation appears.</span>
+      </li>
+      <li>
+        <span class="ar-only">أضف معدة لكل آلة لديك، واملأ ما هو متاح من سجلاتك ولوحات التعريف.</span>
+        <span class="en-only">Add one entry per machine, filling what you have from records and nameplates.</span>
+      </li>
+      <li>
+        <span class="ar-only">راقب مؤشر الاكتمال بجوار كل معدة — يخبرك مباشرةً بجودة الحكم المتوقع.</span>
+        <span class="en-only">Watch the completeness meter beside each machine — it tells you live how sound the verdict will be.</span>
+      </li>
+      <li>
+        <span class="ar-only">اضغط «تصدير الملف» وأرسله. لا حاجة لزيارة موقعية.</span>
+        <span class="en-only">Press "Export file" and send it. No site visit required.</span>
+      </li>
     </ol>
   </div>
 
@@ -151,7 +510,8 @@ input.num{font-family:var(--f-mono);direction:ltr;}
     </div>
     <div class="fld" style="flex:0 0 auto;min-width:auto">
       <button class="btn" type="button" id="add">
-        <span class="ar-only">+ إضافة معدة</span><span class="en-only">+ Add machine</span></button>
+        <span class="ar-only">+ إضافة معدة</span><span class="en-only">+ Add machine</span>
+      </button>
     </div>
   </div>
 
@@ -164,11 +524,13 @@ input.num{font-family:var(--f-mono);direction:ltr;}
       <span class="ar-only">متوسط الاكتمال:</span><span class="en-only">Average completeness:</span>
       <b id="avg">0%</b>
     </div>
-    <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+    <div style="display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center;">
       <button class="btn ghost" type="button" id="demo">
-        <span class="ar-only">تعبئة مثال</span><span class="en-only">Load example</span></button>
+        <span class="ar-only">تعبئة مثال</span><span class="en-only">Load example</span>
+      </button>
       <button class="btn" type="button" id="export" disabled>
-        <span class="ar-only">تصدير الملف (CSV)</span><span class="en-only">Export file (CSV)</span></button>
+        <span class="ar-only">تصدير الملف (CSV)</span><span class="en-only">Export file (CSV)</span>
+      </button>
       <span id="saveMsg" class="tot" role="status" aria-live="polite"></span>
     </div>
   </div>
@@ -253,9 +615,6 @@ var SECTORS = {
  general_facilities:["المرافق العامة","General facilities",["diesel_genset","gas_genset","chiller","air_compressor","pump","hot_water_boiler","ventilation_fan","transformer","switchgear","electric_motor","forklift"]]
 };
 
-// [key, ar label, en label, ar hint, en hint, type, weight]
-// weight mirrors the indicator weights the field feeds, so the completeness
-// meter predicts the data-confidence figure the report will actually show.
 var GROUPS = [
  ["essential","البيانات الأساسية","Essential data",
   "من سجل الأصول ولوحة التعريف — لا تحتاج أي جهاز قياس.",
@@ -353,10 +712,10 @@ function addAsset(prefill){
   var d=el('details','asset'); d.open = !prefill;
   var s=el('summary');
   s.innerHTML='<span class="aid">#'+seq+'</span>'+
-    '<span class="anm" style="flex:1;font-weight:400;color:var(--ink-3)">'+
+    '<span class="anm" style="flex:1;font-weight:600;color:var(--text)">'+
     bi('معدة جديدة','New machine')+'</span>'+
     '<span class="meter"><span class="track"><i style="width:0%"></i></span>'+
-    '<span class="pct" style="font-family:var(--f-mono);min-width:3rem">0%</span></span>';
+    '<span class="pct">0%</span></span>';
   d.appendChild(s);
 
   var body=el('div','body');
@@ -450,7 +809,7 @@ function buildCsv(){
     if(!o.output_unit) o.output_unit=c[3];
     rows.push(COLS.map(function(k){return csvCell(o[k]||'');}).join(','));
   });
-  return "﻿"+rows.join('\n');            // BOM so Excel/Sheets read Arabic
+  return "﻿"+rows.join('\n'); // BOM so Excel/Sheets read Arabic
 }
 
 function say(ar,en){
@@ -466,10 +825,6 @@ function blobSave(name,text){
   URL.revokeObjectURL(a.href);
 }
 
-// The hosted viewer blocks page-initiated downloads, so a plain link is inert
-// there; the downloads capability is the only route. Opened as a local file
-// there is no `claude` global at all — then the blob link is the only route.
-// Try the capability, fall back to the link, and say which happened.
 async function getDownloads(){
   try{
     if(typeof claude==='undefined' || !claude.use) return null;
@@ -502,7 +857,6 @@ async function exportCsv(){
       if(code==='declined'){ say('أُلغي الحفظ.','Save cancelled.'); return; }
       if(code==='rate_limited'){
         say('انتظر لحظة ثم اضغط مرة أخرى.','Wait a moment, then press again.'); return; }
-      // anything else: fall through and try the plain link
     }
   }
   try{
@@ -544,11 +898,18 @@ document.getElementById('demo').addEventListener('click',function(){
 });
 
 var ar=document.getElementById('btn-ar'), en=document.getElementById('btn-en');
-function setLang(l){doc.setAttribute('data-doc-lang',l);doc.setAttribute('dir',l==='ar'?'rtl':'ltr');
-  ar.setAttribute('aria-pressed',String(l==='ar'));en.setAttribute('aria-pressed',String(l==='en'));}
+function setLang(l){
+  doc.setAttribute('data-doc-lang',l);
+  doc.setAttribute('dir',l==='ar'?'rtl':'ltr');
+  document.documentElement.setAttribute('lang', l);
+  ar.setAttribute('aria-pressed',String(l==='ar'));
+  en.setAttribute('aria-pressed',String(l==='en'));
+}
 ar.addEventListener('click',function(){setLang('ar');});
 en.addEventListener('click',function(){setLang('en');});
 
 addAsset();
 })();
 </script>
+</body>
+</html>
