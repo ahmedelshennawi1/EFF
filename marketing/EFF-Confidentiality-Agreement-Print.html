@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <title>اتفاقية سرية وعدم إفصاح متبادلة (Mutual NDA) | eff</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Mono:wght@500;700&family=Rubik:wght@400;500;600;700&display=swap');
+
+    :root {
+      --primary: #171D1F;
+      --ember: #F0692F;
+      --text: #2D3748;
+      --text-muted: #718096;
+      --border: #D8DCD6;
+      --bg: #F7FAFC;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #E2E8F0;
+      font-family: 'Amiri', 'Rubik', serif;
+      color: var(--text);
+      line-height: 1.8;
+      font-size: 14.5px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .toolbar {
+      max-width: 210mm;
+      margin: 15px auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      font-family: 'Rubik', sans-serif;
+    }
+
+    .btn {
+      background: var(--ember);
+      color: #fff;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn:hover { background: #FF8A4D; }
+
+    .sheet {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto 30px;
+      background: #FFFFFF;
+      padding: 18mm 22mm;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .header-bar {
+      border-bottom: 2px solid var(--ember);
+      padding-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Rubik', sans-serif;
+    }
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand-logo .wm {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+    }
+    .doc-meta {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      text-align: left;
+      direction: ltr;
+    }
+
+    .title-box {
+      text-align: center;
+      margin: 16px 0 20px;
+    }
+    .title-box h1 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 0 0 4px;
+      font-family: 'Rubik', sans-serif;
+    }
+    .title-box p {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      margin: 0;
+      font-family: 'Rubik', sans-serif;
+    }
+
+    .clause {
+      margin-bottom: 14px;
+    }
+    .clause h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 0 0 4px;
+      font-family: 'Rubik', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .clause p {
+      margin: 0;
+      text-align: justify;
+      line-height: 1.7;
+    }
+
+    .parties-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0 16px;
+      font-size: 13px;
+      font-family: 'Rubik', sans-serif;
+    }
+    .parties-table td {
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      vertical-align: top;
+      background: #FAFAF8;
+    }
+    .parties-table td b { color: var(--primary); }
+
+    .signatures {
+      margin-top: 25px;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      font-family: 'Rubik', sans-serif;
+    }
+    .sig-col {
+      flex: 1;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      background: #FAFAF8;
+    }
+    .sig-col h4 {
+      margin: 0 0 8px;
+      font-size: 13px;
+      color: var(--primary);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 4px;
+    }
+    .sig-col div { font-size: 12px; line-height: 1.6; }
+    .sig-hand {
+      font-family: 'Amiri', serif;
+      font-size: 20px;
+      color: #2B6CB0;
+      margin: 8px 0 4px;
+      font-weight: bold;
+    }
+
+    .footer {
+      border-top: 1px solid var(--border);
+      padding-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 10.5px;
+      color: var(--text-muted);
+      font-family: 'Rubik', sans-serif;
+    }
+
+    @media print {
+      body { background: #fff; margin: 0; }
+      .toolbar { display: none; }
+      .sheet { box-shadow: none; width: 100%; padding: 0; min-height: auto; }
+      @page { size: A4; margin: 15mm 20mm; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="toolbar">
+  <div><strong>اتفاقية سرية وعدم إفصاح متبادلة (Mutual Confidentiality Agreement - NDA)</strong></div>
+  <button class="btn" onclick="window.print()">
+    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2m-12 0v4h12v-4"/></svg>
+    طباعة الاتفاقية (Print / PDF)
+  </button>
+</div>
+
+<div class="sheet">
+  <div>
+    <!-- Header -->
+    <div class="header-bar">
+      <div class="brand-logo">
+        <svg width="26" height="26" viewBox="0 0 48 48"><rect width="48" height="48" rx="12" fill="#F0692F"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+        <span class="wm">eff — Legal & Privacy</span>
+      </div>
+      <div class="doc-meta">
+        <div>REF: EFF-NDA-2026-UCSL</div>
+        <div>DATE: 06 NOV 2026</div>
+      </div>
+    </div>
+
+    <!-- Title -->
+    <div class="title-box">
+      <h1>اتفاقية سرية وعدم إفصاح متبادلة لحماية البيانات الصناعية</h1>
+      <p>MUTUAL CONFIDENTIALITY AND NON-DISCLOSURE AGREEMENT (NDA)</p>
+    </div>
+
+    <!-- Parties Table -->
+    <table class="parties-table">
+      <tr>
+        <td style="width: 50%;">
+          <b>الطرف الأول (مقدم إطار التقييم):</b><br>
+          مؤسسة <strong>eff لتقييم كفاءة المعدات</strong><br>
+          يمثلها: أ. أحمد الشناوي (المؤسس)<br>
+          البريد: a.elshennawi@eff-egypt.com
+        </td>
+        <td style="width: 50%;">
+          <b>الطرف الثاني (العميل):</b><br>
+          <strong>شركة المخازن المبردة المتحدة (UCSL)</strong><br>
+          الرياض — المملكة العربية السعودية (س.ت: 1010839210)<br>
+          يمثلها: م. عبد العزيز بن فهد التميمي (مدير التشغيل والصيانة)
+        </td>
+      </tr>
+    </table>
+
+    <!-- Clause 1 -->
+    <div class="clause">
+      <h3>1. الغرض من الاتفاقية (Purpose)</h3>
+      <p>
+        نظراً لرغبة الطرف الثاني في الاستفادة من التقييم التجريبي الفني (14-Day Free Pilot) الذي يوفره الطرف الأول عبر إطار (eff) لتقييم أسطول التبريد والطاقة، يتطلب ذلك مشاركة الطرف الثاني لبيانات تشغيلية وهندسية ومالية حساسة تخص معداته ومرافقه، وعليه تم إبرام هذه الاتفاقية لضمان الحماية والسرية المطلقة لتلك المعلومات.
+      </p>
+    </div>
+
+    <!-- Clause 2 -->
+    <div class="clause">
+      <h3>2. تعريف المعلومات السرية (Confidential Information)</h3>
+      <p>
+        تشمل "المعلومات السرية" كافة البيانات المدخلة في كراسة جمع البيانات (DataKit)، ومنها: قراءات عدادات استهلاك الطاقة، فواتير الكهرباء والوقود، سجلات وساعات الأعطال غير المخططة، تكاليف الصيانة السنوية وقطع الغيار، الموديلات والأرقام التسلسلية، عروض الصيانة والتسعير المقدمة من الوكلاء، وأي تقارير تقييم ناتجة عن المحرك.
+      </p>
+    </div>
+
+    <!-- Clause 3 -->
+    <div class="clause">
+      <h3>3. التزامات الطرف الأول الصارمة (Strict Obligations)</h3>
+      <p>
+        يلتزم الطرف الأول (eff) بالتالي: (أ) قصر استخدام البيانات المستلمة حصرياً على إجراء التقييم الحسابي والهندسي للأصول المحددة. (ب) عدم إفشاء أو مشاركة أو تداول أي من هذه البيانات مع أي جهة أو طرف ثالث دون موافقة كتابية مسبقة. (ج) عدم استخدام البيانات في أي مقارنات سوقية أو دراسات منشورة إلا بعد إخفاء هوية المنشأة وأرقام معداتها تماماً وبموافقة صريحة. (د) حذف كافة البيانات وسجلات القياس نهائياً فور انتهاء فترة التقييم بناءً على طلب الطرف الثاني.
+      </p>
+    </div>
+
+    <!-- Clause 4 -->
+    <div class="clause">
+      <h3>4. ملكية البيانات (Data Ownership)</h3>
+      <p>
+        يقر الطرفان بأن الطرف الثاني (العميل) يظل هو المالك الحصري والوحيد لكافة بياناته التشغيلية وسجلاته الهندسية، ولا يترتب على مشاركتها عبر كراسة البيانات أو منصة (eff) أي حق ملكية أو تصرف للطرف الأول.
+      </p>
+    </div>
+
+    <!-- Clause 5 -->
+    <div class="clause">
+      <h3>5. السريان والمدة (Term)</h3>
+      <p>
+        تسري هذه الاتفاقية من تاريخ توقيعها وتظل سارية المفعول وملزمة للطرفين لمدة (3) سنوات من تاريخ استلام آخر حزمة بيانات تشغيلية.
+      </p>
+    </div>
+
+    <!-- Signatures Block -->
+    <div class="signatures">
+      <div class="sig-col">
+        <h4>توقيع الطرف الأول (eff):</h4>
+        <div>الاسم: أحمد الشناوي</div>
+        <div>الصفة: المؤسس — eff</div>
+        <div class="sig-hand" style="color: var(--ember);">أحمد الشناوي</div>
+        <div style="font-size:11px; color:var(--text-muted);">التاريخ: 06 نوفمبر 2026م</div>
+      </div>
+
+      <div class="sig-col">
+        <h4>اعتماد الطرف الثاني (UCSL):</h4>
+        <div>الاسم: م. عبد العزيز بن فهد التميمي</div>
+        <div>الصفة: مدير عام التشغيل والمرافق</div>
+        <div class="sig-hand" style="color: #2B6CB0;">عبدالعزيز التميمي</div>
+        <div style="font-size:11px; color:var(--text-muted);">التاريخ: ....................</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <span>eff Equipment Fitness Framework · اتفاقية عدم إفصاح معتمدة</span>
+    <span>صفحة 1 من 1 · سري ومحمي بموجب القانون</span>
+  </div>
+</div>
+
+</body>
+</html>
