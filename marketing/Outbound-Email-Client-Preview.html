@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <title>معاينة البريد الصادر — واجهة العميل وتوقيع البراند | eff</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="../icon.svg">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Rubik:wght@400;500;600;700&display=swap');
+
+    :root {
+      --ink: #FAFAF8;
+      --surface: #FFFFFF;
+      --surface-2: #F1F2EF;
+      --well: #ECEDE9;
+      --line: #D8DCD6;
+      --line-soft: #E5E7E2;
+      --text: #171D1F;
+      --text-2: #4C595D;
+      --text-3: #7C898D;
+      --ember: #F0692F;
+      --ember-hi: #FF8A4D;
+      --ember-soft: #FBEDE6;
+      --ok: #2FA98C;
+      --f: 'Rubik', sans-serif;
+      --mono: 'IBM Plex Mono', monospace;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #E8EBE9;
+      font-family: var(--f);
+      color: var(--text);
+      line-height: 1.7;
+      padding: 30px 15px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Email Client Window Container */
+    .mail-window {
+      max-width: 860px;
+      margin: 0 auto;
+      background: var(--surface);
+      border-radius: 12px;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.06);
+      border: 1px solid var(--line);
+      overflow: hidden;
+    }
+
+    /* Window Header / Titlebar */
+    .client-titlebar {
+      background: #F4F5F3;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+    }
+    .window-dots {
+      display: flex;
+      gap: 7px;
+    }
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+    }
+    .dot-close { background: #FF5F56; border: 1px solid #E0443E; }
+    .dot-min { background: #FFBD2E; border: 1px solid #DEA123; }
+    .dot-max { background: #27C93F; border: 1px solid #1AAB29; }
+
+    .client-app-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-2);
+      font-family: var(--mono);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .client-app-name span { color: var(--ember); }
+
+    /* Client Action Toolbar */
+    .client-toolbar {
+      background: var(--surface);
+      padding: 10px 20px;
+      border-bottom: 1px solid var(--line-soft);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .tool-btn {
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-2);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+    .tool-btn:hover {
+      background: var(--well);
+      color: var(--text);
+    }
+    .tool-btn.primary {
+      background: var(--ember);
+      border-color: var(--ember);
+      color: #fff;
+      font-weight: 600;
+    }
+    .tool-btn.primary:hover {
+      background: var(--ember-hi);
+    }
+
+    /* Email Header / Metadata */
+    .mail-header {
+      padding: 24px 28px 18px;
+      border-bottom: 1px solid var(--line-soft);
+      background: #FAFAF8;
+    }
+    .mail-subject {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.4;
+      margin-bottom: 16px;
+    }
+    .mail-participants {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #171D1F, #333F42);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 16px;
+      border: 2px solid var(--ember);
+      flex-shrink: 0;
+    }
+    .meta-details {
+      flex: 1;
+      font-size: 13.5px;
+    }
+    .sender-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .sender-name {
+      font-weight: 700;
+      color: var(--text);
+      font-size: 15px;
+    }
+    .sender-email {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-3);
+      margin-inline-start: 6px;
+    }
+    .mail-date {
+      color: var(--text-3);
+      font-size: 12px;
+      font-family: var(--mono);
+      direction: ltr;
+    }
+    .recipient-line {
+      color: var(--text-2);
+      margin-top: 4px;
+      font-size: 12.5px;
+    }
+    .recipient-line b { color: var(--text); }
+
+    /* Email Body Content */
+    .mail-body {
+      padding: 28px 32px 35px;
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--text);
+    }
+    .mail-body p {
+      margin: 0 0 16px;
+    }
+
+    /* Decision Milestone Box */
+    .milestone-box {
+      background: var(--well);
+      border-inline-start: 4px solid var(--ember);
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+    .milestone-box h4 {
+      margin: 0 0 10px;
+      font-size: 15px;
+      color: var(--text);
+    }
+    .milestone-box ol {
+      margin: 0;
+      padding-inline-start: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--text-2);
+    }
+
+    /* Action CTA Card */
+    .cta-card {
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+    .cta-info {
+      font-size: 13.5px;
+      color: var(--text-2);
+    }
+    .cta-info strong {
+      display: block;
+      color: var(--text);
+      font-size: 14.5px;
+      margin-bottom: 2px;
+    }
+    .cta-btn {
+      background: var(--ember);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 13.5px;
+      padding: 8px 18px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.15s;
+    }
+    .cta-btn:hover { background: var(--ember-hi); }
+
+    /* Official HTML Signature Section */
+    .signature-container {
+      margin-top: 35px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line-soft);
+    }
+
+    @media print {
+      body { background: #fff; padding: 0; }
+      .mail-window { box-shadow: none; border: none; max-width: 100%; }
+      .client-titlebar, .client-toolbar { display: none; }
+      .mail-header { background: #fff; border-bottom: 2px solid #ccc; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="mail-window">
+
+  <!-- Titlebar -->
+  <div class="client-titlebar">
+    <div class="window-dots">
+      <div class="dot dot-close"></div>
+      <div class="dot dot-min"></div>
+      <div class="dot dot-max"></div>
+    </div>
+    <div class="client-app-name">
+      <span>eff</span> Mail Client — Outbound Response
+    </div>
+    <div style="width: 50px;"></div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="client-toolbar">
+    <button class="tool-btn primary" onclick="window.print()">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2m-12 0v4h12v-4"/></svg>
+      طباعة الإيميل
+    </button>
+    <button class="tool-btn">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/></svg>
+      رد على الكل
+    </button>
+    <button class="tool-btn">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10H11a8 8 0 00-8 8v2M21 10l-6 6m6-6l-6-6"/></svg>
+      إعادة توجيه
+    </button>
+    <span style="margin-inline-start: auto; font-size: 12px; color: var(--text-3); font-family: var(--mono);">
+      ID: MSG-EFF-20261106-SA
+    </span>
+  </div>
+
+  <!-- Header / Metadata -->
+  <div class="mail-header">
+    <div class="mail-subject">
+      رد: طلب تنفيذ تقييم تجريبي فني (Pilot) لأسطول التبريد والطاقة — مستودعات الرياض
+    </div>
+    <div class="mail-participants">
+      <div class="avatar">AE</div>
+      <div class="meta-details">
+        <div class="sender-line">
+          <div>
+            <span class="sender-name">Ahmed Elshennawi</span>
+            <span class="sender-email">&lt;a.elshennawi@eff-egypt.com&gt;</span>
+          </div>
+          <div class="mail-date">Nov 6, 2026, 5:15 PM</div>
+        </div>
+        <div class="recipient-line">
+          إلى: <b>م. عبد العزيز بن فهد التميمي</b> &lt;eng.abdulaziz.tamimi@ucsl-sa.com&gt;
+        </div>
+        <div class="recipient-line" style="font-size: 11.5px; color: var(--text-3); display:flex; align-items:center; gap:8px; margin-top:6px; flex-wrap:wrap;">
+          <span>نسخة: إدارة العمليات (UCSL) &lt;operations@ucsl-sa.com&gt;</span>
+          <span style="background:var(--well); border:1px solid var(--line); padding:1px 8px; border-radius:4px; font-family:var(--mono); color:var(--ember); font-size:11px; font-weight:600;">
+            المصدر: إعلان LinkedIn (حملة سلاسل الإمداد والتبريد)
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Email Body -->
+  <div class="mail-body">
+    <p>سعادة المهندس / عبد العزيز بن فهد التميمي المحترم،<br>
+    مدير عام التشغيل والمرافق والصيانة المركزية — شركة المخازن المبردة المتحدة (UCSL)</p>
+
+    <p>السلام عليكم ورحمة الله وبركاته،،</p>
+
+    <p>
+      أشكركم على خطابكم الكريم وحرصكم المهني الراقي. يسعدنا في <strong>eff</strong> اعتماد وتنفيذ مبادرة <strong>التقييم التجريبي المجاني (14-Day Free Pilot)</strong> للمعدات الخمس المحددة بمجمع مستودعاتكم بالمدينة الصناعية الثانية بالرياض.
+    </p>
+
+    <p>
+      المعضلة التي تفضلتم بطرحها بشأن عرض العمرة الميكانيكية الشاملة (<strong>420,000 ريال سعودي</strong>) هي تحديداً الحالة الهندسية والمالية التي صُمم إطار (eff) لحسمها؛ فإذا كانت وحدات التبريد (Carrier & Bitzer) تعاني من تراجع بنيوي في الكفاءة الحرارية يسبب نزيفاً سنوياً مستمراً في فاتورة الكهرباء يتجاوز تكلفة الإحلال، فإن دفع هذا المبلغ سيكون مجرد تأجيل لخسارة حتمية. أما إذا أثبت القياس أن التراجع ناتج عن سوء تحجيم (Sizing Fault) أو أحمال جزئية قابلة لإعادة الضبط، فإن المنصة ستوصي فوراً بعدم التسرع في الاستبدال.
+    </p>
+
+    <!-- Milestone Box -->
+    <div class="milestone-box">
+      <h4>خطة عمل الـ Pilot خلال الـ 14 يوماً القادمة:</h4>
+      <ol>
+        <li><strong>المرحلة الأولى (يوم 1 - 3):</strong> سحب قراءات العدادات واللوحات عبر كراسة جمع البيانات (DataKit) دون الحاجة لأجهزة إضافية.</li>
+        <li><strong>المرحلة الثانية (يوم 4 - 8):</strong> معالجة البيانات عبر محرك (eff) لحساب المؤشرات الثمانية وتصحيح الكفاءة حسب درجات حرارة الرياض وأحمال الصيف.</li>
+        <li><strong>المرحلة الثالثة (يوم 9 - 14):</strong> تسليم ومناقشة التقرير التنفيذي المعتمد (PDF) متضمناً الحكم القاطع (Keep / Monitor / Plan Replacement / Retire) وحساب العائد المالي بالريال.</li>
+      </ol>
+    </div>
+
+    <!-- CTA Box -->
+    <div class="cta-card">
+      <div class="cta-info">
+        <strong>كراسة جمع البيانات المخصصة لمعدات التبريد والمولدات</strong>
+        <span>يمكن لفريق الصيانة لديكم البدء فوراً في إدخال بيانات المعدات الخمس</span>
+      </div>
+      <a href="../datakit.html" target="_blank" class="cta-btn">
+        فتح نموذج الـ DataKit
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <p>
+      يسعدني أيضاً أن نلتقي في اجتماع افتراضي قصير (مدته 20 دقيقة) يوم الأحد القادم في تمام الساعة 11:00 صباحاً بتوقيت الرياض لمراجعة الحقول المطلوبة مع مهندسي الموقع والإجابة على أي استفسارات.
+    </p>
+
+    <p>تفضلوا بقبول وافر احترامي وتقديري،،</p>
+
+    <!-- Official HTML Email Signature -->
+    <div class="signature-container">
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="font-family:'Rubik','Segoe UI',Tahoma,sans-serif; direction:rtl; text-align:right;">
+        <tr>
+          <!-- Brand Emblem Box -->
+          <td style="vertical-align:top; padding-inline-end:16px;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="background:#0F1416; border-radius:10px; width:48px; height:48px;">
+              <tr><td align="center" valign="middle">
+                <svg width="28" height="28" viewBox="0 0 48 48"><rect width="48" height="48" rx="12" fill="#F0692F"/><rect x="11" y="13" width="26" height="5" rx="2.5" fill="#fff"/><rect x="11" y="21.5" width="18" height="5" rx="2.5" fill="#fff"/><rect x="11" y="30" width="10" height="5" rx="2.5" fill="#fff"/></svg>
+              </td></tr>
+            </table>
+          </td>
+
+          <!-- Details & Credentials -->
+          <td style="vertical-align:top; border-inline-start:2px solid #F0692F; padding-inline-start:16px;">
+            <div style="font-weight:700; font-size:16px; color:#171D1F; letter-spacing:-0.02em;">Ahmed Elshennawi</div>
+            <div style="font-size:13px; color:#4C595D; margin-top:2px;">المؤسس — Founder, <span style="font-weight:700; color:#D4551E;">eff</span></div>
+            <div style="font-size:11.5px; color:#7C898D; margin-top:5px; font-weight:500;">
+              إطار تقييم كفاءة المعدات الصناعية · Equipment Fitness Framework
+            </div>
+            
+            <div style="font-family:'IBM Plex Mono',Consolas,monospace; font-size:11.5px; color:#4C595D; margin-top:8px; line-height:1.9; direction:ltr; text-align:right;">
+              <span style="color:#D4551E;">✉</span> a.elshennawi@eff-egypt.com &nbsp;|&nbsp; 
+              <span style="color:#D4551E;">✆</span> +20 10 3220 8322 &nbsp;|&nbsp; 
+              <span style="color:#D4551E;">🌐</span> <a href="https://ahmedelshennawi1.github.io/EFF/" style="color:inherit; text-decoration:none; font-weight:600;">ahmedelshennawi1.github.io/EFF</a>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

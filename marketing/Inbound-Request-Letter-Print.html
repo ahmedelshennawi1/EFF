@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <title>خطاب رسمي — طلب تقييم تجريبي (Pilot) | شركة المخازن المبردة المتحدة</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Mono:wght@500;700&family=Rubik:wght@400;500;600;700&display=swap');
+
+    :root {
+      --primary: #1A365D;
+      --gold: #C5A059;
+      --text: #2D3748;
+      --text-muted: #718096;
+      --border: #E2E8F0;
+      --bg: #F7FAFC;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #E2E8F0;
+      font-family: 'Amiri', 'Rubik', serif;
+      color: var(--text);
+      line-height: 1.8;
+      font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .toolbar {
+      max-width: 210mm;
+      margin: 15px auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      font-family: 'Rubik', sans-serif;
+    }
+
+    .btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn:hover { background: #2A4365; }
+
+    /* A4 Sheet Simulation */
+    .sheet {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto 30px;
+      background: #FFFFFF;
+      padding: 20mm 22mm;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Letterhead Top */
+    .letterhead {
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo-block {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo-emblem {
+      width: 52px;
+      height: 52px;
+      background: linear-gradient(135deg, var(--primary), #2B6CB0);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 24px;
+      font-weight: bold;
+      border: 2px solid var(--gold);
+    }
+    .company-names h2 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      font-family: 'Rubik', sans-serif;
+    }
+    .company-names p {
+      margin: 0;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      font-family: 'Rubik', sans-serif;
+    }
+    .meta-box {
+      text-align: left;
+      font-size: 12px;
+      font-family: 'Rubik', sans-serif;
+      line-height: 1.6;
+    }
+    .meta-box b { color: var(--primary); }
+
+    /* Document Reference Line */
+    .ref-bar {
+      margin: 20px 0 10px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--text-muted);
+      border-bottom: 1px dashed var(--border);
+      padding-bottom: 8px;
+      font-family: 'Rubik', sans-serif;
+    }
+
+    /* Recipient Block */
+    .recipient {
+      margin: 15px 0 20px;
+    }
+    .recipient .salutation {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 3px;
+    }
+    .recipient .org {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* Content */
+    .subject {
+      background: #F7FAFC;
+      border-right: 4px solid var(--gold);
+      padding: 8px 14px;
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--primary);
+      margin: 15px 0 20px;
+      font-family: 'Rubik', sans-serif;
+    }
+
+    .body-text p {
+      margin-bottom: 12px;
+      text-align: justify;
+      text-justify: inter-word;
+      font-size: 15.5px;
+    }
+
+    /* Asset Scope Table */
+    .asset-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 13.5px;
+      font-family: 'Rubik', sans-serif;
+    }
+    .asset-table th {
+      background: var(--primary);
+      color: #fff;
+      padding: 8px 10px;
+      text-align: right;
+      font-weight: 600;
+      font-size: 12.5px;
+    }
+    .asset-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .asset-table tr:nth-child(even) td { background: #F8FAFC; }
+    .asset-table td.tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: bold;
+      color: var(--primary);
+      direction: ltr;
+      text-align: right;
+    }
+
+    /* Signoff & Stamp */
+    .signoff {
+      margin-top: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .sign-block {
+      text-align: right;
+      font-family: 'Rubik', sans-serif;
+    }
+    .sign-block .role {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .signature-hand {
+      font-family: 'Amiri', serif;
+      font-size: 22px;
+      color: #2B6CB0;
+      font-weight: bold;
+      margin: 10px 0 5px;
+      transform: rotate(-2deg);
+    }
+
+    .stamp-box {
+      width: 120px;
+      height: 120px;
+      border: 2px dashed #9B2C2C;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #9B2C2C;
+      font-family: 'Rubik', sans-serif;
+      font-size: 10px;
+      text-align: center;
+      transform: rotate(-10deg);
+      opacity: 0.85;
+      line-height: 1.3;
+    }
+    .stamp-box b { font-size: 11px; }
+
+    /* Footer */
+    .letter-footer {
+      border-top: 1px solid var(--border);
+      padding-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 10.5px;
+      color: var(--text-muted);
+      font-family: 'Rubik', sans-serif;
+    }
+
+    @media print {
+      body { background: #fff; margin: 0; }
+      .toolbar { display: none; }
+      .sheet {
+        box-shadow: none;
+        margin: 0;
+        width: 100%;
+        min-height: auto;
+        padding: 0;
+      }
+      @page { size: A4; margin: 18mm 20mm; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="toolbar">
+  <div>
+    <strong>معاينة المستند الرسمي للطباعة (A4 Letterhead)</strong> — نموذج الطلب الوارد من العميل
+  </div>
+  <button class="btn" onclick="window.print()">
+    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2m-12 0v4h12v-4"/></svg>
+    طباعة المستند (Print / PDF)
+  </button>
+</div>
+
+<div class="sheet">
+  <div>
+    <!-- Letterhead Header -->
+    <div class="letterhead">
+      <div class="logo-block">
+        <div class="logo-emblem">UCSL</div>
+        <div class="company-names">
+          <h2>شركة المخازن المبردة المتحدة</h2>
+          <p>UNITED COLD STORAGE LOGISTICS CO. LTD.</p>
+        </div>
+      </div>
+      <div class="meta-box">
+        <div><b>الرقم الإشاري:</b> UCSL-OPS/2026-1184</div>
+        <div><b>التاريخ:</b> 21 جمادى الأولى 1448هـ</div>
+        <div><b>الموافق:</b> 06 نوفمبر 2026م</div>
+        <div><b>سجل تجاري:</b> 1010839210</div>
+      </div>
+    </div>
+
+    <!-- Reference Line -->
+    <div class="ref-bar">
+      <span>قطاع سلاسل الإمداد والتخزين المبرد — إدارة التشغيل والصيانة المركزية</span>
+      <span>الرياض — المملكة العربية السعودية</span>
+    </div>
+
+    <!-- Recipient -->
+    <div class="recipient">
+      <div class="salutation">سعادة المهندس / أحمد الشناوي المحترم،</div>
+      <div class="org">مؤسس ومدير إطار تقييم كفاءة المعدات (eff) — جمهورية مصر العربية</div>
+    </div>
+
+    <!-- Subject -->
+    <div class="subject">
+      الموضوع: طلب تنفيذ تقييم تجريبي فني (14-Day Free Pilot) لأسطول التبريد والطاقة بمستودعات الرياض
+    </div>
+
+    <!-- Body Text -->
+    <div class="body-text">
+      <p>السلام عليكم ورحمة الله وبركاته،،</p>
+
+      <p>
+        إشارةً إلى إعلانكم المهني على منصة <strong>LinkedIn</strong> واطلاعنا اللاحق على كُتيبكم الفني ومنهجيتكم الهندسية المنشورة لتقييم كفاءة المعدات الصناعية (Equipment Fitness Framework - eff)، والخاصة باحتساب التكلفة السنوية المكافئة (EAC) وتحليل انحدار الكفاءة مع تصحيح الأحمال؛
+      </p>
+
+      <p>
+        نفيدكم بأن شركة "المخازن المبردة المتحدة" تدير مجمع مستودعات تبريد وتجميد مركزية بالمدينة الصناعية الثانية بالرياض، بطاقة تخزينية تبلغ 12,000 طبلية للمنتجات الغذائية والدوائية الحساسة. نواجه حالياً معضلة استثمارية متعلقة بارتفاع تكاليف استهلاك الكهرباء، وتلقينا عرضاً من الوكيل المعتمد لعمل "عمرة ميكانيكية شاملة" لعدد من وحدات التبريد بتكلفة تتجاوز <strong>420,000 ريال سعودي</strong>، مع تحفظات مالية من الإدارة حول مدى جدوى هذا الإنفاق مقارنة بالاستبدال.
+      </p>
+
+      <p>
+        بناءً عليه، نرغب رسمياً في الاستفادة من مبادرة <strong>التقييم التجريبي المجاني (14-Day Free Pilot)</strong> لتقييم (5) معدات حرجة ذات أولوية قصوى وفق الجدول التالي:
+      </p>
+
+      <!-- Asset Scope Table -->
+      <table class="asset-table">
+        <thead>
+          <tr>
+            <th>رمز المعدة</th>
+            <th>نوع المعدة والمصنع</th>
+            <th>السعة المقننة</th>
+            <th>سنة التشغيل</th>
+            <th>الأزمة الفنية الحالية</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="tag">CHL-01</td>
+            <td>تشيلر تبريد مائي (Carrier AquaForce 30XW)</td>
+            <td>280 TR</td>
+            <td>2016</td>
+            <td>تراجع معامل الأداء (kW/TR) وعرض عمرة بـ 180,000 ر.س</td>
+          </tr>
+          <tr>
+            <td class="tag">CHL-02</td>
+            <td>تشيلر تبريد هوائي (Trane Helical Rotary)</td>
+            <td>200 TR</td>
+            <td>2018</td>
+            <td>ارتفاع استهلاك الطاقة وأعطال صيفية متكررة</td>
+          </tr>
+          <tr>
+            <td class="tag">FRZ-01</td>
+            <td>وحدة ضواغط تجميد (Bitzer Screw Rack -22°C)</td>
+            <td>120 kW_th</td>
+            <td>2017</td>
+            <td>اهتزاز في المحامل وعرض عمرة بـ 140,000 ر.س</td>
+          </tr>
+          <tr>
+            <td class="tag">GEN-01</td>
+            <td>مولد ديزل احتياطي (Cummins QSK19-G4)</td>
+            <td>500 kVA</td>
+            <td>2015</td>
+            <td>ساعات تشغيل متراكمة، وتفاوت في استهلاك الديزل</td>
+          </tr>
+          <tr>
+            <td class="tag">GEN-02</td>
+            <td>مولد ديزل احتياطي (Cummins QSK19-G4)</td>
+            <td>500 kVA</td>
+            <td>2019</td>
+            <td>يعمل عند أحمال جزئية منخفضة (مطلوب فحص التحجيم)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        نرجو التكرم بتزويدنا برابط كراسة جمع البيانات (DataKit) والترتيب لعقد اجتماع تعريفي افتراضي (عبر Teams أو Google Meet) لشرح المتطلبات الفنية، تمهيداً لبدء سحب البيانات والتقييم.
+      </p>
+    </div>
+
+    <!-- Signatures -->
+    <div class="signoff">
+      <div class="sign-block">
+        <div>شاكرين لكم حسن تعاونكم الدائم،،</div>
+        <div class="signature-hand">عبدالعزيز التميمي</div>
+        <div style="font-weight:700;">م. عبد العزيز بن فهد التميمي</div>
+        <div class="role">مدير عام التشغيل والمرافق والصيانة المركزية</div>
+        <div class="role">شركة المخازن المبردة المتحدة — الرياض</div>
+      </div>
+
+      <div class="stamp-box">
+        <b>المخازن المبردة المتحدة</b>
+        <span>إدارة التشغيل والصيانة</span>
+        <span>صادر معتمد</span>
+        <span>الرياض - المملكة</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Letterhead Footer -->
+  <div class="letter-footer">
+    <span>المركز الرئيسي: المدينة الصناعية الثانية، ص.ب 42819، الرياض 11551</span>
+    <span>هاتف: 966114980000+ · البريد: operations@ucsl-sa.com</span>
+    <span>المملكة العربية السعودية · المملكة الرقمية</span>
+  </div>
+</div>
+
+</body>
+</html>
